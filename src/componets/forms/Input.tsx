@@ -3,6 +3,7 @@ import React from 'react'
 interface InputProps {
   label: string
   name: string
+  catcher: (value:any) => void
   type?: string
   placeholder?: string
   required?: boolean
@@ -13,7 +14,7 @@ interface InputProps {
 export default function Input (configuration: InputProps) {
   return (
     <div className='flex flex-col gap-2 text-left'>
-      <label htmlFor={configuration.name}>{configuration.label}</label>
+      <label className='font-bold' htmlFor={configuration.name}>{configuration.label}</label>
       <input
         className='border border-gray-600 py-1 px-3 rounded-sm'
         id={configuration.name}
@@ -23,6 +24,7 @@ export default function Input (configuration: InputProps) {
         required={configuration.required}
         minLength={configuration.minLength}
         maxLength={configuration.maxLength}
+        onChange={(e) => configuration.catcher(e.target.value)}
       />
     </div>
   )

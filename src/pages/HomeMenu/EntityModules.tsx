@@ -44,7 +44,7 @@ export default function EntityModules ({ entity }: EntityModulesProps) {
   }))
 
   return (
-    <HomeLayout>
+    <HomeLayout title={'Modulo '+entity}>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
         {modules.map((module, i) => (
           <Card

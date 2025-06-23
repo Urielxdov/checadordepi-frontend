@@ -3,6 +3,7 @@ import React from 'react'
 interface ButtonProps {
   text: string
   action: () => void
+  submit: boolean
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
   styles?: string
@@ -11,14 +12,15 @@ interface ButtonProps {
 export default function Button ({
   text,
   action,
+  submit,
   icon,
   iconPosition = 'left',
   styles = ''
 }: ButtonProps) {
   return (
-    <button onClick={action} className={`flex items-center gap-2 ${styles}`}>
+    <button onClick={action} className={`flex items-center gap-2 ${styles}`} type={submit?'submit':'button'}>
       {icon && iconPosition === 'left' && icon}
-      {text}
+      <span className='grow'>{text}</span>
       {icon && iconPosition === 'right' && icon}
     </button>
   )

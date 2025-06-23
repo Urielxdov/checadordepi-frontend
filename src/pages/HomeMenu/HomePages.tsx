@@ -22,7 +22,7 @@ export default function HomePage () {
   ]
 
   return (
-    <HomeLayout>
+    <HomeLayout title='Panel principal'>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
         {modules.map((module, index) => (
           <Card
