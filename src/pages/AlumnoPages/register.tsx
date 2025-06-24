@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Alumno } from "../../models/entityModels";
 import Form from "../../componets/forms/Form";
 import Input from "../../componets/forms/Input";
 import Button from "../../componets/utils/buttons/Button";
@@ -18,7 +19,7 @@ function CreateAlu(){
     const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //objeto alumno
-        const alumno = {
+        const alumno = new Alumno({
             noControl: noControl.trim(),
             nombre: nombre.trim(),
             apellidos: apellidos.trim(),
@@ -26,8 +27,8 @@ function CreateAlu(){
             calle: calle.trim(),
             colonia: colonia.trim(),
             correo: correo.trim()
-        }
-        console.log(alumno);
+        })
+        console.log(alumno.nombre);
         alert("alumno capturado!!!");
     }
 
