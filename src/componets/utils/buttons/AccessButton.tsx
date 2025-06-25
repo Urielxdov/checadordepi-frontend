@@ -14,6 +14,7 @@ export default function AccessButton ({ url }: PropsAccessButton) {
     <Button
       text={'Ingresar'}
       action={() => navigate(url)}
+      submit={false}
       icon={<ArrowRight className='h-5  w-5' />}
       iconPosition='right'
       styles='px-4 py-2 rounded bg-blue-500 text-white

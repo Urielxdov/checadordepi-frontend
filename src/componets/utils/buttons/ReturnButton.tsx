@@ -9,6 +9,7 @@ export default function ReturnButton () {
       action={() => {
         console.log('hola')
       }}
+      submit={false}
       icon={<ArrowLeft className='h-5  w-5' />}
       iconPosition='left'
       styles='px-4 py-2 rounded bg-red-500 text-white

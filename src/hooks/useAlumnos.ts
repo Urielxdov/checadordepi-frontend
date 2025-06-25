@@ -5,13 +5,13 @@ function useAlumno(){
     //estado de alumnos
     const [alumnos, setAlumnos] = useState([
         new Alumno({
-            noControl: "22240341",
-            nombre: "Ivan Alejandro",
-            apellidos: "Cadena Lopez",
-            telefono: "4631073583",
-            calle: "campestre olivo #108",
-            colonia: "Urbivilla del Roble",
-            correo: "ivancdeno@gmail.com"
+            noControl: "22241102",
+            nombre: "John",
+            apellidos: "Doe",
+            telefono: "1234567890",
+            calle: "alguna calle #100",
+            colonia: "Alguna colonia",
+            correo: "jdoe@gmail.com"
         })
     ]);
 
