@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState} from "react";
 import { Alumno } from "../../models/entityModels";
+import useAlumno from "../../hooks/useAlumnos";
 import Form from "../../componets/forms/Form";
 import Input from "../../componets/forms/Input";
 import Button from "../../componets/utils/buttons/Button";
 import HomeLayout from "../Layouts/HomeLayout";
 
 function CreateAlu(){
+    //hook de alumno
+    const { create } = useAlumno();
+
     //valores de formulario
     const [noControl, setNoControl] = useState('');
     const [nombre, setNombre] = useState('');
@@ -28,7 +32,7 @@ function CreateAlu(){
             colonia: colonia.trim(),
             correo: correo.trim()
         })
-        console.log(alumno.nombre);
+        create(alumno);
         alert("alumno capturado!!!");
     }
 

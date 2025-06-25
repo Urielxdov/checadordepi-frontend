@@ -42,4 +42,16 @@ type AlumnoConfig = {
         }
     }
 
+    toArray(){
+        return [
+            this.noControl,
+            this.nombre,
+            this.apellidos,
+            this.telefono,
+            this.calle,
+            this.colonia,
+            this.correo
+        ]
+    }
+
 }
