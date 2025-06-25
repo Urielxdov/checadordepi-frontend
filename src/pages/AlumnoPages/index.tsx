@@ -11,13 +11,13 @@ function IndexAlu(){
         <HomeLayout title="Lista de alumnos">
             <Table
                 header={[
-                    "no. control",
-                    "nombre(s)",
-                    "apellidos",
-                    "telefono",
-                    "calle",
-                    "colonia",
-                    "correo"
+                    "Numero de Control",
+                    "Nombre(s)",
+                    "Apellidos",
+                    "Telefono",
+                    "Calle",
+                    "Colonia",
+                    "Correo"
                     ]}
                 body={read().map((alumno:Alumno) => alumno.toArray())}
             />
