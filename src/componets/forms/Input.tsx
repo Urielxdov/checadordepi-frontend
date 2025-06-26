@@ -9,6 +9,7 @@ interface InputProps {
   required?: boolean
   minLength?: number
   maxLength?: number
+  value?: any
 }
 
 export default function Input (configuration: InputProps) {
@@ -24,6 +25,7 @@ export default function Input (configuration: InputProps) {
         required={configuration.required}
         minLength={configuration.minLength}
         maxLength={configuration.maxLength}
+        value={configuration.value}
         onChange={(e) => configuration.catcher(e.target.value)}
       />
     </div>

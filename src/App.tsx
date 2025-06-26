@@ -5,6 +5,8 @@ import EntityModules from './pages/HomeMenu/EntityModules'
 import CreateAlu from './pages/AlumnoPages/register'
 import IndexAlu from './pages/AlumnoPages'
 import Delete from './pages/CrudActions/Delete'
+import DeleteAlu from './pages/AlumnoPages/delete'
+import UpdateAlu from './pages/AlumnoPages/update'
 
 function App () {
   return (
@@ -13,7 +15,9 @@ function App () {
       <Route path='/alumno' element={<EntityModules entity='alumno' />} />
       <Route path='/alumno/get' element={<IndexAlu/>} />
       <Route path='/alumno/create' element={<CreateAlu/>} />
-      <Route path='/alumno/delete' element={<Delete headers={["ID", "Nombre", "Apellidos", "Acciones"]} body={[]} entity='alumno' onDelete={(id) => console.log(id)} onSearch={(query) => console.log(query)} />} />
+      <Route path='/alumno/delete'element={<DeleteAlu/>}/>
+      <Route path='/alumno/delete/p' element={<Delete headers={["ID", "Nombre", "Apellidos", "Acciones"]} body={[]} entity='alumno' onDelete={(id) => console.log(id)} onSearch={(query) => console.log(query)} />} />
+      <Route path='/alumno/update' element={<UpdateAlu/>}/>
       <Route path='/profesor' element={<EntityModules entity='profesor' />} />
       <Route path='/curso' element={<EntityModules entity='curso' />} />
     </Routes>

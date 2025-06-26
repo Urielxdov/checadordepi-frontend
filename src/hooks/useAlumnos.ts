@@ -28,7 +28,22 @@ function useAlumno(){
         setAlumnos([...alumnos, alumno]);
     }
 
-    return { read, search, create }
+    const drop = (noControl:string) => {
+        setAlumnos(alumnos.filter(a => a.noControl != noControl))
+    }
+
+    const update = (alumno:Alumno) => {
+        const nuevoAlumnos = alumnos.map((a) => {
+            if(a.noControl == alumno.noControl){
+                return alumno;
+            }else{
+                return a;
+            }
+        });
+        setAlumnos(nuevoAlumnos);
+    }
+
+    return { read, search, create, drop, update }
 }
 
 export default useAlumno;

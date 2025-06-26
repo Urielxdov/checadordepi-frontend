@@ -66,6 +66,7 @@ function CreateAlu(){
                         required={true}
                         maxLength={8}
                         minLength={8}
+                        value={noControl}
                         catcher={setNoControl}
                     />
                     <Input
@@ -73,6 +74,7 @@ function CreateAlu(){
                         name='nombre'
                         type='text'
                         required={true}
+                        value={nombre}
                         catcher={setNombre}
                     />
                     <Input
@@ -80,6 +82,7 @@ function CreateAlu(){
                         name='apellidos'
                         type='text'
                         required={true}
+                        value={apellidos}
                         catcher={setApellidos}
                     />
                     <Input
@@ -88,6 +91,7 @@ function CreateAlu(){
                         type='tel'
                         required={true}
                         maxLength={10}
+                        value={telefono}
                         catcher={setTelefono}
                     />
                     <Input
@@ -95,6 +99,7 @@ function CreateAlu(){
                         name='calle'
                         type='text'
                         required={true}
+                        value={calle}
                         catcher={setCalle}
                     />
                     <Input
@@ -102,6 +107,7 @@ function CreateAlu(){
                         name='colonia'
                         type='text'
                         required={true}
+                        value={colonia}
                         catcher={setColonia}
                     />
                     <Input
@@ -109,6 +115,7 @@ function CreateAlu(){
                         name='correo'
                         type='email'
                         required={true}
+                        value={correo}
                         catcher={setCorreo}
                     />
                     <Button
