@@ -17,6 +17,6 @@ export default function QueryInput({action, placeholder}: PropsQueryInput){
     }
 
     return (
-        <input type="text" placeholder={placeholder} onChange={sendQuery}/>
+        <input className="flex w-full border rounded-sm border-gray-500 p-1.5 focus:outline-none focus:ring-4 focus:ring-blue-200 focus:border-blue-500" type="text" placeholder={placeholder} onChange={sendQuery}/>
     )
 } 

@@ -14,7 +14,7 @@ export default function HomeLayout ({ title, children }: Props) {
         <div className='border-b border-gray-200 rounded-t-sm bg-gray-100 z-20 text-left py-2 px-4'>
           <p>{title}</p>
         </div>
-        <main className='p-4'>{children}</main>
+        <main className='p-4 flex flex-col gap-3'>{children}</main>
       </div>
       <Footer />
     </>

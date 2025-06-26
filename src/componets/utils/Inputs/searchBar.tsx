@@ -3,8 +3,8 @@ import Button from "../buttons/Button";
 
 type SearchBarConfig = {
     tip: string,
-    onSearch: (s:any) => any,
-    onResult: (r:any) => void
+    onSearch: (s:string) => any,
+    onResult: (r:string) => any
 }
 
 function SearchBar({ tip, onSearch, onResult}:SearchBarConfig){
