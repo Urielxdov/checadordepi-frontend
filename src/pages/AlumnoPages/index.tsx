@@ -1,27 +1,26 @@
-import useAlumno from "../../hooks/useAlumnos";
+import { useReducer } from "react";
+import { reduceAlumno, initialState } from "../../hooks/AlumnoReducer";
 import { Alumno } from "../../models/entityModels";
-import HomeLayout from "../Layouts/HomeLayout";
-import Table from "../../componets/tables/Table";
+import Index from "../CrudActions/Index";
 
 function IndexAlu(){
     //hook de alumnos
-    const { read } = useAlumno();
+    const [state, dispatch] = useReducer(reduceAlumno, initialState());
 
     return (
-        <HomeLayout title="Lista de alumnos">
-            <Table
-                header={[
-                    "Numero de Control",
-                    "Nombre(s)",
-                    "Apellidos",
-                    "Telefono",
-                    "Calle",
-                    "Colonia",
-                    "Correo"
-                    ]}
-                body={read().map((alumno:Alumno) => alumno.toArray())}
-            />
-        </HomeLayout>
+        <Index
+            title="Listado de alumnos"
+            headers={[
+                "numero de control",
+                "nombre(s)",
+                "apellidos",
+                "telefono",
+                "calle",
+                "colonia",
+                "correo"
+            ]}
+            data={state.alumnos.map((a:Alumno) => a.toArray())}
+        />
     );
 }
 

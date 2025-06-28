@@ -1,18 +1,11 @@
-import { useState} from "react";
+import { useReducer, useState} from "react";
 import { Alumno } from "../../models/entityModels";
-import useAlumno from "../../hooks/useAlumnos";
-import Form from "../../componets/forms/Form";
-import Input from "../../componets/forms/Input";
-import Button from "../../componets/utils/buttons/Button";
-import HomeLayout from "../Layouts/HomeLayout";
-import Modal from "../../componets/ui/Modals";
+import { reduceAlumno, initialState } from "../../hooks/AlumnoReducer";
+import Create from "../CrudActions/create";
 
 function CreateAlu(){
-    //hook de modal
-    const [modalOpen, setModalOpen] = useState(false);
-
     //hook de alumno
-    const { create } = useAlumno();
+    const [state, disptach] = useReducer(reduceAlumno, initialState());
 
     //valores de formulario
     const [noControl, setNoControl] = useState('');
@@ -39,101 +32,90 @@ function CreateAlu(){
         })
 
         //guardar el alumno
-        create(alumno);
+        disptach({type:"create", alumno: alumno});
 
         //limpiar los campos
         setNoControl("");
         setNombre("");
         setApellidos("");
+        setTelefono("");
         setCalle("");
         setColonia("");
         setCorreo("");
+    }
 
-        //abrir el modal
-        setModalOpen(true);
+    //configuracion de campos
+    const fields = [
+        {
+            label:"Numero de control",
+            name:"noControl",
+            type:"text",
+            maxlength: 8,
+            minlength: 8,
+            value: noControl,
+            catch: setNoControl
+        },
+        {
+            label:"Nombre(s)",
+            name:"nombre",
+            type:"text",
+            value: nombre,
+            catch: setNombre
+        },
+        {
+            label:"Apellidos",
+            name:"apellidos",
+            type:"text",
+            value: apellidos,
+            catch: setApellidos
+        },
+        {
+            label:"Telefono",
+            name:"telefono",
+            type:"tel",
+            maxlength: 10,
+            value: telefono,
+            catch: setTelefono
+        },
+        {
+            label:"Calle y numero",
+            name:"calle",
+            type:"text",
+            value: calle,
+            catch: setCalle
+        },
+        {
+            label:"Colonia",
+            name:"colonia",
+            type:"text",
+            value: colonia,
+            catch: setColonia
+        },
+        {
+            label:"Correo",
+            name:"correo",
+            type:"email",
+            value: correo,
+            catch: setCorreo
+        },
+    ]
+
+    //configuracion de modal de exito
+    const modalConf = {
+        title: "Alumno creado",
+        message: "El alumno ha sido creado con exito",
+        type:"success"
     }
 
     //retorno de vista
     return (
-        <>
-        <HomeLayout title="Modulo alumno">
-                <h1 className="font-bold text-xl">Registrar nuevo alumno</h1>
-                <Form onSubmit={handleForm}>
-                    <Input
-                        label='Numero de control:'
-                        name='noControl'
-                        type='text'
-                        required={true}
-                        maxLength={8}
-                        minLength={8}
-                        value={noControl}
-                        catcher={setNoControl}
-                    />
-                    <Input
-                        label='Nombre(s):'
-                        name='nombre'
-                        type='text'
-                        required={true}
-                        value={nombre}
-                        catcher={setNombre}
-                    />
-                    <Input
-                        label='Apellidos:'
-                        name='apellidos'
-                        type='text'
-                        required={true}
-                        value={apellidos}
-                        catcher={setApellidos}
-                    />
-                    <Input
-                        label='Telefono:'
-                        name='telefono'
-                        type='tel'
-                        required={true}
-                        maxLength={10}
-                        value={telefono}
-                        catcher={setTelefono}
-                    />
-                    <Input
-                        label='Calle y numero:'
-                        name='calle'
-                        type='text'
-                        required={true}
-                        value={calle}
-                        catcher={setCalle}
-                    />
-                    <Input
-                        label='Colonia:'
-                        name='colonia'
-                        type='text'
-                        required={true}
-                        value={colonia}
-                        catcher={setColonia}
-                    />
-                    <Input
-                        label='Correo:'
-                        name='correo'
-                        type='email'
-                        required={true}
-                        value={correo}
-                        catcher={setCorreo}
-                    />
-                    <Button
-                        text="registrar"
-                        action={() => {}}
-                        submit={true}
-                        styles="p-1 text-white bg-green-500 rounded-sm"
-                    />
-                </Form>
-            </HomeLayout>
-            <Modal
-                isOpen={modalOpen}
-                title="alumno creado"
-                message="El alumno ha sido creado con exito"
-                type="success"
-                onClose={() => setModalOpen(false)}
-            />
-        </>
+        <Create
+            title="Modulo alumno"
+            entity="Alumno"
+            fields={fields}
+            formHandler={handleForm}
+            modalConf={modalConf}
+        />
     );
 }
 
