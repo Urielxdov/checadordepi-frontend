@@ -20,7 +20,8 @@ export const initialState = ():StateProps => ({
             telefono: "1234567890",
             calle: "alguna calle #100",
             colonia: "Alguna colonia",
-            correo: "jdoe@gmail.com"
+            correo: "jdoe@gmail.com",
+            status:"Activo"
         })
     ]
 })

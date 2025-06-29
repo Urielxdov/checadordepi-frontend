@@ -2,29 +2,10 @@ import { useEffect, useState } from "react";
 import SearchBar from "../../componets/utils/Inputs/searchBar";
 import Button from "../../componets/utils/buttons/Button";
 import HomeLayout from "../Layouts/HomeLayout";
-import Modal from "../../componets/ui/Modals";
 import Table from "../../componets/tables/Table";
+import { type DeleteParameters } from "../../interfaces/CRUDInterfaces";
 
-interface DeleteParameters {
-    title: string
-    module: any
-    modalConf: ModalConfig
-    headers: Array<string>
-    entity: any
-    onSearch: (s:string) => any
-    onDelete: () => any
-}
-
-interface ModalConfig {
-    title:string
-    message:string
-    type:string
-}
-
-function Delete({title, module, modalConf, headers, entity, onDelete, onSearch}:DeleteParameters){
-    //estado de modal
-    const [modalOpen, setModalOpen] = useState(false);
-
+function Delete({title, module, headers, entity, onDelete, onSearch}:DeleteParameters){
     //estado para busqueda
     const [searchText, setSearch] = useState('');
 
@@ -38,7 +19,6 @@ function Delete({title, module, modalConf, headers, entity, onDelete, onSearch}:
 
     if(!entity){
         return (
-            <>
             <HomeLayout title={title}>
                 <h1 className="font-bold text-xl">Eliminar {module}</h1>
                 <SearchBar
@@ -47,18 +27,9 @@ function Delete({title, module, modalConf, headers, entity, onDelete, onSearch}:
                 />
                 no hay registros aun
             </HomeLayout>
-            <Modal
-                isOpen={modalOpen}
-                title={modalConf.title}
-                message={modalConf.message}
-                type={modalConf.type}
-                onClose={()=>{setModalOpen(false)}}
-            />
-            </>
         );
     }else{
         return (
-            <>
             <HomeLayout title={title}>
                 <h1 className="font-bold text-xl">Eliminar {module}</h1>
                 <SearchBar
@@ -77,20 +48,11 @@ function Delete({title, module, modalConf, headers, entity, onDelete, onSearch}:
                     action={() => {
                         //eliminar alumno
                         onDelete();
-                        setModalOpen(true);
                     }}
                     submit={false}
                     styles="p-1 text-white bg-red-500 rounded-sm max-w-20 mx-auto"
                 />
             </HomeLayout>
-            <Modal
-                isOpen={modalOpen}
-                title={modalConf.title}
-                message={modalConf.message}
-                type={modalConf.type}
-                onClose={()=>{setModalOpen(false)}}
-            />
-            </>
         );
     }
 }

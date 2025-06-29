@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import { reduceAlumno, initialState } from "../../hooks/AlumnoReducer";
+import { ALUMNOHEADERS } from "../../utils/Headers";
 import Delete from "../CrudActions/Delete";
 
 function DeleteAlu(){
@@ -19,15 +20,7 @@ function DeleteAlu(){
             title="Modulo alumno"
             module="alumno"
             modalConf={modalConf}
-            headers={[
-                "numero de control",
-                "nombre(s)",
-                "apellidos",
-                "telefono",
-                "calle",
-                "colonia",
-                "correo"
-            ]}
+            headers={ALUMNOHEADERS}
             entity={state.alumno}
             onDelete={() => {
                     distpatch({type: "delete", nocontrol: state.alumno?.noControl});

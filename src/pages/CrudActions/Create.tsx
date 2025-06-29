@@ -1,49 +1,17 @@
-import { useState} from "react";
 import Form from "../../componets/forms/Form";
 import Input from "../../componets/forms/Input";
 import Button from "../../componets/utils/buttons/Button";
 import HomeLayout from "../Layouts/HomeLayout";
-import Modal from "../../componets/ui/Modals";
+import { type CreateParameters } from "../../interfaces/CRUDInterfaces";
+import { type FieldProps } from "../../interfaces/componentConfig";
 
-interface FieldProps {
-    label: string
-    name: string
-    type: string
-    maxlength?: number
-    minlength?: number
-    value: any
-    catch: (value:any) => void
-}
-
-interface ModalConfig {
-    title:string
-    message:string
-    type:string
-}
-
-interface CreateParameters {
-    title: string
-    entity: string
-    fields: Array<FieldProps>
-    formHandler: (e: React.FormEvent<HTMLFormElement>) => void
-    modalConf: ModalConfig
-}
-
-function Create({ title, entity, fields, formHandler, modalConf }:CreateParameters){
-    //hook de modal
-    const [modalOpen, setModalOpen] = useState(false);
-
-    const form = (e: React.FormEvent<HTMLFormElement>) => {
-        formHandler(e);
-        setModalOpen(true);
-    }
+function Create({ title, entity, fields, formHandler }:CreateParameters){
 
     //retorno de vista
     return (
-        <>
         <HomeLayout title={title}>
                 <h1 className="font-bold text-xl">Registrar nuevo {entity}</h1>
-                <Form onSubmit={form}>
+                <Form onSubmit={formHandler}>
                     {fields.map((f:FieldProps) => 
                         <Input
                             label={f.label}
@@ -65,14 +33,6 @@ function Create({ title, entity, fields, formHandler, modalConf }:CreateParamete
                     />
                 </Form>
             </HomeLayout>
-            <Modal
-                isOpen={modalOpen}
-                title={modalConf.title}
-                message={modalConf.message}
-                type={modalConf.type}
-                onClose={() => setModalOpen(false)}
-            />
-        </>
     );
 }
 

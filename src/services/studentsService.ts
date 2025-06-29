@@ -1,4 +1,4 @@
-import type Alumno from "../interfaces/AlumnoInterface";
+import type Alumno from "../interfaces/ModelsInterfaces";
 
 const apiUrl = ''
 

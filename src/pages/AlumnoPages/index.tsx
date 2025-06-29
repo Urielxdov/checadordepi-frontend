@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { reduceAlumno, initialState } from "../../hooks/AlumnoReducer";
 import { Alumno } from "../../models/entityModels";
+import { ALUMNOHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 
 function IndexAlu(){
@@ -10,15 +11,7 @@ function IndexAlu(){
     return (
         <Index
             title="Listado de alumnos"
-            headers={[
-                "numero de control",
-                "nombre(s)",
-                "apellidos",
-                "telefono",
-                "calle",
-                "colonia",
-                "correo"
-            ]}
+            headers={ALUMNOHEADERS}
             data={state.alumnos.map((a:Alumno) => a.toArray())}
         />
     );

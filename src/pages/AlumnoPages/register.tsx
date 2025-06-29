@@ -1,7 +1,7 @@
 import { useReducer, useState} from "react";
 import { Alumno } from "../../models/entityModels";
 import { reduceAlumno, initialState } from "../../hooks/AlumnoReducer";
-import Create from "../CrudActions/create";
+import Create from "../CrudActions/Create";
 
 function CreateAlu(){
     //hook de alumno
@@ -28,7 +28,8 @@ function CreateAlu(){
             telefono: telefono.trim(),
             calle: calle.trim(),
             colonia: colonia.trim(),
-            correo: correo.trim()
+            correo: correo.trim(),
+            status: "Activo"
         })
 
         //guardar el alumno
