@@ -1,6 +1,6 @@
 import { useReducer, useState} from "react";
 import { Alumno } from "../../models/entityModels";
-import { reduceAlumno, initialState } from "../../hooks/AlumnoReducer";
+import { reduceAlumno, initialState } from "../../hooks/reducers/AlumnoReducer";
 import Create from "../CrudActions/Create";
 
 function CreateAlu(){

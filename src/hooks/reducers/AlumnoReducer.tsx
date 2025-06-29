@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { Alumno } from "../models/entityModels";
+import { Alumno } from "../../models/entityModels";
 
 // version Uriel
 type PropsHook = {

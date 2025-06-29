@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { reduceAlumno, initialState } from "../../hooks/AlumnoReducer";
+import { reduceAlumno, initialState } from "../../hooks/reducers/AlumnoReducer";
 import { Alumno } from "../../models/entityModels";
 import { ALUMNOHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
