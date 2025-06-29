@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { StudentsContext } from "../reducers/AlumnoReducer";
+import { StudentsContext } from "../context/StudentContext";
 
 export function useStudents () {
     const context = useContext(StudentsContext)
