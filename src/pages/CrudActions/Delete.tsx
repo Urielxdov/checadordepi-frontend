@@ -1,60 +1,42 @@
-import { useEffect, useState } from "react";
-import SearchBar from "../../componets/utils/Inputs/searchBar";
-import Button from "../../componets/utils/buttons/Button";
-import HomeLayout from "../Layouts/HomeLayout";
-import Table from "../../componets/tables/Table";
-import { type DeleteParameters } from "../../interfaces/CRUDInterfaces";
+import { useEffect, useState } from "react"
+import Table from "../../componets/tables/Table"
+import HomeLayout from "../Layouts/HomeLayout"
+import { parseObjectToRow } from "../../utils/ParserObjects"
+import type { Student } from "../../models/Student"
 
-function Delete({title, module, headers, entity, onDelete, onSearch}:DeleteParameters){
-    //estado para busqueda
-    const [searchText, setSearch] = useState('');
-
-    //effect para montar el alumno
-    useEffect(()=>{
-        if(searchText!=''){
-            //busqueda en el api
-            onSearch(searchText);
-        }
-    },[searchText]);
-
-    if(!entity){
-        return (
-            <HomeLayout title={title}>
-                <h1 className="font-bold text-xl">Eliminar {module}</h1>
-                <SearchBar
-                    tip="numero de control"
-                    onSearch={setSearch}
-                />
-                no hay registros aun
-            </HomeLayout>
-        );
-    }else{
-        return (
-            <HomeLayout title={title}>
-                <h1 className="font-bold text-xl">Eliminar {module}</h1>
-                <SearchBar
-                    tip="numero de control"
-                    onSearch={setSearch}
-                />
-                <div className="flex flex-col">
-                    <h2 className="font-bold text-lg">Datos del {module}</h2>
-                    <Table
-                        header={headers}
-                        body={[entity.toArray()]}
-                    />
-                </div>
-                <Button
-                    text="eliminar"
-                    action={() => {
-                        //eliminar alumno
-                        onDelete();
-                    }}
-                    submit={false}
-                    styles="p-1 text-white bg-red-500 rounded-sm max-w-20 mx-auto"
-                />
-            </HomeLayout>
-        );
-    }
+type PropsDeletePage = {
+  entity: string
+  headers: string[]
+  body: Student[] // objetos crudos, no nodos
+  onSearch: (value: string) => void
+  onDelete: (id: string) => void
 }
 
-export default Delete;
+export function Delete({ entity, headers, body, onDelete }: PropsDeletePage) {
+  const [currentRecords, setCurrentRecords] = useState<React.ReactNode[][]>([])
+
+  useEffect(() => {
+    setCurrentRecords(
+      body ? body.map((obj: Student) =>
+        parseObjectToRow(obj).concat([
+          <button
+            key="delete"
+            onClick={() => onDelete(obj.id)}
+            className="text-red-600 hover:underline"
+          >
+            Dar baja
+          </button>
+        ])
+      )
+      : []
+    )
+  }, [body, onDelete])
+
+  return (
+    <HomeLayout title={`Dar baja ${entity}`}>
+      <Table header={headers.concat("Acciones")} body={currentRecords} />
+    </HomeLayout>
+  )
+}
+
+export default Delete

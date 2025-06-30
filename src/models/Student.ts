@@ -1,10 +1,10 @@
 export type Student = {
-    numberControl: string,
+    id: string,
     nombre: string,
     apellido: string,
     direccion: string | null,
     telefono: string,
     correo: string,
     estado: string,
-    foto: File | null
+    foto?: File
 }
