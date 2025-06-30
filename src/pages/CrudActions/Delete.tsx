@@ -3,6 +3,7 @@ import Table from "../../componets/tables/Table"
 import HomeLayout from "../Layouts/HomeLayout"
 import { parseObjectToRow } from "../../utils/ParserObjects"
 import type { Student } from "../../models/Student"
+import QueryInput from "../../componets/utils/Inputs/QueryInput"
 
 type PropsDeletePage = {
   entity: string
@@ -12,7 +13,7 @@ type PropsDeletePage = {
   onDelete: (id: string) => void
 }
 
-export function Delete({ entity, headers, body, onDelete }: PropsDeletePage) {
+export function Delete({ entity, headers, body, onDelete, onSearch }: PropsDeletePage) {
   const [currentRecords, setCurrentRecords] = useState<React.ReactNode[][]>([])
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export function Delete({ entity, headers, body, onDelete }: PropsDeletePage) {
 
   return (
     <HomeLayout title={`Dar baja ${entity}`}>
+      <QueryInput placeholder={`Buscar ${entity}`} action={onSearch}/>
       <Table header={headers.concat("Acciones")} body={currentRecords} />
     </HomeLayout>
   )
