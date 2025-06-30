@@ -8,7 +8,6 @@ export interface IndexParameters {
 }
 
 export interface DeleteParameters {
-    title: string
     module: string
     headers: Array<string>
     entity: Alumno | Profesor | ProgramaEstudios
@@ -17,8 +16,7 @@ export interface DeleteParameters {
 }
 
 export interface CreateParameters {
-    title: string
-    entity: string
+    module: string
     fields: Array<FieldProps>
     formHandler: (e: React.FormEvent<HTMLFormElement>) => void
 }

@@ -1,5 +1,5 @@
 export interface AlumnoConfig {
-    noControl: string
+    id: string
     nombre: string
     apellidos: string
     telefono: string
@@ -10,7 +10,7 @@ export interface AlumnoConfig {
 }
 
 export interface ProfesorConfig {
-    clave: string
+    id: string
     nombre: string
     apellidos: string
     telefono: string

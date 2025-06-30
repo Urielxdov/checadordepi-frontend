@@ -5,12 +5,12 @@ import HomeLayout from "../Layouts/HomeLayout";
 import { type CreateParameters } from "../../interfaces/CRUDInterfaces";
 import { type FieldProps } from "../../interfaces/componentConfig";
 
-function Create({ title, entity, fields, formHandler }:CreateParameters){
+function Create({ module, fields, formHandler }:CreateParameters){
 
     //retorno de vista
     return (
-        <HomeLayout title={title}>
-                <h1 className="font-bold text-xl">Registrar nuevo {entity}</h1>
+        <HomeLayout title={"Modulo "+module}>
+                <h1 className="font-bold text-xl">Registrar nuevo {module}</h1>
                 <Form onSubmit={formHandler}>
                     {fields.map((f:FieldProps) => 
                         <Input

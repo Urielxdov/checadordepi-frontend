@@ -1,12 +1,12 @@
 import { createContext } from "react"
-import type { Student } from "../../models/Student"
+import { Alumno } from "../../models/entityModels"
 import type { StudentActions } from "../reducers/AlumnoReducer"
 
 type StudentContextType = {
-    state: Student[]
+    state: Alumno[]
     dispatch: React.Dispatch<StudentActions>
-    addStudent: (student: Student) => void
-    updateStudent: (student: Student) => void
+    addStudent: (student: Alumno) => void
+    updateStudent: (student: Alumno) => void
     deleteStudent: (numberControl: string) => void
 }
 

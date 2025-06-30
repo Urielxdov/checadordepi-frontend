@@ -2,7 +2,7 @@ import { type AlumnoConfig, type ProfesorConfig, type ProgramaConfig } from "../
 
  export class Alumno{
     //propiedades
-    public noControl: string;
+    public id: string;
     public nombre: string;
     public apellidos: string;
     public telefono: string;
@@ -12,8 +12,8 @@ import { type AlumnoConfig, type ProfesorConfig, type ProgramaConfig } from "../
     public status: string;
 
     //constructor
-    constructor({noControl, nombre, apellidos, telefono, calle, colonia, correo, status}:AlumnoConfig){
-        this.noControl = noControl;
+    constructor({id, nombre, apellidos, telefono, calle, colonia, correo, status}:AlumnoConfig){
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.telefono = telefono;
@@ -26,7 +26,7 @@ import { type AlumnoConfig, type ProfesorConfig, type ProgramaConfig } from "../
     //metodos de instancia
     toJson():object{
         return {
-            "noControl":this.noControl,
+            "noControl":this.id,
             "nombre":this.nombre,
             "apellidos":this.apellidos,
             "telefono":this.telefono,
@@ -39,7 +39,7 @@ import { type AlumnoConfig, type ProfesorConfig, type ProgramaConfig } from "../
 
     toArray():Array<string>{
         return [
-            this.noControl,
+            this.id,
             this.nombre,
             this.apellidos,
             this.telefono,
@@ -54,7 +54,7 @@ import { type AlumnoConfig, type ProfesorConfig, type ProgramaConfig } from "../
 
 export class Profesor{
     //propiedades
-    public clave: string
+    public id: string
     public nombre: string
     public apellidos: string
     public telefono: string
@@ -66,9 +66,9 @@ export class Profesor{
     public status: string
 
     //constructor
-    constructor ({clave, nombre, apellidos, telefono, calle, colonia, correo, grado, nombre_grado, status}:ProfesorConfig){
+    constructor ({id, nombre, apellidos, telefono, calle, colonia, correo, grado, nombre_grado, status}:ProfesorConfig){
         //instancias
-        this.clave = clave;
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.telefono = telefono;
@@ -83,7 +83,7 @@ export class Profesor{
     //metodos de instancia
     toArray():Array<string>{
         return [
-            this.clave,
+            this.id,
             this.nombre,
             this.apellidos,
             this.telefono,
@@ -98,7 +98,7 @@ export class Profesor{
 
     toJson():object{
         return {
-            "clave":this.clave,
+            "clave":this.id,
             "nombre":this.nombre,
             "apellidos":this.apellidos,
             "telefono":this.telefono,

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react"
 import Table from "../../componets/tables/Table"
 import HomeLayout from "../Layouts/HomeLayout"
 import { parseObjectToRow } from "../../utils/ParserObjects"
-import type { Student } from "../../models/Student"
+import { Alumno } from "../../models/entityModels"
 import QueryInput from "../../componets/utils/Inputs/QueryInput"
 
 type PropsDeletePage = {
   entity: string
   headers: string[]
-  body: Student[] // objetos crudos, no nodos
+  body: Alumno[] // objetos crudos, no nodos
   onSearch: (value: string) => void
   onDelete: (id: string) => void
 }
@@ -18,7 +18,7 @@ export function Delete({ entity, headers, body, onDelete, onSearch }: PropsDelet
 
   useEffect(() => {
     setCurrentRecords(
-      body ? body.map((obj: Student) =>
+      body ? body.map((obj: Alumno) =>
         parseObjectToRow(obj).concat([
           <button
             key="delete"

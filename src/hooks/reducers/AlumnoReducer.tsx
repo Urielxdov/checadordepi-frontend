@@ -1,33 +1,33 @@
 import React, { useReducer } from "react";
-import type { Student } from "../../models/Student";
+import { Alumno } from "../../models/entityModels";
 import { StudentsContext } from "../context/StudentContext";
 
 type PropsHook = {
     children: React.ReactNode
 }
 
-const initialState: Student[] = []
+const initialState: Alumno[] = []
 
 export type StudentActions = 
-    | { type: "CREATE_STUDENT"; payload: Student}
-    | { type: "UPDATE_STUDENT"; payload: Student}
+    | { type: "CREATE_STUDENT"; payload: Alumno}
+    | { type: "UPDATE_STUDENT"; payload: Alumno}
     | { type: "DELETE_STUDENT"; payload: string}
 
-const reducer = (state: Student[], action: StudentActions) => {
+const reducer = (state: Alumno[], action: StudentActions) => {
     switch(action.type) {
         case 'CREATE_STUDENT':
             return [...state, action.payload]
         case 'DELETE_STUDENT':
-            return state.filter(student => student.numberControl !== action.payload)
+            return state.filter(student => student.id !== action.payload)
         case 'UPDATE_STUDENT':
-            return state.map(student => student.numberControl === action.payload.numberControl ? action.payload : student)
+            return state.map(student => student.id === action.payload.id ? action.payload : student)
     }
 }
 
 export function StudentProvider({ children }: PropsHook) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const addStudent = (student: Student) =>
+  const addStudent = (student: Alumno) =>
     dispatch({
       type: "CREATE_STUDENT",
       payload: student,
@@ -39,7 +39,7 @@ export function StudentProvider({ children }: PropsHook) {
       payload: numberControl,
     })
 
-  const updateStudent = (student: Student) =>
+  const updateStudent = (student: Alumno) =>
     dispatch({
       type: "UPDATE_STUDENT",
       payload: student,
