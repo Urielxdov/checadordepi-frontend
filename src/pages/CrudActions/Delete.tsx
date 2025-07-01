@@ -20,6 +20,7 @@ export function Delete({ entity, headers, body, onDelete, onSearch }: PropsDelet
     setCurrentRecords(
       body ? body.map((obj: Alumno) =>
         parseObjectToRow(obj).concat([
+          
           <button
             key="delete"
             onClick={() => onDelete(obj.id)}

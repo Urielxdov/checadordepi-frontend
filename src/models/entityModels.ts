@@ -58,22 +58,18 @@ export class Profesor{
     public nombre: string
     public apellidos: string
     public telefono: string
-    public calle: string
-    public colonia: string
     public correo: string
     public grado: string
     public nombre_grado: string
     public status: string
 
     //constructor
-    constructor ({id, nombre, apellidos, telefono, calle, colonia, correo, grado, nombre_grado, status}:ProfesorConfig){
+    constructor ({id, nombre, apellidos, telefono, correo, grado, nombre_grado, status}:ProfesorConfig){
         //instancias
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.telefono = telefono;
-        this.calle = calle;
-        this.colonia = colonia;
         this.correo = correo;
         this.grado = grado;
         this.nombre_grado = nombre_grado;
@@ -87,8 +83,6 @@ export class Profesor{
             this.nombre,
             this.apellidos,
             this.telefono,
-            this.calle,
-            this.colonia,
             this.correo,
             this.grado,
             this.nombre_grado,
@@ -102,8 +96,6 @@ export class Profesor{
             "nombre":this.nombre,
             "apellidos":this.apellidos,
             "telefono":this.telefono,
-            "calle":this.calle,
-            "colonia":this.colonia,
             "correo":this.correo,
             "grado":this.grado,
             "nombre_grado":this.nombre_grado,

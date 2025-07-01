@@ -14,8 +14,6 @@ export interface ProfesorConfig {
     nombre: string
     apellidos: string
     telefono: string
-    calle: string
-    colonia: string
     correo: string
     grado: string
     nombre_grado: string
