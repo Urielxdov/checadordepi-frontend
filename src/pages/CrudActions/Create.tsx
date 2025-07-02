@@ -1,7 +1,6 @@
 import Form from "../../componets/forms/Form";
 import Input from "../../componets/forms/Input";
 import Button from "../../componets/utils/buttons/Button";
-import HomeLayout from "../Layouts/HomeLayout";
 import { type CreateParameters } from "../../interfaces/CRUDInterfaces";
 import { type FieldProps } from "../../interfaces/componentConfig";
 
@@ -9,30 +8,32 @@ function Create({ module, fields, formHandler }:CreateParameters){
 
     //retorno de vista
     return (
-        <HomeLayout title={"Modulo "+module}>
-                <h1 className="font-bold text-xl">Registrar nuevo {module}</h1>
-                <Form onSubmit={formHandler}>
-                    {fields.map((f:FieldProps) => 
-                        <Input
-                            label={f.label}
-                            name={f.name}
-                            type={f.type}
-                            required={true}
-                            maxLength={f.maxlength?f.maxlength:200}
-                            minLength={f.minlength?f.minlength:1}
-                            value={f.value}
-                            catcher={f.catch}
-                            key={f.name}
-                        />
-                    )}
-                    <Button
-                        text="registrar"
-                        action={() => {}}
-                        submit={true}
-                        styles="p-1 text-white bg-green-500 rounded-sm"
+        <>
+            <h1 className="font-bold text-xl">Registrar nuevo {module}</h1>
+            <Form onSubmit={formHandler}>
+                {fields.map((f:FieldProps) => 
+                    <Input
+                        label={f.label}
+                        name={f.name}
+                        type={f.type}
+                        required={true}
+                        maxLength={f.maxlength?f.maxlength:200}
+                        minLength={f.minlength?f.minlength:1}
+                        value={f.value}
+                        catcher={f.catch}
+                        key={f.name}
                     />
-                </Form>
-            </HomeLayout>
+                )}
+                <Button
+                    text="registrar"
+                    action={() => {}}
+                    submit={true}
+                    styles="p-1 text-white bg-green-500 rounded-sm
+                    hover: bg-green-600 hover: cursor-pointer
+                    "
+                />
+            </Form>
+        </>
     );
 }
 

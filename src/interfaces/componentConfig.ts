@@ -13,3 +13,7 @@ export interface ModalConfig {
     message: string
     type: string
 }
+
+export interface ReturnButtonConfig {
+    path: string
+}

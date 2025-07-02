@@ -1,20 +1,23 @@
-// import { useReducer } from "react";
-// import { reduceAlumno, initialState } from "../../hooks/reducers/AlumnoReducer";
-// import { Alumno } from "../../models/entityModels";
-// import { ALUMNOHEADERS } from "../../utils/Headers";
-// import Index from "../CrudActions/Index";
+import { useStudents } from "../../hooks/custom/useStudents";
+import { Alumno } from "../../models/entityModels";
+import { ALUMNOHEADERS } from "../../utils/Headers";
+import Index from "../CrudActions/Index";
+import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import HomeLayout from "../Layouts/HomeLayout";
 
-// function IndexAlu(){
-//     //hook de alumnos
-//     const [state, dispatch] = useReducer(reduceAlumno, initialState());
+function IndexAlu(){
+    //hook de alumnos
+    const context = useStudents();
 
-//     return (
-//         <Index
-//             title="Listado de alumnos"
-//             headers={ALUMNOHEADERS}
-//             data={state.alumnos.map((a:Alumno) => a.toArray())}
-//         />
-//     );
-// }
+    return (
+        <HomeLayout title="Lista de alumnos">
+            <Index
+                headers={ALUMNOHEADERS}
+                data={context.state.map((a:Alumno) => a.toArray())}
+            />
+            <ReturnButton path="/alumno/"/>
+        </HomeLayout>
+    );
+}
 
-// export default IndexAlu;
+export default IndexAlu;

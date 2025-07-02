@@ -6,7 +6,16 @@ type PropsHook = {
     children: React.ReactNode
 }
 
-const initialState: Alumno[] = []
+const initialState: Alumno[] = [new Alumno({
+                                    id:'22241102',
+                                    nombre: 'jhon',
+                                    apellidos:'doe',
+                                    telefono:'4773332222',
+                                    calle:'alguna calle #100',
+                                    colonia: 'alguna colonia',
+                                    correo: 'jdoe@gmail.com',
+                                    status: 'activo'
+                                  })]
 
 export type StudentActions = 
     | { type: "CREATE_STUDENT"; payload: Alumno}
@@ -21,13 +30,15 @@ const reducer = (state: Alumno[], action: StudentActions) => {
             return state.filter(student => student.id !== action.payload)
         case 'UPDATE_STUDENT':
             return state.map(student => student.id === action.payload.id ? action.payload : student)
+        default:
+            return state;
     }
 }
 
 export function StudentProvider({ children }: PropsHook) {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const addStudent = (student: Alumno) =>
+  const addStudent = (student: Alumno) => 
     dispatch({
       type: "CREATE_STUDENT",
       payload: student,

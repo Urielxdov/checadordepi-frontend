@@ -2,7 +2,6 @@ import { Alumno, Profesor, ProgramaEstudios } from "../models/entityModels"
 import { type FieldProps } from "./componentConfig"
 
 export interface IndexParameters {
-    title: string,
     headers: Array<string>,
     data: Array<any>
 }

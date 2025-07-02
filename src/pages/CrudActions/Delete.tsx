@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Table from "../../componets/tables/Table"
-import HomeLayout from "../Layouts/HomeLayout"
 import { parseObjectToRow } from "../../utils/ParserObjects"
 import { Alumno } from "../../models/entityModels"
 import QueryInput from "../../componets/utils/Inputs/QueryInput"
@@ -35,10 +34,10 @@ export function Delete({ entity, headers, body, onDelete, onSearch }: PropsDelet
   }, [body, onDelete])
 
   return (
-    <HomeLayout title={`Dar baja ${entity}`}>
-      <QueryInput placeholder={`Buscar ${entity}`} action={onSearch}/>
-      <Table header={headers.concat("Acciones")} body={currentRecords} />
-    </HomeLayout>
+      <>
+        <QueryInput placeholder={`Buscar ${entity}`} action={onSearch}/>
+        <Table header={headers.concat("Acciones")} body={currentRecords} />
+      </>
   )
 }
 
