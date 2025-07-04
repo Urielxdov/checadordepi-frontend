@@ -1,12 +1,13 @@
 import React, { useReducer } from "react";
 import { Alumno } from "../../models/entityModels";
 import { StudentsContext } from "../context/StudentContext";
+import { type StateProps } from "../../interfaces/componentConfig";
 
-type PropsHook = {
+export type PropsHook = {
     children: React.ReactNode
 }
 
-const initialState: Alumno[] = [new Alumno({
+const initialState = () => ({ students: [new Alumno({
                                     id:'22241102',
                                     nombre: 'jhon',
                                     apellidos:'doe',
@@ -16,27 +17,30 @@ const initialState: Alumno[] = [new Alumno({
                                     correo: 'jdoe@gmail.com',
                                     status: 'activo'
                                   })]
+                            })
+
 
 export type StudentActions = 
     | { type: "CREATE_STUDENT"; payload: Alumno}
     | { type: "UPDATE_STUDENT"; payload: Alumno}
     | { type: "DELETE_STUDENT"; payload: string}
+    | { type: "SEARCH_STUDENT"; payload: string}
 
-const reducer = (state: Alumno[], action: StudentActions) => {
+const reducer = (state: StateProps, action: StudentActions) => {
     switch(action.type) {
         case 'CREATE_STUDENT':
-            return [...state, action.payload]
+            return {students: [...state.students, action.payload]}
         case 'DELETE_STUDENT':
-            return state.filter(student => student.id !== action.payload)
+            return {students: state.students.filter(student => student.id !== action.payload)}
         case 'UPDATE_STUDENT':
-            return state.map(student => student.id === action.payload.id ? action.payload : student)
-        default:
-            return state;
+            return {students: state.students.map(student => student.id === action.payload.id ? action.payload : student)}
+        case 'SEARCH_STUDENT':
+            return {...state, student: state.students.find(student => student.id === action.payload)}
     }
 }
 
 export function StudentProvider({ children }: PropsHook) {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState())
 
   const addStudent = (student: Alumno) => 
     dispatch({
@@ -56,6 +60,13 @@ export function StudentProvider({ children }: PropsHook) {
       payload: student,
     })
 
+  const searchStudent = (numberControl: string) => {
+    dispatch({
+      type: "SEARCH_STUDENT",
+      payload: numberControl
+    });
+  }
+
   return (
     <StudentsContext.Provider
       value={{
@@ -64,6 +75,7 @@ export function StudentProvider({ children }: PropsHook) {
         addStudent,
         updateStudent,
         deleteStudent,
+        searchStudent
       }}
     >
       {children}

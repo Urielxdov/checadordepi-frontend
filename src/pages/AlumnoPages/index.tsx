@@ -13,7 +13,7 @@ function IndexAlu(){
         <HomeLayout title="Lista de alumnos">
             <Index
                 headers={ALUMNOHEADERS}
-                data={context.state.map((a:Alumno) => a.toArray())}
+                data={context.state.students.map((a:Alumno) => a.toArray())}
             />
             <ReturnButton path="/alumno/"/>
         </HomeLayout>

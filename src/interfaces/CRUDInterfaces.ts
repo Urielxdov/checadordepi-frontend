@@ -19,3 +19,11 @@ export interface CreateParameters {
     fields: Array<FieldProps>
     formHandler: (e: React.FormEvent<HTMLFormElement>) => void
 }
+
+export interface UpdateParameters {
+    module: string,
+    entity: Alumno | Profesor | ProgramaEstudios | undefined
+    fields: Array<FieldProps>,
+    onSearch: (s: string) => void
+    onUpdate: (e: React.FormEvent<HTMLFormElement>) => void
+}

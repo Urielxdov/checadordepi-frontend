@@ -1,3 +1,5 @@
+import { Alumno } from "../models/entityModels"
+
 export interface FieldProps {
     label: string
     name: string
@@ -16,4 +18,9 @@ export interface ModalConfig {
 
 export interface ReturnButtonConfig {
     path: string
+}
+
+export interface StateProps {
+  students: Alumno[]
+  student?: Alumno
 }

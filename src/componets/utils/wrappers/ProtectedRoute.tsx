@@ -1,7 +1,9 @@
-import { useNavigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { getAuthContext } from "../../../hooks/custom/useAuth";
 
 function ProtectedRoute() {
-    return <Outlet/>;
+    const context = getAuthContext();
+    return context.valid ?<Outlet/>:<Navigate to="/"/>;
 }
 
 export default ProtectedRoute;
