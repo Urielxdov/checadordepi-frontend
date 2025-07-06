@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Table from "../../componets/tables/Table"
 import { parseObjectToRow } from "../../utils/ParserObjects"
-import { Alumno } from "../../models/entityModels"
+import { Alumno } from "../../models/AlumnoModel"
 import QueryInput from "../../componets/utils/Inputs/QueryInput"
 
 type PropsDeletePage = {

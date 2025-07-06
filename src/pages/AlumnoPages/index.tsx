@@ -1,5 +1,5 @@
 import { useStudents } from "../../hooks/custom/useStudents";
-import { Alumno } from "../../models/entityModels";
+import { Alumno } from "../../models/AlumnoModel";
 import { ALUMNOHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";

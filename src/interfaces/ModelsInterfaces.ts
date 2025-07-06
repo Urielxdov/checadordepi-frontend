@@ -26,3 +26,8 @@ export interface ProgramaConfig {
     registro: string
     status: string
 }
+
+export interface Dumpable {
+    toJson: () => Record<string, string | number>
+    toArray: () => Array<string>
+}

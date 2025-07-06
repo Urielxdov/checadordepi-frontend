@@ -1,4 +1,4 @@
-import { Alumno } from "../models/entityModels"
+import { Alumno } from "../models/AlumnoModel"
 
 export interface FieldProps {
     label: string

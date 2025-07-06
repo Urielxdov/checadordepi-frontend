@@ -1,5 +1,5 @@
 import { createContext } from "react"
-import { Alumno } from "../../models/entityModels"
+import { Alumno } from "../../models/AlumnoModel"
 import type { StudentActions } from "../reducers/AlumnoReducer"
 import { type StateProps } from "../../interfaces/componentConfig"
 

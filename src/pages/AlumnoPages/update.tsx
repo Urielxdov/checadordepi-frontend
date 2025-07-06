@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Update from "../CrudActions/Update";
-import { Alumno } from "../../models/entityModels";
+import { Alumno } from "../../models/AlumnoModel";
 import { useStudents } from "../../hooks/custom/useStudents";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";

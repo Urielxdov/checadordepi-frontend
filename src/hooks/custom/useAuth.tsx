@@ -1,6 +1,9 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { type PropsHook } from "../reducers/AlumnoReducer";
+
+type PropsHook = {
+    children: React.ReactNode
+}
 
 export function getAuthContext(){
     const context = useContext(AuthContext);

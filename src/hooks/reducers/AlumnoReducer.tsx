@@ -1,9 +1,9 @@
 import React, { useReducer } from "react";
-import { Alumno } from "../../models/entityModels";
+import { Alumno } from "../../models/AlumnoModel";
 import { StudentsContext } from "../context/StudentContext";
 import { type StateProps } from "../../interfaces/componentConfig";
 
-export type PropsHook = {
+type PropsHook = {
     children: React.ReactNode
 }
 
