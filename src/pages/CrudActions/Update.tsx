@@ -32,7 +32,7 @@ function Update({module, entity, fields, onSearch, onUpdate}:UpdateParameters){
                     />
                 )}
                 <Button
-                    text="registrar"
+                    text="actualizar"
                     action={() => {}}
                     submit={true}
                     styles="p-1 text-white bg-green-500 rounded-sm

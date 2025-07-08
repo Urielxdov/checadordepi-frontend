@@ -1,4 +1,6 @@
-import { Alumno, Profesor, ProgramaEstudios } from "../models/AlumnoModel"
+import { Alumno } from "../models/AlumnoModel"
+import { Profesor } from "../models/ProfesorModel"
+import { ProgramaEstudios } from "../models/ProgramaModel"
 import { type FieldProps } from "./componentConfig"
 
 export interface IndexParameters {

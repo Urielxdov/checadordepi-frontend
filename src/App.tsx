@@ -9,11 +9,15 @@ import CreateAlu from './pages/AlumnoPages/register'
 import IndexAlu from './pages/AlumnoPages'
 import UpdateAlu from './pages/AlumnoPages/update'
 // import DeleteAlu from './pages/AlumnoPages/delete'
+import IndexProf from './pages/ProfesorPages';
 
 //wrappers
 import StudentWrapper from './componets/utils/wrappers/StudentWrapper';
 import AuthWrapper from './componets/utils/wrappers/AuthWrapper'
 import ProtectedRoute from './componets/utils/wrappers/ProtectedRoute';
+import TeacherWrapper from './componets/utils/wrappers/TeacherWrapper';
+import ProgramWrapper from './componets/utils/wrappers/ProgramWrapper';
+import IndexProg from './pages/ProgramaPages';
 
 function App () {
   return (
@@ -24,8 +28,6 @@ function App () {
         {/** Rutas protegidas */}
         <Route element={<ProtectedRoute/>}>
           <Route path='/home' element={<HomePage />} />
-          <Route path='/profesor' element={<EntityModules entity='profesor' />} />
-          <Route path='/curso' element={<EntityModules entity='curso' />} />
         </Route>
         {/** Rutas de alumno */}
         <Route element={<StudentWrapper/>}>
@@ -33,6 +35,16 @@ function App () {
             <Route path='/alumno/get' element={<IndexAlu/>} />
             <Route path='/alumno/create' element={<CreateAlu/>} />
             <Route path='/alumno/update' element={<UpdateAlu/>} />
+        </Route>
+        {/** Rutas de profesor */}
+        <Route element={<TeacherWrapper/>}>
+            <Route path='/profesor' element={<EntityModules entity='profesor' />} />
+            <Route path='/profesor/get' element={<IndexProf/>} />
+        </Route>
+        {/** Rutas de programa/curso */}
+        <Route element={<ProgramWrapper/>}>
+            <Route path='/curso' element={<EntityModules entity='curso' />} />
+            <Route path='/curso/get' element={<IndexProg />} />
         </Route>
       </Route>
     </Routes>

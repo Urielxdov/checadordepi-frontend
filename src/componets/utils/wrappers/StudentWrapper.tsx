@@ -1,4 +1,4 @@
-import { StudentProvider } from "../../../hooks/reducers/AlumnoReducer";
+import { StudentProvider } from "../../../hooks/reducers/StudentReducer";
 import ProtectedRoute from "./ProtectedRoute";
 
 function StudentWrapper(){

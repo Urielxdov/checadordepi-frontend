@@ -14,8 +14,6 @@ export const PROFESORHEADERS = [
                     "nombre(s)",
                     "apellidos",
                     "telefono",
-                    "calle",
-                    "colonia",
                     "correo",
                     "grado maximo",
                     "nombre del grado maximo",

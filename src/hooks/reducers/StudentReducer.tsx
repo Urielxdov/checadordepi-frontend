@@ -1,7 +1,8 @@
 import React, { useReducer } from "react";
 import { Alumno } from "../../models/AlumnoModel";
 import { StudentsContext } from "../context/StudentContext";
-import { type StateProps } from "../../interfaces/componentConfig";
+import { type StudentStateProps } from "../../interfaces/componentConfig";
+import { type StudentActions } from "../../interfaces/componentConfig";
 
 type PropsHook = {
     children: React.ReactNode
@@ -19,14 +20,7 @@ const initialState = () => ({ students: [new Alumno({
                                   })]
                             })
 
-
-export type StudentActions = 
-    | { type: "CREATE_STUDENT"; payload: Alumno}
-    | { type: "UPDATE_STUDENT"; payload: Alumno}
-    | { type: "DELETE_STUDENT"; payload: string}
-    | { type: "SEARCH_STUDENT"; payload: string}
-
-const reducer = (state: StateProps, action: StudentActions) => {
+const reducer = (state: StudentStateProps, action: StudentActions) => {
     switch(action.type) {
         case 'CREATE_STUDENT':
             return {students: [...state.students, action.payload]}
