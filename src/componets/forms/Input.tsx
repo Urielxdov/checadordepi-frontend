@@ -3,7 +3,7 @@ import React from 'react'
 interface InputProps {
   label: string
   name: string
-  catcher: (value:any) => void
+  catcher: (e: React.ChangeEvent<HTMLInputElement>) => void
   type?: string
   placeholder?: string
   required?: boolean
@@ -26,7 +26,7 @@ export default function Input (configuration: InputProps) {
         minLength={configuration.minLength}
         maxLength={configuration.maxLength}
         value={configuration.value}
-        onChange={(e) => configuration.catcher(e.target.value)}
+        onChange={configuration.catcher}
       />
     </div>
   )

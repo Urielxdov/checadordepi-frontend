@@ -4,19 +4,15 @@ import { Alumno } from "../../models/AlumnoModel";
 import { useStudents } from "../../hooks/custom/useStudents";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import useForm from "../../hooks/reducers/FormReducer";
+import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
 
 function UpdateAlu(){
     //contexto de alumno
     const context = useStudents();
 
-    //estados del formulario
-    const [nombre, setNombre] = useState('');
-    const [apellidos,setApellidos] = useState('');
-    const [telefono,setTelefono] = useState('');
-    const [calle,setCalle] = useState('');
-    const [colonia,setColonia] = useState('');
-    const [correo,setCorreo] = useState('');
-    const [status,setStatus] = useState('');
+    //hook de formulario
+    const {state, handleChange, reset, setData} = useForm<AlumnoConfig>("Alumno");
 
     //campos del formulario
     const fields = [
@@ -24,51 +20,51 @@ function UpdateAlu(){
              label:"Nombre(s)",
              name:"nombre",
              type:"text",
-             value: nombre,
-             catch: setNombre
+             value: state.nombre,
+             catch: handleChange
          },
          {
              label:"Apellidos",
              name:"apellidos",
              type:"text",
-             value: apellidos,
-             catch: setApellidos
+             value: state.apellidos,
+             catch: handleChange
          },
          {
              label:"Telefono",
              name:"telefono",
              type:"tel",
              maxlength: 10,
-             value: telefono,
-             catch: setTelefono
+             value: state.telefono,
+             catch: handleChange
          },
          {
              label:"Calle y numero",
              name:"calle",
              type:"text",
-             value: calle,
-             catch: setCalle
+             value: state.calle,
+             catch: handleChange
          },
          {
              label:"Colonia",
              name:"colonia",
              type:"text",
-             value: colonia,
-             catch: setColonia
+             value: state.colonia,
+             catch: handleChange
          },
          {
              label:"Correo",
              name:"correo",
              type:"email",
-             value: correo,
-             catch: setCorreo
+             value: state.correo,
+             catch: handleChange
          },
          {
              label:"Estatus",
              name:"status",
              type:"text",
-             value: status,
-             catch: setStatus
+             value: state.status,
+             catch: handleChange
          }
     ];
 
@@ -81,37 +77,25 @@ function UpdateAlu(){
         const alumno = new Alumno({
             //si existe cuando se crea pero para que ts no llore
             id: context.state.student ? context.state.student.id: "",
-            nombre: nombre,
-            apellidos: apellidos,
-            telefono: telefono,
-            calle: calle,
-            colonia: colonia,
-            correo: correo,
-            status: status
+            nombre: state.nombre,
+            apellidos: state.apellidos,
+            telefono: state.telefono,
+            calle: state.calle,
+            colonia: state.colonia,
+            correo: state.correo,
+            status: state.status
         });
         context.updateStudent(alumno);
 
         //lipieza de campos
-        setNombre('');
-        setApellidos('');
-        setTelefono('');
-        setCalle('');
-        setColonia('');
-        setCorreo('');
-        setStatus('');
+        reset();
     }
 
     useEffect(()=>{
         const student = context.state.student;
 
         if(student){
-            setNombre(student.nombre);
-            setApellidos(student.apellidos);
-            setTelefono(student.telefono);
-            setCalle(student.calle);
-            setColonia(student.colonia);
-            setCorreo(student.correo);
-            setStatus(student.status);
+            setData(student);
         }
     },[context.state.student]);
 

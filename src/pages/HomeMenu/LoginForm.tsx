@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuthContext } from "../../hooks/custom/useAuth";
 import { type FieldProps } from "../../interfaces/componentConfig";
@@ -7,6 +6,7 @@ import Input from "../../componets/forms/Input";
 import Button from "../../componets/utils/buttons/Button";
 import logoTec from '../../assets/logo_login_tecnm.png';
 import logoITL from '../../assets/110053_login.png';
+import useForm, { type LoginConfig } from "../../hooks/reducers/FormReducer";
 
 function LoginView(){
     //contexto
@@ -15,9 +15,8 @@ function LoginView(){
     //navegacion
     const navigate = useNavigate();
 
-    //estados de formulario
-    const [user, setUser] = useState('');
-    const [pass, setPass] = useState('');
+    //hook de formulario
+    const {state, handleChange} = useForm<LoginConfig>("Login");
 
     //manejo de formulario
     const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,7 +24,7 @@ function LoginView(){
         e.preventDefault();
 
         //validar acceso
-        if(user=='admin'&&pass=='12345'){
+        if(state.user=='admin'&&state.pass=='12345'){
             alert("Acceso exitoso!!!!");
             context.validate(true);
             navigate('/home');
@@ -42,8 +41,8 @@ function LoginView(){
             type:"text",
             maxlength: 10,
             minlength: 0,
-            value: user,
-            catch: setUser
+            value: state.user,
+            catch: handleChange
         },
         {
             label:"Contraseña",
@@ -51,8 +50,8 @@ function LoginView(){
             type:"password",
             maxlength: 10,
             minlength: 0,
-            value: pass,
-            catch: setPass
+            value: state.pass,
+            catch: handleChange
         }
     ]
 

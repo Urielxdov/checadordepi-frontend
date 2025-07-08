@@ -1,22 +1,17 @@
-import { useState} from "react";
 import { useStudents } from "../../hooks/custom/useStudents";
 import { Alumno } from "../../models/AlumnoModel";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
+import useForm from "../../hooks/reducers/FormReducer";
+import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
 
 function CreateAlu(){
     //contexto de alumno
     const context = useStudents();
 
-    //valores de formulario
-    const [noControl, setNoControl] = useState('');
-    const [nombre, setNombre] = useState('');
-    const [apellidos, setApellidos] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [calle, setCalle] = useState('');
-    const [colonia, setColonia] = useState('');
-    const [correo, setCorreo] = useState('');
+    //hook de formulario
+    const {state, handleChange, reset} = useForm<AlumnoConfig>("Alumno");
 
     //funcion de manejo
     const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,13 +19,13 @@ function CreateAlu(){
         
          //objeto alumno
          const alumno = new Alumno({
-             id: noControl.trim(),
-             nombre: nombre.trim(),
-             apellidos: apellidos.trim(),
-             telefono: telefono.trim(),
-             calle: calle.trim(),
-             colonia: colonia.trim(),
-             correo: correo.trim(),
+             id: state.id.trim(),
+             nombre: state.nombre.trim(),
+             apellidos: state.apellidos.trim(),
+             telefono: state.telefono.trim(),
+             calle: state.calle.trim(),
+             colonia: state.colonia.trim(),
+             correo: state.correo.trim(),
              status: "Activo"
          });
 
@@ -38,68 +33,62 @@ function CreateAlu(){
          context.addStudent(alumno);
 
          //limpiar los campos
-         setNoControl("");
-         setNombre("");
-         setApellidos("");
-         setTelefono("");
-         setCalle("");
-         setColonia("");
-         setCorreo("");
+         reset();
      }
 
      //configuracion de campos
      const fields = [
          {
              label:"Numero de control",
-             name:"noControl",
+             name:"id",
              type:"text",
              maxlength: 8,
              minlength: 8,
-             value: noControl,
-             catch: setNoControl
+             value: state.id,
+             catch: handleChange
          },
          {
              label:"Nombre(s)",
              name:"nombre",
              type:"text",
-             value: nombre,
-             catch: setNombre
+             value: state.nombre,
+             catch: handleChange
          },
          {
              label:"Apellidos",
              name:"apellidos",
              type:"text",
-             value: apellidos,
-             catch: setApellidos
+             value: state.apellidos,
+             catch: handleChange
          },
          {
              label:"Telefono",
              name:"telefono",
              type:"tel",
              maxlength: 10,
-             value: telefono,
-             catch: setTelefono
+             value: state.telefono,
+             catch: handleChange
          },
          {
              label:"Calle y numero",
              name:"calle",
              type:"text",
-             value: calle,
-             catch: setCalle
+             value: state.calle,
+             catch: handleChange
          },
          {
              label:"Colonia",
              name:"colonia",
              type:"text",
-             value: colonia,
-             catch: setColonia
+             value: state.colonia,
+             catch: handleChange
          },
          {
              label:"Correo",
              name:"correo",
              type:"email",
-             value: correo,
-             catch: setCorreo
+             value: state.correo,
+             catch: handleChange
          },
      ]
 
