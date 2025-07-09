@@ -2,13 +2,13 @@ import { type ProgramaConfig, type Dumpable } from "../interfaces/ModelsInterfac
 
 export class ProgramaEstudios implements Dumpable {
     //propiedades
-    public id;
+    public id: string;
     public nombre;
     public registro;
     public status;
 
     //constructor
-    constructor({id, nombre, registro, status}:ProgramaConfig){
+    constructor({ id, nombre, registro, status }: ProgramaConfig) {
         //instancias
         this.id = id;
         this.nombre = nombre;
@@ -17,7 +17,7 @@ export class ProgramaEstudios implements Dumpable {
     }
 
     //metodos de instancia
-    toArray():Array<any>{
+    toArray(): Array<any> {
         return [
             this.id,
             this.nombre,
@@ -26,12 +26,12 @@ export class ProgramaEstudios implements Dumpable {
         ]
     }
 
-    toJson():Record<string, string | number>{
+    toJson(): Record<string, string | number> {
         return {
-            id:this.id,
-            nombre:this.nombre,
-            registro:this.registro,
-            status:this.status
+            id: this.id,
+            nombre: this.nombre,
+            registro: this.registro,
+            status: this.status
         }
     }
 }
