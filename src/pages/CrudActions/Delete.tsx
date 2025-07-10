@@ -1,52 +1,37 @@
-import { useEffect, useState } from 'react'
-import Table from '../../componets/tables/Table'
-import { parseObjectToRow } from '../../utils/ParserObjects'
-import { Alumno } from '../../models/AlumnoModel'
-import QueryInput from '../../componets/utils/Inputs/QueryInput'
-import type { Profesor } from '../../models/ProfesorModel'
-import type { ProgramaEstudios } from '../../models/ProgramaModel'
+import { type DeleteParameters } from "../../interfaces/CRUDInterfaces";
+import QueryInput from "../../componets/utils/Inputs/QueryInput";
+import Table from "../../componets/tables/Table";
+import Button from "../../componets/utils/buttons/Button";
+import { parseObjectToRow } from "../../utils/ParserObjects";
 
-type PropsDeletePage = {
-  entity: string
-  headers: string[]
-  body: Alumno[] | Profesor[] | ProgramaEstudios[] // objetos crudos, no nodos
-  onSearch: (value: string) => void
-  onDelete: (id: string) => void
+function Delete({module, headers, entity, onSearch, onDelete}:DeleteParameters){
+    //validar entidad
+    if(!entity){
+        return(
+          <>
+            <QueryInput placeholder={"buscar "+module} action={onSearch}/>
+            Sin registros
+          </>
+        );
+    }else{
+        return(
+          <>
+            <QueryInput placeholder={"buscar "+module} action={onSearch}/>
+            <Table
+              header={headers}
+              body={[parseObjectToRow(entity)]}
+            />
+            <Button
+              text="eliminar"
+              action={onDelete}
+              submit={false}
+              styles="p-1 text-white bg-red-500 rounded-sm
+                    hover: bg-red-600 hover: cursor-pointer
+                    "
+            />
+          </>  
+        );
+    }
 }
 
-export function Delete ({
-  entity,
-  headers,
-  body,
-  onDelete,
-  onSearch
-}: PropsDeletePage) {
-  const [currentRecords, setCurrentRecords] = useState<React.ReactNode[][]>([])
-
-  useEffect(() => {
-    setCurrentRecords(
-      body
-        ? body.map((obj: Alumno | Profesor | ProgramaEstudios) =>
-            parseObjectToRow(obj).concat([
-              <button
-                key='delete'
-                onClick={() => onDelete(obj.id)}
-                className='text-red-600 hover:underline'
-              >
-                Dar baja
-              </button>
-            ])
-          )
-        : []
-    )
-  }, [body, onDelete])
-
-  return (
-    <>
-      <QueryInput placeholder={`Buscar ${entity}`} action={onSearch} />
-      <Table header={headers.concat('Acciones')} body={currentRecords} />
-    </>
-  )
-}
-
-export default Delete
+export default Delete;

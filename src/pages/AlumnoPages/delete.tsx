@@ -1,35 +1,37 @@
-// import { useReducer } from "react";
-// import { reduceAlumno, initialState } from "../../hooks/reducers/AlumnoReducer";
-// import { ALUMNOHEADERS } from "../../utils/Headers";
-// import Delete from "../CrudActions/Delete";
+import Delete from "../CrudActions/Delete";
+import HomeLayout from "../Layouts/HomeLayout";
+import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import { ALUMNOHEADERS } from "../../utils/Headers";
+import { useStudents } from "../../hooks/custom/useStudents";
 
-// function DeleteAlu(){
-//     //hook de alumno
-//     const [state, distpatch] = useReducer(reduceAlumno, initialState());
+function DeleteAlu(){
+    //contexto de alumno
+    const context = useStudents();
 
-//     //configuracion de modal
-//     const modalConf = {
-//         title: "alumno eliminado",
-//         message: "El alumno ha sido eliminado con exito",
-//         type: "success"
-//     }
+    //manejo de eliminacion
+    const drop = () => {
+        //obtener alumno
+        const alumno = context.state.student;
 
-//     //componente de delete
-//     return (
-//         <Delete
-//             title="Modulo alumno"
-//             module="alumno"
-//             modalConf={modalConf}
-//             headers={ALUMNOHEADERS}
-//             entity={state.alumno}
-//             onDelete={() => {
-//                     distpatch({type: "delete", nocontrol: state.alumno?.noControl});
-//                 }}
-//             onSearch={(s:string) => {
-//                     distpatch({type: "search", nocontrol: s});
-//                 }}
-//         />
-//     );
-// }
+        //validacion de existencia (nadamas para que ts no llore)
+        if(alumno){
+            context.deleteStudent(alumno.id);
+        }
+    }
 
-// export default DeleteAlu;
+    //retorno de componente
+    return(
+        <HomeLayout title="Modulo Alumno">
+            <Delete 
+                module="alumno"
+                headers={ALUMNOHEADERS}
+                entity={context.state.student}
+                onSearch={context.searchStudent}
+                onDelete={drop}
+            />
+            <ReturnButton path="/alumno/"/>
+        </HomeLayout>
+    );
+}
+
+export default DeleteAlu;

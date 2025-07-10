@@ -1,7 +1,5 @@
-import { Alumno } from "../models/AlumnoModel"
-import { Profesor } from "../models/ProfesorModel"
-import { ProgramaEstudios } from "../models/ProgramaModel"
 import { type FieldProps } from "./componentConfig"
+import type { AlumnoConfig, ProfesorConfig, ProgramaConfig } from "./ModelsInterfaces"
 
 export interface IndexParameters {
     headers: Array<string>,
@@ -11,7 +9,7 @@ export interface IndexParameters {
 export interface DeleteParameters {
     module: string
     headers: Array<string>
-    entity: Alumno | Profesor | ProgramaEstudios
+    entity: AlumnoConfig | ProfesorConfig | ProgramaConfig | undefined
     onSearch: (s:string) => void
     onDelete: () => void
 }
@@ -19,13 +17,13 @@ export interface DeleteParameters {
 export interface CreateParameters {
     module: string
     fields: Array<FieldProps>
-    formHandler: (e: React.FormEvent<HTMLFormElement>) => void
+    onSubmit: (data: FormData) => void
 }
 
 export interface UpdateParameters {
     module: string,
-    entity: Alumno | Profesor | ProgramaEstudios | undefined
-    fields: Array<FieldProps>,
+    entity: AlumnoConfig | ProfesorConfig | ProgramaConfig | undefined
+    headers: Array<string>,
     onSearch: (s: string) => void
-    onUpdate: (e: React.FormEvent<HTMLFormElement>) => void
+    onUpdate: (data: FormData) => void
 }

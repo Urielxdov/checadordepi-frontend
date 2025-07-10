@@ -21,7 +21,7 @@ export interface ProfesorConfig {
 }
 
 export interface ProgramaConfig {
-    id: string
+    id: number
     nombre: string
     registro: string
     status: string

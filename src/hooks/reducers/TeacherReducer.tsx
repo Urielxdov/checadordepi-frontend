@@ -1,7 +1,7 @@
 import { useReducer, type ReactNode } from "react";
 import { TeacherContext } from "../context/TeacherContext";
 import { type TeacherStateProps } from "../../interfaces/componentConfig";
-import { Profesor } from "../../models/ProfesorModel";
+import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import { type TeacherActions } from "../../interfaces/componentConfig";
 
 //interfaces de configuracion
@@ -12,7 +12,7 @@ interface PropsHook {
 
 //estado inicial 
 const initialState = () => ({
-    teachers: [new Profesor({
+    teachers: [{
         id: "12345",
         nombre: "Juan",
         apellidos: "Lopez",
@@ -21,7 +21,7 @@ const initialState = () => ({
         grado: "doctorado",
         nombre_grado: "doctorado en ciencias de la ingenieria",
         status: "activo"
-    })]
+    }]
 })
 
 //reducer de profesor
@@ -45,11 +45,11 @@ export function TeacherProvider({ children }:PropsHook){
     const [state, dispatch] = useReducer(reducer, initialState());
 
     //funciones para compartir
-    const addTeacher = (teacher: Profesor) => {
+    const addTeacher = (teacher: ProfesorConfig) => {
         dispatch({type: "CREATE_TEACHER", payload: teacher});
     }
 
-    const updateTeacher = (teacher: Profesor) => {
+    const updateTeacher = (teacher: ProfesorConfig) => {
         dispatch({type: "UPDATE_TEACHER", payload: teacher});
     }
 

@@ -1,13 +1,13 @@
 import { createContext } from "react"
-import { Alumno } from "../../models/AlumnoModel"
+import { type AlumnoConfig } from "../../interfaces/ModelsInterfaces"
 import { type StudentActions } from "../../interfaces/componentConfig"
 import { type StudentStateProps } from "../../interfaces/componentConfig"
 
 type StudentContextType = {
     state: StudentStateProps
     dispatch: React.Dispatch<StudentActions>
-    addStudent: (student: Alumno) => void
-    updateStudent: (student: Alumno) => void
+    addStudent: (student: AlumnoConfig) => void
+    updateStudent: (student: AlumnoConfig) => void
     deleteStudent: (numberControl: string) => void
     searchStudent: (numberControl: string) => void
 }

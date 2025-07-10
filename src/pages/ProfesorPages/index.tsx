@@ -1,9 +1,10 @@
-import { Profesor } from "../../models/ProfesorModel";
+import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import { parseObjectToRow } from "../../utils/ParserObjects";
 
 function IndexProf(){
     //contexto
@@ -14,7 +15,7 @@ function IndexProf(){
         <HomeLayout title="Lista de profesores">
             <Index 
                 headers={PROFESORHEADERS}
-                data={context.state.teachers.map((p:Profesor) => p.toArray())}
+                data={context.state.teachers.map((p:ProfesorConfig) => parseObjectToRow(p))}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>

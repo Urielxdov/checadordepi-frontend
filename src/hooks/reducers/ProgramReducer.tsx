@@ -2,7 +2,7 @@ import { useReducer, type ReactNode } from "react";
 import { ProgramContext } from "../context/ProgramaContext";
 import { type ProgramStateProps } from "../../interfaces/componentConfig";
 import { type ProgramActions } from "../../interfaces/componentConfig";
-import { ProgramaEstudios } from "../../models/ProgramaModel";
+import { type ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 
 //interfaces de configuracion
 interface PropsHook {
@@ -11,12 +11,12 @@ interface PropsHook {
 
 //estado inicial 
 const initialState = () => ({
-    programs: [new ProgramaEstudios({
+    programs: [{
         id: 1,
         nombre: "Mestria en ciencias de la ingenieria",
         registro: "TECNM-MCI",
         status: "activo"
-    })]
+    }]
 })
 
 //reducer de profesor
@@ -40,11 +40,11 @@ export function ProgramProvider({ children }:PropsHook){
     const [state, dispatch] = useReducer(reducer, initialState());
 
     //funciones para compartir
-    const addProgram = (program: ProgramaEstudios) => {
+    const addProgram = (program: ProgramaConfig) => {
         dispatch({type: "CREATE_PROGRAM", payload: program});
     }
 
-    const updateProgram = (program: ProgramaEstudios) => {
+    const updateProgram = (program: ProgramaConfig) => {
         dispatch({type: "UPDATE_PROGRAM", payload: program});
     }
 

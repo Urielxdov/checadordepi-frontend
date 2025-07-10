@@ -1,6 +1,4 @@
-import { Alumno } from "../models/AlumnoModel"
-import { ProgramaEstudios } from "../models/ProgramaModel"
-import { Profesor } from "../models/ProfesorModel"
+import type { AlumnoConfig, ProfesorConfig, ProgramaConfig } from "./ModelsInterfaces"
 
 export interface FieldProps {
     label: string
@@ -8,8 +6,7 @@ export interface FieldProps {
     type: string
     maxlength?: number
     minlength?: number
-    value: any
-    catch: (value:any) => void
+    value?: any
 }
 
 export interface ModalConfig {
@@ -23,34 +20,34 @@ export interface ReturnButtonConfig {
 }
 
 export interface StudentStateProps {
-  students: Alumno[]
-  student?: Alumno
+  students: AlumnoConfig[]
+  student?: AlumnoConfig
 }
 
 export type StudentActions = 
-    | { type: "CREATE_STUDENT"; payload: Alumno}
-    | { type: "UPDATE_STUDENT"; payload: Alumno}
+    | { type: "CREATE_STUDENT"; payload: AlumnoConfig}
+    | { type: "UPDATE_STUDENT"; payload: AlumnoConfig}
     | { type: "DELETE_STUDENT"; payload: string}
     | { type: "SEARCH_STUDENT"; payload: string}
 
 export interface TeacherStateProps {
-  teachers: Profesor[]
-  teacher?: Profesor
+  teachers: ProfesorConfig[]
+  teacher?: ProfesorConfig
 }
 
 export type TeacherActions = 
-    | {type: "CREATE_TEACHER", payload: Profesor}
-    | {type: "UPDATE_TEACHER", payload: Profesor}
+    | {type: "CREATE_TEACHER", payload: ProfesorConfig}
+    | {type: "UPDATE_TEACHER", payload: ProfesorConfig}
     | {type: "DELETE_TEACHER", payload: string}
     | {type: "SEARCH_TEACHER", payload: string}
 
 export interface ProgramStateProps {
-  programs: ProgramaEstudios[]
-  program?: ProgramaEstudios
+  programs: ProgramaConfig[]
+  program?: ProgramaConfig
 }
 
 export type ProgramActions = 
-    | {type: "CREATE_PROGRAM", payload: ProgramaEstudios}
-    | {type: "UPDATE_PROGRAM", payload: ProgramaEstudios}
+    | {type: "CREATE_PROGRAM", payload: ProgramaConfig}
+    | {type: "UPDATE_PROGRAM", payload: ProgramaConfig}
     | {type: "DELETE_PROGRAM", payload: number}
     | {type: "SEARCH_PROGRAM", payload: number}

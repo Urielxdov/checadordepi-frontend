@@ -1,14 +1,14 @@
 import React, { useReducer } from "react";
-import { Alumno } from "../../models/AlumnoModel";
 import { StudentsContext } from "../context/StudentContext";
 import { type StudentStateProps } from "../../interfaces/componentConfig";
 import { type StudentActions } from "../../interfaces/componentConfig";
+import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
 
 type PropsHook = {
     children: React.ReactNode
 }
 
-const initialState = () => ({ students: [new Alumno({
+const initialState = () => ({ students: [{
                                     id:'22241102',
                                     nombre: 'jhon',
                                     apellidos:'doe',
@@ -17,7 +17,7 @@ const initialState = () => ({ students: [new Alumno({
                                     colonia: 'alguna colonia',
                                     correo: 'jdoe@gmail.com',
                                     status: 'activo'
-                                  })]
+                                  }]
                             })
 
 const reducer = (state: StudentStateProps, action: StudentActions) => {
@@ -36,7 +36,7 @@ const reducer = (state: StudentStateProps, action: StudentActions) => {
 export function StudentProvider({ children }: PropsHook) {
   const [state, dispatch] = useReducer(reducer, initialState())
 
-  const addStudent = (student: Alumno) => 
+  const addStudent = (student: AlumnoConfig) => 
     dispatch({
       type: "CREATE_STUDENT",
       payload: student,
@@ -48,7 +48,7 @@ export function StudentProvider({ children }: PropsHook) {
       payload: numberControl,
     })
 
-  const updateStudent = (student: Alumno) =>
+  const updateStudent = (student: AlumnoConfig) =>
     dispatch({
       type: "UPDATE_STUDENT",
       payload: student,

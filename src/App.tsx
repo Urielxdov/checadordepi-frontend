@@ -8,7 +8,7 @@ import EntityModules from './pages/HomeMenu/EntityModules'
 import CreateAlu from './pages/AlumnoPages/register'
 import IndexAlu from './pages/AlumnoPages'
 import UpdateAlu from './pages/AlumnoPages/update'
-// import DeleteAlu from './pages/AlumnoPages/delete'
+import DeleteAlu from './pages/AlumnoPages/delete'
 import IndexProf from './pages/ProfesorPages';
 
 //wrappers
@@ -34,6 +34,7 @@ function App () {
             <Route path='/alumno' element={<EntityModules entity='alumno' />} />
             <Route path='/alumno/get' element={<IndexAlu/>} />
             <Route path='/alumno/create' element={<CreateAlu/>} />
+            <Route path='/alumno/delete' element={<DeleteAlu/>} />
             <Route path='/alumno/update' element={<UpdateAlu/>} />
         </Route>
         {/** Rutas de profesor */}

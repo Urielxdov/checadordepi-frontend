@@ -1,13 +1,13 @@
 import { createContext } from "react";
 import { type ProgramActions } from "../../interfaces/componentConfig";
 import { type ProgramStateProps } from "../../interfaces/componentConfig";
-import { ProgramaEstudios } from "../../models/ProgramaModel";
+import { type ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 
 type ProgramContextConfig = {
     state: ProgramStateProps,
     dispatch: React.Dispatch<ProgramActions>,
-    addProgram: (program: ProgramaEstudios) => void,
-    updateProgram: (program: ProgramaEstudios) => void,
+    addProgram: (program: ProgramaConfig) => void,
+    updateProgram: (program: ProgramaConfig) => void,
     deleteProgram: (id: number) => void,
     searchProgram: (id: number) => void
 }

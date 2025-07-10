@@ -1,9 +1,10 @@
 import { useStudents } from "../../hooks/custom/useStudents";
-import { Alumno } from "../../models/AlumnoModel";
+import { type AlumnoConfig } from "../../interfaces/ModelsInterfaces";
 import { ALUMNOHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import HomeLayout from "../Layouts/HomeLayout";
+import { parseObjectToRow } from "../../utils/ParserObjects";
 
 function IndexAlu(){
     //hook de alumnos
@@ -13,7 +14,7 @@ function IndexAlu(){
         <HomeLayout title="Lista de alumnos">
             <Index
                 headers={ALUMNOHEADERS}
-                data={context.state.students.map((a:Alumno) => a.toArray())}
+                data={context.state.students.map((a:AlumnoConfig) => parseObjectToRow(a))}
             />
             <ReturnButton path="/alumno/"/>
         </HomeLayout>

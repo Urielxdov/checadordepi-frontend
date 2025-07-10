@@ -1,9 +1,10 @@
-import { ProgramaEstudios } from "../../models/ProgramaModel";
+import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 import { usePrograms } from "../../hooks/custom/usePrograms";
 import { PROGRAMAHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import { parseObjectToRow } from "../../utils/ParserObjects";
 
 function IndexProg(){
     //contexto
@@ -14,7 +15,7 @@ function IndexProg(){
         <HomeLayout title="Lista de profesores">
             <Index 
                 headers={PROGRAMAHEADERS}
-                data={context.state.programs.map((p:ProgramaEstudios) => p.toArray())}
+                data={context.state.programs.map((p:ProgramaConfig) => parseObjectToRow(p))}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>
