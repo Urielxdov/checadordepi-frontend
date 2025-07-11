@@ -4,17 +4,18 @@ import { useStudents } from "../../hooks/custom/useStudents";
 import { type AlumnoConfig } from "../../interfaces/ModelsInterfaces";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
-import { parseToModel } from "../../utils/parserModels";
 import { ALUMNOHEADERS } from "../../utils/Headers";
+import { parseFromArray } from "../../utils/parserModels";
 
 function UpdateAlu(){
     //contexto de alumno
     const context = useStudents();
 
     //menejo de update
-    const update = (data: FormData) => {
+    const update = (data: Array<string>) => {
+        let keys = ["id","nombre","apellidos","telefono","calle","colonia","correo","status"]
         //previene el recargo de la pagina
-        const alumno = parseToModel<AlumnoConfig>(data);
+        const alumno = parseFromArray<AlumnoConfig>(keys, data);
 
         //paso al contexto
         context.updateStudent(alumno);

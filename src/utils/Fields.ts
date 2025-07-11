@@ -48,6 +48,84 @@ export const ALUMNOFIELDS = [
             type:"text"
          }
      ]
+
+export const PROFESORFIELDS = [
+         {
+             label:"clave",
+             name:"id",
+             type:"text",
+             maxlength: 10,
+             minlength: 10,
+         },
+         {
+             label:"Nombre(s)",
+             name:"nombre",
+             type:"text",
+
+         },
+         {
+             label:"Apellidos",
+             name:"apellidos",
+             type:"text",
+            
+         },
+         {
+             label:"Telefono",
+             name:"telefono",
+             type:"tel",
+             maxlength: 10,
+        
+         },
+         {
+             label:"Correo",
+             name:"correo",
+             type:"email",
+
+         },
+         {
+             label:"Grado maximo",
+             name:"grado",
+             type:"text",
+         },
+         {
+             label:"Nombre del grado maximo",
+             name:"nombre grado",
+             type:"text",
+    
+         },
+         {
+            label:"Estatus:",
+            name:"status",
+            type:"text"
+         }
+     ]
+
+export const PROGRAMAFIELDS = [
+         {
+             label:"Numero de programa",
+             name:"id",
+             type:"number",
+         },
+         {
+             label:"Nombre",
+             name:"nombre",
+             type:"text",
+
+         },
+         {
+             label:"Registro de CONAHCYT",
+             name:"registro",
+             type:"text",
+             maxlength: 10,
+        
+         },
+         {
+            label:"Estatus:",
+            name:"status",
+            type:"text"
+         }
+     ]
+
 export const LOGINFIELDS = [
         {
             label:"Usuario",

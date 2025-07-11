@@ -12,7 +12,7 @@ export default function Table({ header, body }: TableProps) {
 
   return (
     <div className='overflow-x-auto'>
-      <table className='min-w-full table-auto border border-gray-300 text-left'>
+      <table id='table' className='min-w-full table-auto border border-gray-300 text-left'>
         <thead className='bg-gray-200'>
           <tr>
             {header.map((content, index) => (

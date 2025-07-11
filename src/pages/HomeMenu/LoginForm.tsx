@@ -2,11 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { getAuthContext } from "../../hooks/custom/useAuth";
 import { LOGINFIELDS } from "../../utils/Fields";
 import { type FieldProps } from "../../interfaces/componentConfig";
+import { type LoginConfig } from "../../interfaces/ModelsInterfaces";
 import Form from "../../componets/forms/Form";
 import Input from "../../componets/forms/Input";
 import Button from "../../componets/utils/buttons/Button";
 import logoTec from '../../assets/logo_login_tecnm.png';
 import logoITL from '../../assets/110053_login.png';
+import { parseToModel } from "../../utils/parserModels";
 
 function LoginView(){
     //contexto
@@ -17,7 +19,7 @@ function LoginView(){
 
     //obtencion de datos
     const onSubmit = (data:FormData) => {
-        const login = {user: data.get('user'), password: data.get('password')};
+        const login = parseToModel<LoginConfig>(data);
         //validar acceso
         if(login.user as String =='admin'&&login.password as String =='12345'){
             alert("Acceso exitoso!!!!");

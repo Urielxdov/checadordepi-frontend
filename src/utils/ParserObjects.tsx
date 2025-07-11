@@ -1,8 +1,8 @@
 import type React from "react";
 
-export function parseObjectToRow<T extends Record<string, any>>(obj: T): React.ReactNode[] {
+export function parseObjectToRow<T extends Record<string, any>>(obj: T, editable:boolean=false): React.ReactNode[] {
     return Object.entries(obj).map(([key, value]) => (
-        <p key={key}>
+        <p contentEditable={editable} key={key}>
             {typeof value === "object" && value !== null
                 ? value instanceof File
                     ? value.name

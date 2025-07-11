@@ -11,3 +11,18 @@ export function parseToModel<T>(data:FormData):T{
     //retornar el modelo
     return model;
 }
+
+export function parseFromArray<T extends Record<string, any>>(keys: Array<string>, data:Array<string>):T{
+    //modelo
+    let model = {} as T;
+
+
+    //construir
+    let i = 0;
+    for(const key of keys){
+        model = {...model, [key]: data[i]}
+        i++;
+    }
+
+    return model;
+}

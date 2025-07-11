@@ -1,7 +1,7 @@
 import debounce from "../../../utils/Debounce"
 
 interface PropsQueryInput {
-    action: (query:string) => void,
+    action: (query:string) => void | ((query: number) => void),
     placeholder: string
 }
 
