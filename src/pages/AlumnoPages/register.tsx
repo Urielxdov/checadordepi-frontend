@@ -1,38 +1,74 @@
-import { useStudents } from "../../hooks/custom/useStudents";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
-import Create from "../CrudActions/Create";
-import HomeLayout from "../Layouts/HomeLayout";
-import { ALUMNOFIELDS } from "../../utils/Fields";
-import { parseToModel } from "../../utils/parserModels";
-import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
+import { useContext } from 'react'
+import ReturnButton from '../../componets/utils/buttons/ReturnButton'
+import Create from '../CrudActions/Create'
+import HomeLayout from '../Layouts/HomeLayout'
+import { StudentsContext } from '../../hooks/context/StudentContext'
 
-function CreateAlu(){
-    //contexto de alumno
-    const context = useStudents();
+function CreateAlu () {
+  //funcion de manejo
 
-    //funcion de manejo
-    const onSubmit = (data:FormData) => {
-        //activo por defecto
-        data.append("status","activo");
-        
-        //paso al modelo de alumno
-        const alumno = parseToModel<AlumnoConfig>(data);
+  const context = useContext(StudentsContext)
 
-        //gurdado en el contexto
-        context.addStudent(alumno);
-     }
+  if (!context) return <div>Error: No se enconto el contexto</div>
 
-     //retorno de vista
-     return (
-        <HomeLayout title="Modulo Alumno">
-           <Create
-                module="Alumno"
-                fields={ALUMNOFIELDS.slice(0,ALUMNOFIELDS.length-1)}
-                onSubmit={onSubmit}
-            />
-            <ReturnButton path="/alumno/"/>
-         </HomeLayout>
-     );
+  const { addStudent } = context
+
+  //configuracion de campos
+  const fields = [
+    {
+      label: 'Numero de control',
+      name: 'noControl',
+      type: 'text',
+      maxlength: 8,
+      minlength: 8,
+      value: ''
+    },
+    {
+      label: 'Nombre(s)',
+      name: 'nombre',
+      type: 'text',
+      value: ''
+    },
+    {
+      label: 'Apellidos',
+      name: 'apellidos',
+      type: 'text',
+      value: ''
+    },
+    {
+      label: 'Telefono',
+      name: 'telefono',
+      type: 'tel',
+      maxlength: 10,
+      value: ''
+    },
+    {
+      label: 'Calle y numero',
+      name: 'calle',
+      type: 'text',
+      value: ''
+    },
+    {
+      label: 'Colonia',
+      name: 'colonia',
+      type: 'text',
+      value: ''
+    },
+    {
+      label: 'Correo',
+      name: 'correo',
+      type: 'email',
+      value: ''
+    }
+  ]
+
+  //retorno de vista
+  return (
+    <HomeLayout title='Modulo Alumno'>
+      <Create module='Alumno' fields={fields} onSubmit={addStudent} />
+      <ReturnButton path='/alumno/' />
+    </HomeLayout>
+  )
 }
 
-export default CreateAlu;
+export default CreateAlu

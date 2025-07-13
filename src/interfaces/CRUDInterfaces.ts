@@ -1,7 +1,4 @@
-import { type FieldProps } from "./componentConfig"
 import type { AlumnoConfig, ProfesorConfig, ProgramaConfig } from "./ModelsInterfaces"
-
-
 
 export interface DeleteParameters {
     module: string
@@ -11,11 +8,7 @@ export interface DeleteParameters {
     onDelete: () => void
 }
 
-export interface CreateParameters {
-    module: string
-    fields: Array<FieldProps>
-    onSubmit: (data: FormData) => void
-}
+
 
 export interface UpdateParameters {
     module: string,

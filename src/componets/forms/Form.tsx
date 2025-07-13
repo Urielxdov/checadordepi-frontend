@@ -2,7 +2,7 @@ import React, { type ReactNode } from 'react'
 
 interface FormProps {
   children: ReactNode
-  onSubmit?: (data: FormData) => void
+  onSubmit: (data: FormData) => void
   id: string
 }
 
@@ -10,16 +10,16 @@ export default function Form ({ children, onSubmit, id }: FormProps) {
   //manejo de envio
   const handleForm = (e: React.FormEvent<HTMLFormElement>) => {
     //para no recargar la pagina
-    e.preventDefault();
+    e.preventDefault()
 
     //obtener el formulario
-    const form = document.getElementById(id) as HTMLFormElement | null;
+    const form = document.getElementById(id) as HTMLFormElement | null
 
     //obtener datos
-    if(form){
-      const data = new FormData(form);
-      onSubmit && onSubmit(data);
-      form.reset();
+    if (form) {
+      const data = new FormData(form)
+      onSubmit(data)
+      form.reset()
     }
   }
 
