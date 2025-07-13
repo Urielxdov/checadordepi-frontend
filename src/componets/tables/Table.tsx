@@ -5,14 +5,17 @@ interface TableProps {
   body: React.ReactNode[][] | null
 }
 
-export default function Table({ header, body }: TableProps) {
+export default function Table ({ header, body }: TableProps) {
   if (header.length === 0) {
     return <div className='text-gray-600'>No hay datos para mostrar</div>
   }
 
   return (
     <div className='overflow-x-auto'>
-      <table id='table' className='min-w-full table-auto border border-gray-300 text-left'>
+      <table
+        id='table'
+        className='min-w-full table-auto border border-gray-300 text-left'
+      >
         <thead className='bg-gray-200'>
           <tr>
             {header.map((content, index) => (
