@@ -1,11 +1,12 @@
 import React from 'react'
+import type { RowData } from '../../utils/generateTableData'
 
-interface TableProps {
+interface TableProps<T = any> {
   header: string[]
-  body: React.ReactNode[][] | null
+  body: RowData<T>[] | null
 }
 
-export default function Table ({ header, body }: TableProps) {
+export default function Table<T> ({ header, body }: TableProps<T>) {
   if (header.length === 0) {
     return <div className='text-gray-600'>No hay datos para mostrar</div>
   }
@@ -28,11 +29,17 @@ export default function Table ({ header, body }: TableProps) {
             ))}
           </tr>
         </thead>
+
         <tbody>
           {body && body.length > 0 ? (
             body.map((row, rowIndex) => (
-              <tr key={rowIndex} className='odd:bg-white even:bg-gray-100'>
-                {row.map((cell, cellIndex) => (
+              <tr
+                key={rowIndex}
+                data-id={row.id}
+                data-object={JSON.stringify(row.raw)} // cuidado: esto debe ser serializable
+                className='odd:bg-white even:bg-gray-100'
+              >
+                {row.cells.map((cell, cellIndex) => (
                   <td
                     key={cellIndex}
                     className='border border-gray-300 p-2 align-top'

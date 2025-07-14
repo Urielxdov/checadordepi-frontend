@@ -9,11 +9,3 @@ export interface DeleteParameters {
 }
 
 
-
-export interface UpdateParameters {
-    module: string,
-    entity: AlumnoConfig | ProfesorConfig | ProgramaConfig | undefined
-    headers: Array<string>,
-    onSearch: (s: string) => void | ((s: number) => void)
-    onUpdate: (data: Array<string>) => void
-}

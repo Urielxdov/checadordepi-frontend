@@ -1,45 +1,38 @@
-import { useEffect } from "react";
-import Update from "../CrudActions/Update";
-import { useStudents } from "../../hooks/custom/useStudents";
-import { type AlumnoConfig } from "../../interfaces/ModelsInterfaces";
-import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
-import { ALUMNOHEADERS } from "../../utils/Headers";
-import { parseFromArray } from "../../utils/parserModels";
+import { useEffect } from 'react'
+import Update from '../CrudActions/Update'
+import { useStudents } from '../../hooks/custom/useStudents'
+import HomeLayout from '../Layouts/HomeLayout'
+import ReturnButton from '../../componets/utils/buttons/ReturnButton'
+import { ALUMNOHEADERS } from '../../utils/Headers'
 
-function UpdateAlu(){
-    //contexto de alumno
-    const context = useStudents();
+function UpdateAlu () {
+  //contexto de alumno
+  const context = useStudents()
 
-    //menejo de update
-    const update = (data: Array<string>) => {
-        let keys = ["id","nombre","apellidos","telefono","calle","colonia","correo","status"]
-        //previene el recargo de la pagina
-        const alumno = parseFromArray<AlumnoConfig>(keys, data);
+  if (!context) return <div>Error: No se encontro el contexto</div>
 
-        //paso al contexto
-        context.updateStudent(alumno);
+  const { state, updateStudent, searchStudent } = context
+
+  useEffect(() => {
+    if (!state.student) {
+      console.log('No se encontro ningun alumno para actualizar')
+    } else {
+      console.log('Alumno encontrado')
     }
+  }, [state.student])
 
-    useEffect(()=>{
-        const student = context.state.student;
-        if(student){
-            console.log("existeeeee");
-        }
-    },[context.state.student]);
-
-    return (
-        <HomeLayout title="Modulo Alumno">
-            <Update
-                module='alumno'
-                entity={context.state.student}
-                headers={ALUMNOHEADERS}
-                onSearch={context.searchStudent}
-                onUpdate={update}
-            />
-            <ReturnButton path="/alumno/"/>
-        </HomeLayout>
-    );
+  return (
+    <HomeLayout title='Modulo Alumno'>
+      <Update
+        module='alumno'
+        body={state.students}
+        headers={ALUMNOHEADERS}
+        onSearch={searchStudent}
+        onUpdate={updateStudent}
+      />
+      <ReturnButton path='/alumno/' />
+    </HomeLayout>
+  )
 }
 
-export default UpdateAlu;
+export default UpdateAlu

@@ -1,20 +1,46 @@
 import QueryInput from '../../componets/utils/Inputs/QueryInput'
-import Form from '../../componets/forms/Form'
-import { type UpdateParameters } from '../../interfaces/CRUDInterfaces'
-import { type FieldProps } from '../../interfaces/componentConfig'
-import Input from '../../componets/forms/Input'
-import Button from '../../componets/utils/buttons/Button'
 
+import type {
+  AlumnoConfig,
+  ProfesorConfig,
+  ProgramaConfig
+} from '../../interfaces/ModelsInterfaces'
+import Table from '../../componets/tables/Table'
+import { generateTableData } from '../../utils/generateTableData'
+
+export interface FieldProps {
+  label: string
+  name: string
+  type: string
+  maxlength?: number
+  minlength?: number
+  value?: string | File
+}
+
+export interface UpdateParameters {
+  module: string
+  body: AlumnoConfig[] | ProfesorConfig[] | ProgramaConfig[] // modelos
+  headers: Array<string>
+  onSearch: (s: string) => void | ((s: number) => void)
+  onUpdate: (formData: FormData) => void
+}
 function Update ({
   module,
-  entity,
-  fields,
+  body,
   onSearch,
-  onUpdate
+  onUpdate,
+  headers
 }: UpdateParameters) {
-  const ID_FORM = 'forrm-data'
+  const update = (rowData: AlumnoConfig | ProfesorConfig | ProgramaConfig) => {
+    const formData = new FormData()
+    Object.entries(rowData).forEach(([key, value]) => {
+      formData.append(key, String(value))
+    })
 
-  if (!entity) {
+    onUpdate(formData)
+  }
+
+  if (!body) {
     return (
       <>
         <QueryInput placeholder={'buscar ' + module} action={onSearch} />
@@ -25,28 +51,10 @@ function Update ({
     return (
       <>
         <QueryInput placeholder={'buscar ' + module} action={onSearch} />
-        <Form onSubmit={onUpdate} id={ID_FORM}>
-          {fields.map((f: FieldProps) => (
-            <Input
-              label={f.label}
-              name={f.name}
-              type={f.type}
-              required={true}
-              maxLength={f.maxlength ? f.maxlength : 200}
-              minLength={f.minlength ? f.minlength : 1}
-              value={f.value}
-              key={f.name}
-            />
-          ))}
-          <Button
-            text='actualizar'
-            action={() => {}}
-            submit={true}
-            styles='p-1 text-white bg-green-500 rounded-sm
-                    hover: bg-green-600 hover: cursor-pointer
-                    '
-          />
-        </Form>
+        <Table
+          header={headers}
+          body={generateTableData(body, item => item.id, update)}
+        />
       </>
     )
   }

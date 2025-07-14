@@ -69,11 +69,13 @@ export function StudentProvider ({ children }: PropsHook) {
       payload: numberControl
     })
 
-  const updateStudent = (student: AlumnoConfig) =>
+  const updateStudent = (formData: FormData) => {
+    const student = formDataUpdateToAlumnoConfig(formData)
     dispatch({
       type: 'UPDATE_STUDENT',
       payload: student
     })
+  }
 
   const searchStudent = (numberControl: string) => {
     dispatch({
@@ -100,6 +102,20 @@ export function StudentProvider ({ children }: PropsHook) {
 
 function formDataToAlumnoConfig (data: FormData): AlumnoConfig {
   return {
+    id: data.get('id') as string,
+    nombre: data.get('nombre') as string,
+    apellidos: data.get('apellidos') as string,
+    telefono: data.get('telefono') as string,
+    calle: data.get('calle') as string,
+    colonia: data.get('colonia') as string,
+    correo: data.get('correo') as string,
+    status: data.get('status') as string
+  }
+}
+
+function formDataUpdateToAlumnoConfig (data: FormData) {
+  return {
+    clave: data.get('clave') as string,
     id: data.get('id') as string,
     nombre: data.get('nombre') as string,
     apellidos: data.get('apellidos') as string,

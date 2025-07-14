@@ -1,4 +1,3 @@
-import type React from 'react'
 import Table from '../../componets/tables/Table'
 import QueryInput from '../../componets/utils/Inputs/QueryInput'
 import type {
@@ -6,6 +5,7 @@ import type {
   ProfesorConfig,
   ProgramaConfig
 } from '../../interfaces/ModelsInterfaces'
+import { generateTableData } from '../../utils/generateTableData'
 
 export interface IndexParameters {
   headers: Array<string>
@@ -14,25 +14,13 @@ export interface IndexParameters {
 }
 
 function Index ({ headers, data, action }: IndexParameters) {
-  const adaptedData = () => {
-    const mappedData: React.ReactNode[][] = []
-    data.forEach(element => {
-      const row: React.ReactNode[] = []
-
-      Object.keys(element).forEach(key => {
-        row.push(element[key as keyof typeof element])
-      })
-
-      mappedData.push(row)
-    })
-    return mappedData
-  }
-
   return (
     <>
-      dswadsdsfsdf
       <QueryInput action={action} placeholder='Buscar' />
-      <Table header={headers} body={adaptedData()} />
+      <Table
+        header={headers}
+        body={generateTableData(data, item => item.id, undefined, false)}
+      />
     </>
   )
 }
