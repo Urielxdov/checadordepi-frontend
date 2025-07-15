@@ -13,7 +13,7 @@ export function generateTableData<T> (
   return data.map(element => {
     const row: React.ReactNode[] = []
 
-    Object.keys(element).forEach(key => {
+    Object.keys(element as Object).forEach(key => {
       const value = element[key as keyof T]
 
       row.push(
@@ -41,6 +41,7 @@ export function generateTableData<T> (
 
             const inputs = tr.querySelectorAll('input')
             const formData = new FormData()
+            formData.append("clave",tr.getAttribute('data-id') as string)
             inputs.forEach(input => {
               const name = input.getAttribute('name')
               const value = (input as HTMLInputElement).value

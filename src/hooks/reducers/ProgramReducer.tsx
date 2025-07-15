@@ -1,8 +1,9 @@
 import { useReducer, type ReactNode } from "react";
-import { ProgramContext } from "../context/ProgramaContext";
+import { ProgramContext } from "../context/ProgramContext";
 import { type ProgramStateProps } from "../../interfaces/componentConfig";
 import { type ProgramActions } from "../../interfaces/componentConfig";
 import { type ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import type { UpdatePrograma } from "../../interfaces/componentConfig";
 
 //interfaces de configuracion
 interface PropsHook {
@@ -26,7 +27,7 @@ const reducer = (state: ProgramStateProps, action: ProgramActions) => {
         case 'CREATE_PROGRAM':
             return {programs: [...state.programs, action.payload]}
         case 'UPDATE_PROGRAM':
-            return {programs: state.programs.map(p => p.id == action.payload.id ? action.payload: p)}
+            return {programs: state.programs.map(p => p.id == action.payload.oldId ? action.payload.data: p)}
         case 'DELETE_PROGRAM':
             return {programs: state.programs.filter( p => p.id != action.payload)}
         case 'SEARCH_PROGRAM':
@@ -40,11 +41,13 @@ export function ProgramProvider({ children }:PropsHook){
     const [state, dispatch] = useReducer(reducer, initialState());
 
     //funciones para compartir
-    const addProgram = (program: ProgramaConfig) => {
+    const addProgram = (data: FormData) => {
+        const program = formDataToProgramaConfig(data)
         dispatch({type: "CREATE_PROGRAM", payload: program});
     }
 
-    const updateProgram = (program: ProgramaConfig) => {
+    const updateProgram = (data: FormData) => {
+        const program = formDataUpdateToProgramaConfig(data)
         dispatch({type: "UPDATE_PROGRAM", payload: program});
     }
 
@@ -69,4 +72,25 @@ export function ProgramProvider({ children }:PropsHook){
             {children}
         </ProgramContext.Provider>
     );
+}
+
+function formDataToProgramaConfig (data: FormData): ProgramaConfig {
+  return {
+    id: parseInt(data.get('id') as string),
+    nombre: data.get('nombre') as string,
+    registro: data.get("registro") as string,
+    status: data.get('status') ? data.get('status') as string : 'activo'
+  }
+}
+
+function formDataUpdateToProgramaConfig (data: FormData): UpdatePrograma {
+  return {
+        oldId: parseInt(data.get('clave') as string),
+        data: {
+            id: parseInt(data.get('id') as string),
+            nombre: data.get('nombre') as string,
+            registro: data.get("registro") as string,
+            status: data.get('status') ? data.get('status') as string : 'activo'
+        }
+    }
 }

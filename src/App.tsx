@@ -12,6 +12,7 @@ import DeleteAlu from './pages/AlumnoPages/delete'
 import IndexProf from './pages/ProfesorPages';
 import CreateProf from './pages/ProfesorPages/register';
 import DeleteProf from './pages/ProfesorPages/delete';
+import UpdateProf from './pages/ProfesorPages/update';
 import IndexProg from './pages/ProgramaPages';
 import CreateProg from './pages/ProgramaPages/register';
 import DeleteProg from './pages/ProgramaPages/delete';
@@ -47,6 +48,7 @@ function App () {
             <Route path='/profesor/get' element={<IndexProf/>} />
             <Route path='/profesor/create' element={<CreateProf/>} />
             <Route path='/profesor/delete' element={<DeleteProf/>} />
+            <Route path='/profesor/update' element={<UpdateProf/>} />
         </Route>
         {/** Rutas de programa/curso */}
         <Route element={<ProgramWrapper/>}>

@@ -3,9 +3,14 @@ import { StudentsContext } from '../context/StudentContext'
 import { type StudentStateProps } from '../../interfaces/componentConfig'
 import type { AlumnoConfig } from '../../interfaces/ModelsInterfaces'
 
+export interface UpdateAlumno {
+  oldId: string,
+  data: AlumnoConfig
+}
+
 export type StudentActions =
   | { type: 'CREATE_STUDENT'; payload: AlumnoConfig }
-  | { type: 'UPDATE_STUDENT'; payload: AlumnoConfig }
+  | { type: 'UPDATE_STUDENT'; payload: UpdateAlumno }
   | { type: 'DELETE_STUDENT'; payload: string }
   | { type: 'SEARCH_STUDENT'; payload: string }
 
@@ -35,13 +40,13 @@ const reducer = (state: StudentStateProps, action: StudentActions) => {
     case 'DELETE_STUDENT':
       return {
         students: state.students.filter(
-          student => student.id !== action.payload
+          student => student.id != action.payload
         )
       }
     case 'UPDATE_STUDENT':
       return {
         students: state.students.map(student =>
-          student.id === action.payload.id ? action.payload : student
+          student.id === action.payload.oldId ? action.payload.data : student
         )
       }
     case 'SEARCH_STUDENT':
@@ -109,20 +114,22 @@ function formDataToAlumnoConfig (data: FormData): AlumnoConfig {
     calle: data.get('calle') as string,
     colonia: data.get('colonia') as string,
     correo: data.get('correo') as string,
-    status: data.get('status') as string
+    status: data.get('status') ? data.get('status') as string : 'activo'
   }
 }
 
-function formDataUpdateToAlumnoConfig (data: FormData) {
+function formDataUpdateToAlumnoConfig (data: FormData): UpdateAlumno {
   return {
-    clave: data.get('clave') as string,
-    id: data.get('id') as string,
-    nombre: data.get('nombre') as string,
-    apellidos: data.get('apellidos') as string,
-    telefono: data.get('telefono') as string,
-    calle: data.get('calle') as string,
-    colonia: data.get('colonia') as string,
-    correo: data.get('correo') as string,
-    status: data.get('status') as string
+    oldId: data.get('clave') as string,
+    data: {
+      id: data.get('id') as string,
+      nombre: data.get('nombre') as string,
+      apellidos: data.get('apellidos') as string,
+      telefono: data.get('telefono') as string,
+      calle: data.get('calle') as string,
+      colonia: data.get('colonia') as string,
+      correo: data.get('correo') as string,
+      status: data.get('status') as string
+    }
   }
 }

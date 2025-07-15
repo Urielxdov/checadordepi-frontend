@@ -20,8 +20,8 @@ function DeleteAlu () {
         headers={ALUMNOHEADERS}
         entity='alumno'
         body={state.students}
-        onSearch={(numberControl: string) => searchStudent(numberControl)}
-        onDelete={(numberControl: string) => deleteStudent(numberControl)}
+        onSearch={searchStudent}
+        onDelete={deleteStudent}
       />
       <ReturnButton path='/alumno/' />
     </HomeLayout>

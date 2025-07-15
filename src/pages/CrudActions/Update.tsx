@@ -37,6 +37,8 @@ function Update ({
       formData.append(key, String(value))
     })
 
+    console.log(formData)
+
     onUpdate(formData)
   }
 

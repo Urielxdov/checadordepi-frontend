@@ -5,6 +5,7 @@ import type {
   ProfesorConfig,
   ProgramaConfig
 } from '../../interfaces/ModelsInterfaces'
+import type { RowData } from '../../utils/generateTableData'
 
 type PropsDeletePage = {
   entity: string
@@ -22,13 +23,18 @@ export function Delete ({
   onSearch
 }: PropsDeletePage) {
   const adaptedData = () => {
-    const mappedData: React.ReactNode[][] = []
+    //contenedor
+    const mappedData: RowData<[typeof body]>[] = []
+
+    //pasar los registros a un renglon
     body.forEach(element => {
       const row: React.ReactNode[] = []
 
       Object.keys(element).forEach(key => {
         row.push(element[key as keyof typeof element])
       })
+
+      //agregar boton de eliminar
       row.push(
         <button
           key='delete'
@@ -39,11 +45,15 @@ export function Delete ({
         </button>
       )
 
-      mappedData.push(row)
+      //nuevo row data
+      const mappedRow = {} as RowData
+      mappedRow.cells = row
+      mappedData.push(mappedRow)
     })
+  
     return mappedData
   }
-
+  
   return (
     <>
       <QueryInput placeholder={`Buscar ${entity}`} action={onSearch} />
