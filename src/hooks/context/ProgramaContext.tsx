@@ -7,7 +7,7 @@ type ProgramContextConfig = {
     state: ProgramStateProps,
     dispatch: React.Dispatch<ProgramActions>,
     addProgram: (program: ProgramaConfig) => void,
-    updateProgram: (program: ProgramaConfig) => void,
+    updateProgram: (data: Array<any>) => void,
     deleteProgram: (id: number) => void,
     searchProgram: (id: number) => void
 }

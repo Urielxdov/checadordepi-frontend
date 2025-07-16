@@ -1,41 +1,41 @@
 import Update from "../CrudActions/Update";
-import { useStudents } from "../../hooks/custom/useStudents";
+import { usePrograms } from "../../hooks/custom/usePrograms";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
-import { ALUMNOHEADERS } from "../../utils/Headers";
+import { PROGRAMAHEADERS } from "../../utils/Headers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 
-function UpdateAlu(){
+function UpdateProg(){
     //estado de modal
     const [open, setOpen] = useState<boolean>(false);
 
-    //contexto de alumno
-    const context = useStudents();
+    //contexto de programa
+    const context = usePrograms();
 
     //menejo de update
     const update = (data: Array<any>) => {
         //paso al contexto
-        context.updateStudent(data);
+        context.updateProgram(data);
         //abrir modal
         setOpen(true);
     }
 
     return (
         <>
-        <HomeLayout title="Modulo Alumno">
+        <HomeLayout title="Modulo curso">
             <Update
-                module='alumno'
-                entity={context.state.student}
-                headers={ALUMNOHEADERS}
-                onSearch={context.searchStudent}
+                module='curso'
+                entity={context.state.program}
+                headers={PROGRAMAHEADERS}
+                onSearch={(s: string) => context.searchProgram(parseInt(s))}
                 onUpdate={update}
             />
-            <ReturnButton path="/alumno/"/>
+            <ReturnButton path="/curso/"/>
         </HomeLayout>
         <Modal
-            title="Alumno actualizado"
-            message="los datos del alumnos se han actualizado"
+            title="Programa actualizado"
+            message="los datos del programa han sido actualizados"
             type="success"
             isOpen={open}
             onClose={() => setOpen(false)}
@@ -44,4 +44,4 @@ function UpdateAlu(){
     );
 }
 
-export default UpdateAlu;
+export default UpdateProg;

@@ -5,8 +5,14 @@ import { PROFESORFIELDS } from "../../utils/Fields";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import { parseToModel } from "../../utils/parserModels";
 import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
+import Modal from "../../componets/ui/Modals";
+import { useState } from "react";
 
 function CreateProf(){
+    //estado de modal
+    const [open, setOpen] = useState<boolean>(false);
+
+
     //uso del contexto
     const context = useTeachers();
 
@@ -20,10 +26,12 @@ function CreateProf(){
 
         //guardado en el contexto
         context.addTeacher(profesor);
+        setOpen(true);
     }
 
     //retorno de la vista
     return (
+        <>
         <HomeLayout title={"Modulo profesor"}>
             <Create
                 module="profesor"
@@ -32,6 +40,14 @@ function CreateProf(){
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>
+        <Modal
+            title="Profesor creado"
+            message="el profesor ha sido creado con exito"
+            type="success"
+            isOpen={open}
+            onClose={() => setOpen(false)}
+        />
+        </>
     );
 }
 

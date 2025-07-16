@@ -1,33 +1,31 @@
 import QueryInput from "../../componets/utils/Inputs/QueryInput";
 import { type UpdateParameters } from "../../interfaces/CRUDInterfaces";
-import Table from "../../componets/tables/Table";
-import Button from "../../componets/utils/buttons/Button";
-import { parseObjectToRow } from "../../utils/ParserObjects";
+import FunctionTable from "../../componets/tables/FunctionTable";
 
 function Update({module, entity, headers, onSearch, onUpdate}:UpdateParameters){
     //manejo de actualizacion
-    const getChanges = () =>{
-        //encontrar la tabla
-        const table = document.getElementById("table") as HTMLTableElement | undefined;
+    const getChanges = (e: React.MouseEvent<HTMLButtonElement>) =>{
+        //evitar recargo de pagina
+        e.preventDefault()
 
         //contenedor de datos
-        const changes = [] as Array<string>;
+        const data = []
 
-        //validacion de existencia (para que ts no llore)
-        if(table){
-            //iterar sobre los renglones
-            [...table.rows].forEach((row, i) => {
-                //iterar sobre celdas
-                [...row.cells].forEach((cell) => {
-                    //celda de datos
-                    if(i>0){
-                        changes.push(cell.textContent as string);
-                    }
-                })
+        //obtener el tr
+        const tr = (e.target as HTMLElement).closest('tr');
+
+        if(tr){
+            //guardar el id viejo
+            data.push(tr.getAttribute('data-id'));
+
+            //obtener los datos cambiados
+            const inputs = tr.getElementsByTagName('input');
+            [...inputs].forEach(input => {
+                data.push((input as HTMLInputElement).value)
             })
 
             //paso al padre
-            onUpdate(changes);
+            onUpdate(data);
         }
     }
 
@@ -42,17 +40,11 @@ function Update({module, entity, headers, onSearch, onUpdate}:UpdateParameters){
         return (
         <>
             <QueryInput placeholder={'buscar '+module} action={onSearch}/>
-            <Table
-                header={headers}
-                body={[parseObjectToRow(entity, true)]}
-            />
-            <Button
-                text="actualizar"
+            <FunctionTable
+                type='UPDATE'
                 action={getChanges}
-                submit={false}
-                styles="p-1 text-white bg-green-500 rounded-sm
-                hover: bg-green-600 hover: cursor-pointer
-                "
+                headers={headers}
+                body={[entity]}
             />
         </>
         );

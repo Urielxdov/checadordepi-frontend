@@ -1,42 +1,41 @@
-import Delete from "../CrudActions/Delete";
+import Update from "../CrudActions/Update";
+import { useTeachers } from "../../hooks/custom/useTeachers";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import { PROFESORHEADERS } from "../../utils/Headers";
-import { useTeachers } from "../../hooks/custom/useTeachers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 
-function DeleteProf(){
+function UpdateProf(){
     //estado de modal
     const [open,setOpen] = useState<boolean>(false);
 
-    //uso de contexto
+    //contexto de profesor
     const context = useTeachers();
 
-    //manejo de eliminado
-    const drop = (id: string) => { 
-        //pasar el id
-        context.deleteTeacher(id);
+    //menejo de update
+    const update = (data: Array<any>) => {
+        //paso al contexto
+        context.updateTeacher(data);
         //abrir modal
         setOpen(true);
     }
 
-    //retorno de la vista
-    return(
+    return (
         <>
         <HomeLayout title="Modulo profesor">
-            <Delete
-                module="profesor"
-                headers={PROFESORHEADERS}
+            <Update
+                module='profesor'
                 entity={context.state.teacher}
+                headers={PROFESORHEADERS}
                 onSearch={context.searchTeacher}
-                onDelete={drop}
+                onUpdate={update}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>
         <Modal
-            title="Profesor eliminado"
-            message="el profesor ha sido eliminado con exito"
+            title="Profesor actualizado"
+            message="los datos del profesor han sido actualizados"
             type="success"
             isOpen={open}
             onClose={() => setOpen(false)}
@@ -45,4 +44,4 @@ function DeleteProf(){
     );
 }
 
-export default DeleteProf;
+export default UpdateProf;

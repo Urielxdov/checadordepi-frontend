@@ -1,8 +1,8 @@
 import { useReducer, type ReactNode } from "react";
 import { ProgramContext } from "../context/ProgramaContext";
-import { type ProgramStateProps } from "../../interfaces/componentConfig";
+import { type ProgramStateProps, type ProgramUpdate } from "../../interfaces/componentConfig";
 import { type ProgramActions } from "../../interfaces/componentConfig";
-import { type ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 
 //interfaces de configuracion
 interface PropsHook {
@@ -26,7 +26,7 @@ const reducer = (state: ProgramStateProps, action: ProgramActions) => {
         case 'CREATE_PROGRAM':
             return {programs: [...state.programs, action.payload]}
         case 'UPDATE_PROGRAM':
-            return {programs: state.programs.map(p => p.id == action.payload.id ? action.payload: p)}
+            return {programs: state.programs.map(p => p.id == action.payload.oldId ? action.payload.data: p)}
         case 'DELETE_PROGRAM':
             return {programs: state.programs.filter( p => p.id != action.payload)}
         case 'SEARCH_PROGRAM':
@@ -44,7 +44,8 @@ export function ProgramProvider({ children }:PropsHook){
         dispatch({type: "CREATE_PROGRAM", payload: program});
     }
 
-    const updateProgram = (program: ProgramaConfig) => {
+    const updateProgram = (data: Array<any>) => {
+        const program = parseArray(data);
         dispatch({type: "UPDATE_PROGRAM", payload: program});
     }
 
@@ -69,4 +70,16 @@ export function ProgramProvider({ children }:PropsHook){
             {children}
         </ProgramContext.Provider>
     );
+}
+
+function parseArray(data: Array<any>):ProgramUpdate{
+    return {
+        oldId: data[0],
+        data: {
+            id: data[1],
+            nombre: data[2],
+            registro: data[3],
+            status: data[4]
+        } as ProgramaConfig
+    };
 }

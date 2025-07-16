@@ -2,7 +2,7 @@ import React from 'react'
 
 interface ButtonProps {
   text: string
-  action: () => void
+  action: (() => void) | ((e: React.MouseEvent<HTMLButtonElement>) => void)
   submit: boolean
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'

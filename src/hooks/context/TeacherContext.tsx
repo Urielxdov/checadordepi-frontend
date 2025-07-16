@@ -7,7 +7,7 @@ type TeacherContextConfig = {
     state: TeacherStateProps,
     dispatch: React.Dispatch<TeacherActions>,
     addTeacher: (teacher: ProfesorConfig) => void,
-    updateTeacher: (teacher: ProfesorConfig) => void,
+    updateTeacher: (data: Array<any>) => void,
     deleteTeacher: (clave: string) => void,
     searchTeacher: (clave: string) => void
 }

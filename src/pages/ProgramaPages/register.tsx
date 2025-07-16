@@ -5,8 +5,13 @@ import { PROGRAMAFIELDS } from "../../utils/Fields";
 import { usePrograms } from "../../hooks/custom/usePrograms";
 import { parseToModel } from "../../utils/parserModels";
 import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import Modal from "../../componets/ui/Modals";
+import { useState } from "react";
 
 function CreateProg(){
+    //estado de modal
+    const [open,setOpen] = useState<boolean>(false);
+
     //uso del contexto
     const context = usePrograms();
 
@@ -20,10 +25,13 @@ function CreateProg(){
 
         //guardado en el contexto
         context.addProgram(programa);
+        setOpen(true);
+
     }
 
     //retorno de la vista
     return (
+        <>
         <HomeLayout title={"Modulo curso"}>
             <Create
                 module="curso"
@@ -32,6 +40,14 @@ function CreateProg(){
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>
+        <Modal
+            title="Programa creado"
+            message="el programa ha sido creado con exito"
+            type="success"
+            isOpen={open}
+            onClose={() => setOpen(false)}
+        />
+        </>
     );
 }
 

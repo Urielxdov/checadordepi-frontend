@@ -31,7 +31,7 @@ const reducer = (state: TeacherStateProps, action: TeacherActions) => {
         case 'CREATE_TEACHER':
             return {teachers: [...state.teachers, action.payload]}
         case 'UPDATE_TEACHER':
-            return {teachers: state.teachers.map(t => t.id == action.payload.id ? action.payload: t)}
+            return {teachers: state.teachers.map(t => t.id == action.payload.oldId ? action.payload.data: t)}
         case 'DELETE_TEACHER':
             return {teachers: state.teachers.filter( t => t.id != action.payload)}
         case 'SEARCH_TEACHER':
@@ -49,7 +49,8 @@ export function TeacherProvider({ children }:PropsHook){
         dispatch({type: "CREATE_TEACHER", payload: teacher});
     }
 
-    const updateTeacher = (teacher: ProfesorConfig) => {
+    const updateTeacher = (data: Array<any>) => {
+        const teacher = parseArray(data);
         dispatch({type: "UPDATE_TEACHER", payload: teacher});
     }
 
@@ -74,4 +75,20 @@ export function TeacherProvider({ children }:PropsHook){
             {children}
         </TeacherContext.Provider>
     );
+}
+
+function parseArray(data: Array<any>){
+    return {
+        oldId: data[0],
+        data: {
+            id: data[1],
+            nombre: data[2],
+            apellidos: data[3],
+            telefono: data[4],
+            correo: data[5],
+            grado: data[6],
+            nombre_grado: data[7],
+            status: data[8]
+        } as ProfesorConfig
+    }
 }

@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { StudentsContext } from "../context/StudentContext";
-import { type StudentStateProps } from "../../interfaces/componentConfig";
+import { type StudentStateProps, type StudentUpdate } from "../../interfaces/componentConfig";
 import { type StudentActions } from "../../interfaces/componentConfig";
 import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
 
@@ -27,7 +27,7 @@ const reducer = (state: StudentStateProps, action: StudentActions) => {
         case 'DELETE_STUDENT':
             return {students: state.students.filter(student => student.id !== action.payload)}
         case 'UPDATE_STUDENT':
-            return {students: state.students.map(student => student.id === action.payload.id ? action.payload : student)}
+            return {students: state.students.map(student => student.id === action.payload.oldId ? action.payload.data : student)}
         case 'SEARCH_STUDENT':
             return {...state, student: state.students.find(student => student.id === action.payload)}
     }
@@ -48,11 +48,13 @@ export function StudentProvider({ children }: PropsHook) {
       payload: numberControl,
     })
 
-  const updateStudent = (student: AlumnoConfig) =>
+  const updateStudent = (data: Array<any>) => {
+    const student = parseArray(data);
     dispatch({
       type: "UPDATE_STUDENT",
       payload: student,
     })
+  }
 
   const searchStudent = (numberControl: string) => {
     dispatch({
@@ -75,4 +77,21 @@ export function StudentProvider({ children }: PropsHook) {
       {children}
     </StudentsContext.Provider>
   )
+}
+
+function parseArray(data: Array<any>):StudentUpdate{
+  //nuevo objeto
+  return {
+    oldId: data[0],
+    data: {
+      id: data[1],
+      nombre: data[2],
+      apellidos: data[3],
+      telefono: data[4],
+      calle: data[5],
+      colonia: data[6],
+      correo: data[7],
+      status: data[8]
+    } as AlumnoConfig
+  }
 }

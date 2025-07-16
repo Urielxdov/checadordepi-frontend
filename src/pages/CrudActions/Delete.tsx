@@ -1,10 +1,30 @@
 import { type DeleteParameters } from "../../interfaces/CRUDInterfaces";
 import QueryInput from "../../componets/utils/Inputs/QueryInput";
-import Table from "../../componets/tables/Table";
-import Button from "../../componets/utils/buttons/Button";
-import { parseObjectToRow } from "../../utils/ParserObjects";
+import FunctionTable from "../../componets/tables/FunctionTable";
 
 function Delete({module, headers, entity, onSearch, onDelete}:DeleteParameters){
+    //manejo de eliminado
+    const drop = (e: React.MouseEvent<HTMLButtonElement>) => {
+      //evitar recargo de pagina
+      e.preventDefault()
+
+      //obtener el tr sobre el que se dio click
+      const tr = (e.target as HTMLElement).closest('tr')
+
+      //si existe el tr
+      if(tr){
+        //obtener el id
+        const id = tr.getAttribute('data-id');
+
+        //si el id existe
+        if(id){
+          //pasar a onDelete
+          onDelete(id)
+        }
+      }
+    }
+
+  
     //validar entidad
     if(!entity){
         return(
@@ -17,17 +37,11 @@ function Delete({module, headers, entity, onSearch, onDelete}:DeleteParameters){
         return(
           <>
             <QueryInput placeholder={"buscar "+module} action={onSearch}/>
-            <Table
-              header={headers}
-              body={[parseObjectToRow(entity)]}
-            />
-            <Button
-              text="eliminar"
-              action={onDelete}
-              submit={false}
-              styles="p-1 text-white bg-red-500 rounded-sm
-                    hover: bg-red-600 hover: cursor-pointer
-                    "
+            <FunctionTable
+              type='DELETE'
+              action={drop}
+              headers={headers}
+              body={[entity]}
             />
           </>  
         );
