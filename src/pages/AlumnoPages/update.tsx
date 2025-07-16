@@ -3,6 +3,7 @@ import { useStudents } from "../../hooks/custom/useStudents";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import { ALUMNOHEADERS } from "../../utils/Headers";
+import { ALUMNOFIELDS } from "../../utils/Fields";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 
@@ -27,7 +28,9 @@ function UpdateAlu(){
             <Update
                 module='alumno'
                 entity={context.state.student}
+                all={context.state.students}
                 headers={ALUMNOHEADERS}
+                fields={ALUMNOFIELDS}
                 onSearch={context.searchStudent}
                 onUpdate={update}
             />

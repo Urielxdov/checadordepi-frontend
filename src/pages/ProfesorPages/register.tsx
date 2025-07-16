@@ -3,29 +3,30 @@ import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import { PROFESORFIELDS } from "../../utils/Fields";
 import { useTeachers } from "../../hooks/custom/useTeachers";
-import { parseToModel } from "../../utils/parserModels";
 import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import { useForm } from "../../hooks/reducers/FormReducer";
 
 function CreateProf(){
     //estado de modal
     const [open, setOpen] = useState<boolean>(false);
 
-
     //uso del contexto
     const context = useTeachers();
 
+    //hook de formulario
+    const {state, handleChange, resetForm } = useForm('Profesor');
+
     //manejo de datos
-    const submit = (data:FormData) => {
+    const submit = () => {
+        //obtener el modelo
+        const profesor = state.data as ProfesorConfig;
         //activo por defecto
-        data.append("status","activo");
-
-        //objeto convertido
-        const profesor = parseToModel<ProfesorConfig>(data);
-
+        profesor.status = "activo"
         //guardado en el contexto
         context.addTeacher(profesor);
+        resetForm();
         setOpen(true);
     }
 
@@ -37,6 +38,7 @@ function CreateProf(){
                 module="profesor"
                 fields={PROFESORFIELDS.slice(0, PROFESORFIELDS.length-1)}
                 onSubmit={submit}
+                onChange={handleChange}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>

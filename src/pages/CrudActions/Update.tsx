@@ -2,7 +2,7 @@ import QueryInput from "../../componets/utils/Inputs/QueryInput";
 import { type UpdateParameters } from "../../interfaces/CRUDInterfaces";
 import FunctionTable from "../../componets/tables/FunctionTable";
 
-function Update({module, entity, headers, onSearch, onUpdate}:UpdateParameters){
+function Update({module, entity, headers, all, onSearch, onUpdate}:UpdateParameters){
     //manejo de actualizacion
     const getChanges = (e: React.MouseEvent<HTMLButtonElement>) =>{
         //evitar recargo de pagina
@@ -33,7 +33,12 @@ function Update({module, entity, headers, onSearch, onUpdate}:UpdateParameters){
         return (
             <>
                 <QueryInput placeholder={'buscar '+module} action={onSearch}/>
-                sin registros
+                <FunctionTable
+                    type='UPDATE'
+                    action={getChanges}
+                    headers={headers}
+                    body={all}
+                />
             </>
         );
     }else{

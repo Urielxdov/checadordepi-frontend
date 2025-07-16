@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type ChangeEvent } from 'react'
 
 interface InputProps {
   label: string
@@ -9,6 +9,7 @@ interface InputProps {
   minLength?: number
   maxLength?: number
   value?: any
+  change: (key: string, value: any) => void
 }
 
 export default function Input (configuration: InputProps) {
@@ -24,7 +25,8 @@ export default function Input (configuration: InputProps) {
         required={configuration.required}
         minLength={configuration.minLength}
         maxLength={configuration.maxLength}
-        value={configuration.value}
+        defaultValue={configuration.value}
+        onChange={e => configuration.change(e.target.name, e.target.value)}
       />
     </div>
   )

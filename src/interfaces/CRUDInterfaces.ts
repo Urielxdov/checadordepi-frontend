@@ -1,5 +1,5 @@
 import { type FieldProps } from "./componentConfig"
-import type { AlumnoConfig, ProfesorConfig, ProgramaConfig } from "./ModelsInterfaces"
+import type { BaseModel } from "./ModelsInterfaces"
 
 export interface IndexParameters {
     headers: Array<string>,
@@ -9,7 +9,8 @@ export interface IndexParameters {
 export interface DeleteParameters {
     module: string
     headers: Array<string>
-    entity: AlumnoConfig | ProfesorConfig | ProgramaConfig | undefined
+    entity: BaseModel | undefined
+    all: BaseModel[]
     onSearch: (s:string) => void
     onDelete: (id:string) => void
 }
@@ -17,13 +18,15 @@ export interface DeleteParameters {
 export interface CreateParameters {
     module: string
     fields: Array<FieldProps>
-    onSubmit: (data: FormData) => void
+    onChange: (key: string, value: any) => void
+    onSubmit: () => void
 }
 
 export interface UpdateParameters {
     module: string,
-    entity: AlumnoConfig | ProfesorConfig | ProgramaConfig | undefined
-    headers: Array<string>,
+    entity: BaseModel | undefined
+    all: BaseModel[]
+    headers: Array<string>
     onSearch: (s:string) => void
     onUpdate: (data: Array<any>) => void
 }

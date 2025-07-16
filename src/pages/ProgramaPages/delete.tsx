@@ -29,6 +29,7 @@ function DeleteProg(){
                 module="curso"
                 headers={PROGRAMAHEADERS}
                 entity={context.state.program}
+                all={context.state.programs}
                 onSearch={(s: string) => context.searchProgram(parseInt(s))}
                 onDelete={drop}
             />

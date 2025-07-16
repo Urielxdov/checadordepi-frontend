@@ -27,6 +27,7 @@ function UpdateProf(){
             <Update
                 module='profesor'
                 entity={context.state.teacher}
+                all={context.state.teachers}
                 headers={PROFESORHEADERS}
                 onSearch={context.searchTeacher}
                 onUpdate={update}

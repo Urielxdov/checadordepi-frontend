@@ -27,6 +27,7 @@ function UpdateProg(){
             <Update
                 module='curso'
                 entity={context.state.program}
+                all={context.state.programs}
                 headers={PROGRAMAHEADERS}
                 onSearch={(s: string) => context.searchProgram(parseInt(s))}
                 onUpdate={update}

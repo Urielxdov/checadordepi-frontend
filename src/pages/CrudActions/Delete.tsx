@@ -2,7 +2,7 @@ import { type DeleteParameters } from "../../interfaces/CRUDInterfaces";
 import QueryInput from "../../componets/utils/Inputs/QueryInput";
 import FunctionTable from "../../componets/tables/FunctionTable";
 
-function Delete({module, headers, entity, onSearch, onDelete}:DeleteParameters){
+function Delete({module, headers, entity, all, onSearch, onDelete}:DeleteParameters){
     //manejo de eliminado
     const drop = (e: React.MouseEvent<HTMLButtonElement>) => {
       //evitar recargo de pagina
@@ -30,7 +30,12 @@ function Delete({module, headers, entity, onSearch, onDelete}:DeleteParameters){
         return(
           <>
             <QueryInput placeholder={"buscar "+module} action={onSearch}/>
-            Sin registros
+            <FunctionTable
+              type='DELETE'
+              action={drop}
+              headers={headers}
+              body={all}
+            />
           </>
         );
     }else{

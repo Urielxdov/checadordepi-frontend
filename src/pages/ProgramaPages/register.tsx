@@ -3,7 +3,7 @@ import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import { PROGRAMAFIELDS } from "../../utils/Fields";
 import { usePrograms } from "../../hooks/custom/usePrograms";
-import { parseToModel } from "../../utils/parserModels";
+import { useForm } from "../../hooks/reducers/FormReducer";
 import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
@@ -15,16 +15,18 @@ function CreateProg(){
     //uso del contexto
     const context = usePrograms();
 
+    //hook de formulario
+    const { state, handleChange, resetForm } = useForm('Programa');
+
     //manejo de datos
-    const submit = (data:FormData) => {
+    const submit = () => {
+        //obtener el modelo
+        const programa = state.data as ProgramaConfig
         //activo por defecto
-        data.append("status","activo");
-
-        //objeto convertido
-        const programa = parseToModel<ProgramaConfig>(data);
-
+        programa.status = "activo"
         //guardado en el contexto
         context.addProgram(programa);
+        resetForm();
         setOpen(true);
 
     }
@@ -37,6 +39,7 @@ function CreateProg(){
                 module="curso"
                 fields={PROGRAMAFIELDS.slice(0, PROGRAMAFIELDS.length-1)}
                 onSubmit={submit}
+                onChange={handleChange}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>

@@ -29,6 +29,7 @@ function DeleteProf(){
                 module="profesor"
                 headers={PROFESORHEADERS}
                 entity={context.state.teacher}
+                all={context.state.teachers}
                 onSearch={context.searchTeacher}
                 onDelete={drop}
             />

@@ -30,6 +30,7 @@ function DeleteAlu(){
                 module="alumno"
                 headers={ALUMNOHEADERS}
                 entity={context.state.student}
+                all={context.state.students}
                 onSearch={context.searchStudent}
                 onDelete={drop}
             />

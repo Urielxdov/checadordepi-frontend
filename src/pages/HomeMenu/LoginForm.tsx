@@ -8,18 +8,21 @@ import Input from "../../componets/forms/Input";
 import Button from "../../componets/utils/buttons/Button";
 import logoTec from '../../assets/logo_login_tecnm.png';
 import logoITL from '../../assets/110053_login.png';
-import { parseToModel } from "../../utils/parserModels";
+import { useForm } from "../../hooks/reducers/FormReducer";
 
 function LoginView(){
     //contexto
     const context = getAuthContext();
 
+    //hook de formulario
+    const { state, handleChange, resetForm } = useForm('Login');
+
     //navegacion
     const navigate = useNavigate();
 
     //obtencion de datos
-    const onSubmit = (data:FormData) => {
-        const login = parseToModel<LoginConfig>(data);
+    const onSubmit = () => {
+        const login = state.data as LoginConfig
         //validar acceso
         if(login.user as String =='admin'&&login.password as String =='12345'){
             alert("Acceso exitoso!!!!");
@@ -28,6 +31,8 @@ function LoginView(){
         }else{
             alert("Credenciales invalidas");
         }
+
+        resetForm();
     }
 
     return(
@@ -50,6 +55,7 @@ function LoginView(){
                                 required={true}
                                 maxLength={f.maxlength?f.maxlength:200}
                                 minLength={f.minlength?f.minlength:1}
+                                change={handleChange}
                                 key={f.name}
                             />
                         ))}

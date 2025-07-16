@@ -3,30 +3,32 @@ import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
 import { ALUMNOFIELDS } from "../../utils/Fields";
-import { parseToModel } from "../../utils/parserModels";
 import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
+import { useForm } from "../../hooks/reducers/FormReducer";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 
 function CreateAlu(){
-    //estado para modal
-    const [open, setOpen] = useState<boolean>(false);
+   //estado para modal
+   const [open, setOpen] = useState<boolean>(false);
 
-    //contexto de alumno
-    const context = useStudents();
+   //contexto de alumno
+   const context = useStudents();
 
-    //funcion de manejo
-    const onSubmit = (data:FormData) => {
-        //activo por defecto
-        data.append("status","activo");
-        
-        //paso al modelo de alumno
-        const alumno = parseToModel<AlumnoConfig>(data);
+   //hook de formulario
+   const { state, handleChange, resetForm } = useForm('Alumno');
 
-        //gurdado en el contexto
-        context.addStudent(alumno);
-        setOpen(true);
-     }
+   //funcion de manejo
+   const onSubmit = () => {
+      //obtener el modelo
+      const alumno = state.data as AlumnoConfig
+      //activo por defecto
+      alumno.status = "activo"
+      //gurdado en el contexto
+      context.addStudent(alumno);
+      resetForm();
+      setOpen(true);
+   }
 
      //retorno de vista
      return (
@@ -36,6 +38,7 @@ function CreateAlu(){
                 module="Alumno"
                 fields={ALUMNOFIELDS.slice(0,ALUMNOFIELDS.length-1)}
                 onSubmit={onSubmit}
+                onChange={handleChange}
             />
             <ReturnButton path="/alumno/"/>
          </HomeLayout>
