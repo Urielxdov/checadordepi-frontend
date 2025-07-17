@@ -89,7 +89,7 @@ export const PROFESORFIELDS = [
          },
          {
              label:"Nombre del grado maximo",
-             name:"nombre grado",
+             name:"nombre_grado",
              type:"text",
     
          },

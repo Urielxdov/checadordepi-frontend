@@ -8,26 +8,15 @@ function DeleteProg(){
     //uso de contexto
     const context = usePrograms();
 
-    //manejo de eliminado
-    const drop = () => {
-        //obtener el profesor
-        const programa = context.state.program
-
-        //validar que exista
-        if(programa){
-            context.deleteProgram(programa.id);
-        }
-    }
-
     //retorno de la vista
     return(
         <HomeLayout title="Modulo curso">
             <Delete
-                module="curso"
+                entity="curso"
                 headers={PROGRAMAHEADERS}
-                entity={context.state.program}
-                onSearch={context.searchProgram}
-                onDelete={drop}
+                body={context.state.programs}
+                onSearch={(s: string) => context.searchProgram(parseInt(s))}
+                onDelete={(id: string) => context.deleteProgram(parseInt(id))}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>

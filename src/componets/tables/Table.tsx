@@ -36,7 +36,6 @@ export default function Table<T> ({ header, body }: TableProps<T>) {
               <tr
                 key={rowIndex}
                 data-id={row.id}
-                data-object={JSON.stringify(row.raw)} // cuidado: esto debe ser serializable
                 className='odd:bg-white even:bg-gray-100'
               >
                 {row.cells.map((cell, cellIndex) => (

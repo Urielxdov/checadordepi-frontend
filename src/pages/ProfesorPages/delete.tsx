@@ -8,26 +8,15 @@ function DeleteProf(){
     //uso de contexto
     const context = useTeachers();
 
-    //manejo de eliminado
-    const drop = () => {
-        //obtener el profesor
-        const profesor = context.state.teacher
-
-        //validar que exista
-        if(profesor){
-            context.deleteTeacher(profesor.id);
-        }
-    }
-
     //retorno de la vista
     return(
         <HomeLayout title="Modulo profesor">
             <Delete
-                module="profesor"
                 headers={PROFESORHEADERS}
-                entity={context.state.teacher}
+                entity="profesor"
+                body={context.state.teachers}
                 onSearch={context.searchTeacher}
-                onDelete={drop}
+                onDelete={context.deleteTeacher}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>

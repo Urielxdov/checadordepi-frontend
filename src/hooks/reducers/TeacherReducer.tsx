@@ -3,12 +3,12 @@ import { TeacherContext } from "../context/TeacherContext";
 import { type TeacherStateProps } from "../../interfaces/componentConfig";
 import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import { type TeacherActions } from "../../interfaces/componentConfig";
+import type { UpdateProfesor } from "../../interfaces/componentConfig";
 
 //interfaces de configuracion
 interface PropsHook {
     children: ReactNode
 }
-
 
 //estado inicial 
 const initialState = () => ({
@@ -31,7 +31,7 @@ const reducer = (state: TeacherStateProps, action: TeacherActions) => {
         case 'CREATE_TEACHER':
             return {teachers: [...state.teachers, action.payload]}
         case 'UPDATE_TEACHER':
-            return {teachers: state.teachers.map(t => t.id == action.payload.id ? action.payload: t)}
+            return {teachers: state.teachers.map(t => t.id == action.payload.oldId ? action.payload.data: t)}
         case 'DELETE_TEACHER':
             return {teachers: state.teachers.filter( t => t.id != action.payload)}
         case 'SEARCH_TEACHER':
@@ -45,11 +45,13 @@ export function TeacherProvider({ children }:PropsHook){
     const [state, dispatch] = useReducer(reducer, initialState());
 
     //funciones para compartir
-    const addTeacher = (teacher: ProfesorConfig) => {
+    const addTeacher = (data: FormData) => {
+        const teacher = formDataToProfesorConfig(data)
         dispatch({type: "CREATE_TEACHER", payload: teacher});
     }
 
-    const updateTeacher = (teacher: ProfesorConfig) => {
+    const updateTeacher = (data: FormData) => {
+        const teacher = formDataUpdateToProfesorConfig(data)
         dispatch({type: "UPDATE_TEACHER", payload: teacher});
     }
 
@@ -74,4 +76,33 @@ export function TeacherProvider({ children }:PropsHook){
             {children}
         </TeacherContext.Provider>
     );
+}
+
+function formDataToProfesorConfig (data: FormData): ProfesorConfig {
+  return {
+    id: data.get('id') as string,
+    nombre: data.get('nombre') as string,
+    apellidos: data.get('apellidos') as string,
+    telefono: data.get('telefono') as string,
+    correo: data.get('correo') as string,
+    grado: data.get('grado') as string,
+    nombre_grado: data.get('nombre_grado') as string,
+    status: data.get('status') ? data.get('status') as string : 'activo'
+  }
+}
+
+function formDataUpdateToProfesorConfig (data: FormData): UpdateProfesor {
+  return {
+        oldId: data.get('clave') as string,
+        data: {
+        id: data.get('id') as string,
+        nombre: data.get('nombre') as string,
+        apellidos: data.get('apellidos') as string,
+        telefono: data.get('telefono') as string,
+        correo: data.get('correo') as string,
+        grado: data.get('grado') as string,
+        nombre_grado: data.get('nombre_grado') as string,
+        status: data.get('status') as string
+        }
+    }
 }

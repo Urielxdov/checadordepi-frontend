@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ProgramContext } from "../context/ProgramaContext";
+import { ProgramContext } from "../context/ProgramContext";
 
 export function usePrograms(){
     //recupera el contexto
