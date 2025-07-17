@@ -7,7 +7,7 @@ type StudentContextType = {
     state: StudentStateProps
     dispatch: React.Dispatch<StudentActions>
     addStudent: (student: AlumnoConfig) => void
-    updateStudent: (data: Array<any>) => void
+    updateStudent: (updated: AlumnoConfig) => void
     deleteStudent: (numberControl: string) => void
     searchStudent: (numberControl: string) => void
 }

@@ -1,8 +1,8 @@
-import type Alumno from "../interfaces/ModelsInterfaces";
+import type { AlumnoConfig } from "../interfaces/ModelsInterfaces"
 
 const apiUrl = ''
 
-export const fetchStudents = async (query: string): Promise<Alumno[]> => {
+export const fetchStudents = async (query: string): Promise<AlumnoConfig[]> => {
   const res = await fetch(`${apiUrl} ${query}`)
   if (!res.ok) {
     // manejar el error

@@ -3,7 +3,7 @@ import { useStudents } from "../../hooks/custom/useStudents";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import { ALUMNOHEADERS } from "../../utils/Headers";
-import { ALUMNOFIELDS } from "../../utils/Fields";
+import { type AlumnoConfig, type BaseModel } from "../../interfaces/ModelsInterfaces";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 
@@ -15,9 +15,9 @@ function UpdateAlu(){
     const context = useStudents();
 
     //menejo de update
-    const update = (data: Array<any>) => {
+    const update = (updated: BaseModel) => {
         //paso al contexto
-        context.updateStudent(data);
+        context.updateStudent(updated as AlumnoConfig);
         //abrir modal
         setOpen(true);
     }
@@ -30,7 +30,6 @@ function UpdateAlu(){
                 entity={context.state.student}
                 all={context.state.students}
                 headers={ALUMNOHEADERS}
-                fields={ALUMNOFIELDS}
                 onSearch={context.searchStudent}
                 onUpdate={update}
             />

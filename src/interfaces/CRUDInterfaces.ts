@@ -28,5 +28,5 @@ export interface UpdateParameters {
     all: BaseModel[]
     headers: Array<string>
     onSearch: (s:string) => void
-    onUpdate: (data: Array<any>) => void
+    onUpdate: (updated: BaseModel) => void
 }

@@ -31,7 +31,7 @@ export interface StudentUpdate {
 
 export type StudentActions = 
     | { type: "CREATE_STUDENT"; payload: AlumnoConfig}
-    | { type: "UPDATE_STUDENT"; payload: StudentUpdate}
+    | { type: "UPDATE_STUDENT"; payload: AlumnoConfig}
     | { type: "DELETE_STUDENT"; payload: string}
     | { type: "SEARCH_STUDENT"; payload: string}
 
@@ -40,14 +40,9 @@ export interface TeacherStateProps {
   teacher?: ProfesorConfig
 }
 
-export interface TeacherUpdate {
-  oldId: string,
-  data: ProfesorConfig
-}
-
 export type TeacherActions = 
     | {type: "CREATE_TEACHER", payload: ProfesorConfig}
-    | {type: "UPDATE_TEACHER", payload: TeacherUpdate}
+    | {type: "UPDATE_TEACHER", payload: ProfesorConfig}
     | {type: "DELETE_TEACHER", payload: string}
     | {type: "SEARCH_TEACHER", payload: string}
 
@@ -56,13 +51,8 @@ export interface ProgramStateProps {
   program?: ProgramaConfig
 }
 
-export interface ProgramUpdate {
-  oldId: string
-  data: ProgramaConfig
-}
-
 export type ProgramActions = 
     | {type: "CREATE_PROGRAM", payload: ProgramaConfig}
-    | {type: "UPDATE_PROGRAM", payload: ProgramUpdate}
+    | {type: "UPDATE_PROGRAM", payload: ProgramaConfig}
     | {type: "DELETE_PROGRAM", payload: number}
     | {type: "SEARCH_PROGRAM", payload: number}

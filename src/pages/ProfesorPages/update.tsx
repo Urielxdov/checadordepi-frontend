@@ -5,6 +5,7 @@ import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import type { ProfesorConfig, BaseModel } from "../../interfaces/ModelsInterfaces";
 
 function UpdateProf(){
     //estado de modal
@@ -14,9 +15,9 @@ function UpdateProf(){
     const context = useTeachers();
 
     //menejo de update
-    const update = (data: Array<any>) => {
+    const update = (updated: BaseModel) => {
         //paso al contexto
-        context.updateTeacher(data);
+        context.updateTeacher(updated as ProfesorConfig);
         //abrir modal
         setOpen(true);
     }
