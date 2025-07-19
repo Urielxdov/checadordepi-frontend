@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import loadModels from '../../FaceRecognition/loadModels'
 
 export default function Camera () {
   const CAMERA_ID = 'FACE_RECOGNITION'
@@ -24,6 +25,12 @@ export default function Camera () {
           video: true
         })
         video.srcObject = stream
+
+        // Esperamos a que el video tenga dimensiones válidas
+        video.onloadedmetadata = () => {
+          video.play()
+          loadModels(CAMERA_ID, CANVAS_ID)
+        }
       } catch (err) {
         console.error('Error accediendo a la cámara:', err)
       }
@@ -33,15 +40,17 @@ export default function Camera () {
   }, [])
 
   return (
-    <>
+    <div className='relative w-full max-w-md mx-auto'>
       <video
         id={CAMERA_ID}
         autoPlay
         muted
         playsInline
-        className='w-full max-w-md'
+        width={640}
+        height={480}
+        className='w-full'
       />
-      <canvas id={CANVAS_ID} />
-    </>
+      <canvas id={CANVAS_ID} className='absolute top-0 left-0 w-full h-full' />
+    </div>
   )
 }
