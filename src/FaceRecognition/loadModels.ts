@@ -3,10 +3,7 @@ import * as faceapi from 'face-api.js'
 const MODELS_URL = '/models/face_recognition'
 
 export default async function loadModels(idVideo: string, idCanvas: string): Promise<void> {
-  await faceapi.nets.ssdMobilenetv1.loadFromUri(MODELS_URL)
-  await faceapi.nets.faceLandmark68Net.loadFromUri(MODELS_URL)
-  await faceapi.nets.faceRecognitionNet.loadFromUri(MODELS_URL)
-  await faceapi.nets.faceExpressionNet.loadFromUri(MODELS_URL)
+  await faceapi.nets.tinyFaceDetector.loadFromUri(MODELS_URL)
 
   const video = document.getElementById(idVideo) as HTMLVideoElement | null
   const canvas = document.getElementById(idCanvas) as HTMLCanvasElement | null
@@ -20,20 +17,19 @@ export default async function loadModels(idVideo: string, idCanvas: string): Pro
   faceapi.matchDimensions(canvas, displaySize)
 
   const detect = async () => {
-    const detections = await faceapi
-      .detectAllFaces(video)
-      .withFaceLandmarks()
-      .withFaceDescriptors()
-      .withFaceExpressions()
+    const detections = await faceapi.detectAllFaces(
+      video,
+      new faceapi.TinyFaceDetectorOptions()
+    )
 
     const resized = faceapi.resizeResults(detections, displaySize)
 
-    canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height)
-    faceapi.draw.drawDetections(canvas, resized)
-    faceapi.draw.drawFaceLandmarks(canvas, resized)
-    faceapi.draw.drawFaceExpressions(canvas, resized, 0.05)
+    const ctx = canvas.getContext('2d')
+    ctx?.clearRect(0, 0, canvas.width, canvas.height)
 
-    requestAnimationFrame(detect) // loop
+    faceapi.draw.drawDetections(canvas, resized)
+
+    requestAnimationFrame(detect)
   }
 
   detect()
