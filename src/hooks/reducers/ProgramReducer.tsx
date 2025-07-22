@@ -3,6 +3,7 @@ import { ProgramContext } from "../context/ProgramaContext";
 import { type ProgramStateProps } from "../../interfaces/componentConfig";
 import { type ProgramActions } from "../../interfaces/componentConfig";
 import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import { getPrograms } from "../../services/programService";
 
 //interfaces de configuracion
 interface PropsHook {
@@ -10,14 +11,11 @@ interface PropsHook {
 }
 
 //estado inicial 
-const initialState = () => ({
-    programs: [{
-        id: 1,
-        nombre: "Mestria en ciencias de la ingenieria",
-        registro: "TECNM-MCI",
-        status: "activo"
-    }]
-})
+const initialState = () => {
+    const data = { programs: [] as Array<ProgramaConfig> }
+    getPrograms().then(paged => data.programs = paged.data).catch(e => console.log(e))
+    return data
+}
 
 //reducer de profesor
 const reducer = (state: ProgramStateProps, action: ProgramActions) => {

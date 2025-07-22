@@ -3,6 +3,7 @@ import { TeacherContext } from "../context/TeacherContext";
 import { type TeacherStateProps } from "../../interfaces/componentConfig";
 import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import { type TeacherActions } from "../../interfaces/componentConfig";
+import { getTeachers } from "../../services/teacherService";
 
 //interfaces de configuracion
 interface PropsHook {
@@ -11,18 +12,12 @@ interface PropsHook {
 
 
 //estado inicial 
-const initialState = () => ({
-    teachers: [{
-        id: "12345",
-        nombre: "Juan",
-        apellidos: "Lopez",
-        telefono: "4771112233",
-        correo: "jlopez@mail.com",
-        grado: "doctorado",
-        nombre_grado: "doctorado en ciencias de la ingenieria",
-        status: "activo"
-    }]
-})
+const initialState = () => {
+    //obtener del api
+    const data = { teachers: [] as Array<ProfesorConfig> }
+    getTeachers().then(paged => data.teachers = paged.data).catch(e => console.log(e));
+    return data
+}
 
 //reducer de profesor
 const reducer = (state: TeacherStateProps, action: TeacherActions) => {
