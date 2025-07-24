@@ -1,5 +1,3 @@
-import React, { type ChangeEvent } from 'react'
-
 interface InputProps {
   label: string
   name: string
@@ -25,7 +23,7 @@ export default function Input (configuration: InputProps) {
         required={configuration.required}
         minLength={configuration.minLength}
         maxLength={configuration.maxLength}
-        defaultValue={configuration.value}
+        value={configuration.value}
         onChange={e => configuration.change(e.target.name, e.target.value)}
       />
     </div>

@@ -25,9 +25,16 @@ function CreateProf(){
         //activo por defecto
         profesor.status = "activo"
         //guardado en el contexto
-        context.addTeacher(profesor);
-        resetForm();
-        setOpen(true);
+        context.addTeacher(profesor).then(created => {
+            if(created){
+                //mostrar modal
+                setOpen(true);
+            }else{
+                alert("no se creo");
+            }
+            //resetear formulario
+            resetForm();
+        }).catch(e => console.log(e));
     }
 
     //retorno de la vista
@@ -36,7 +43,7 @@ function CreateProf(){
         <HomeLayout title={"Modulo profesor"}>
             <Create
                 module="profesor"
-                fields={PROFESORFIELDS.slice(0, PROFESORFIELDS.length-1)}
+                fields={PROFESORFIELDS}
                 onSubmit={submit}
                 onChange={handleChange}
             />

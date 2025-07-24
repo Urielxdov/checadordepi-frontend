@@ -1,3 +1,4 @@
+import type { PagedData } from "./httpConfig"
 import type { AlumnoConfig, ProfesorConfig, ProgramaConfig } from "./ModelsInterfaces"
 
 export interface FieldProps {
@@ -37,10 +38,13 @@ export type StudentActions =
 
 export interface TeacherStateProps {
   teachers: ProfesorConfig[]
+  current_page?: number
+  total?: number
   teacher?: ProfesorConfig
 }
 
 export type TeacherActions = 
+    | {type: "GET_TEACHERS", payload: PagedData<ProfesorConfig>}
     | {type: "CREATE_TEACHER", payload: ProfesorConfig}
     | {type: "UPDATE_TEACHER", payload: ProfesorConfig}
     | {type: "DELETE_TEACHER", payload: string}

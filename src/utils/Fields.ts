@@ -10,20 +10,17 @@ export const ALUMNOFIELDS = [
              label:"Nombre(s)",
              name:"nombre",
              type:"text",
-
          },
          {
              label:"Apellidos",
              name:"apellidos",
              type:"text",
-            
          },
          {
              label:"Telefono",
              name:"telefono",
              type:"tel",
              maxlength: 10,
-        
          },
          {
              label:"Calle y numero",
@@ -40,7 +37,6 @@ export const ALUMNOFIELDS = [
              label:"Correo",
              name:"correo",
              type:"email",
-
          },
          {
             label:"Estatus:",
@@ -92,11 +88,6 @@ export const PROFESORFIELDS = [
              name:"nombre_grado",
              type:"text",
     
-         },
-         {
-            label:"Estatus:",
-            name:"status",
-            type:"text"
          }
      ]
 

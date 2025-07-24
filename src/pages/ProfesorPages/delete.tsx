@@ -14,11 +14,16 @@ function DeleteProf(){
     const context = useTeachers();
 
     //manejo de eliminado
-    const drop = (id: string) => { 
+    const drop = (id: string) => {
         //pasar el id
-        context.deleteTeacher(id);
-        //abrir modal
-        setOpen(true);
+        context.deleteTeacher(id).then( deleted => {
+            if(deleted){
+                //abrir modal
+                setOpen(true);
+            }else{
+                alert("No se elimino");
+            }
+        }).catch(e => console.log(e));
     }
 
     //retorno de la vista

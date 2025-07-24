@@ -17,9 +17,12 @@ function UpdateProf(){
     //menejo de update
     const update = (updated: BaseModel) => {
         //paso al contexto
-        context.updateTeacher(updated as ProfesorConfig);
-        //abrir modal
-        setOpen(true);
+        if(context.updateTeacher(updated as ProfesorConfig)){
+            //abrir modal
+            setOpen(true);
+        }else{
+            alert("No se actualizo!!!");
+        }
     }
 
     return (
