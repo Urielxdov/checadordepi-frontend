@@ -5,9 +5,9 @@ import type { ProfesorConfig } from "../interfaces/ModelsInterfaces";
 const api_url = 'http://localhost:8080/profesor'
 
 //pedir profesores
-export async function getTeachersA():Promise<PagedData<ProfesorConfig>>{
+export async function getTeachersA(page:number):Promise<PagedData<ProfesorConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/all');
+    const response = await fetch(api_url+'/get/all?page='+page);
 
     //verificar el exito
     if(!response.ok){
@@ -21,9 +21,9 @@ export async function getTeachersA():Promise<PagedData<ProfesorConfig>>{
 }
 
 //pedir profesores activos
-export async function getActiveTeachers():Promise<PagedData<ProfesorConfig>>{
+export async function getActiveTeachers(page:number):Promise<PagedData<ProfesorConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/actives');
+    const response = await fetch(api_url+'/get/actives?page='+page);
 
     //verificar el exito
     if(!response.ok){
@@ -31,7 +31,9 @@ export async function getActiveTeachers():Promise<PagedData<ProfesorConfig>>{
         throw new Error("Error("+response.status+"): "+response.statusText);
     }
 
-    return await response.json();
+    const data = await response.json();
+
+    return {data: data.data.map((p:ProfesorAPI) => jsonMapper(p)), page: data.page, total: data.total};
 }
 
 export async function createTeacher(prof:ProfesorConfig):Promise<boolean>{

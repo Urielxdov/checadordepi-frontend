@@ -38,8 +38,8 @@ export type StudentActions =
 
 export interface TeacherStateProps {
   teachers: ProfesorConfig[]
-  current_page?: number
-  total?: number
+  current_page: number
+  total: number
   teacher?: ProfesorConfig
 }
 

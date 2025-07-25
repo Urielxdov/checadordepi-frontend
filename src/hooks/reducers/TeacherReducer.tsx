@@ -1,9 +1,9 @@
-import { useReducer, type ReactNode } from "react";
+import { useEffect, useReducer, type ReactNode } from "react";
 import { TeacherContext } from "../context/TeacherContext";
 import { type TeacherStateProps } from "../../interfaces/componentConfig";
 import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import { type TeacherActions } from "../../interfaces/componentConfig";
-import { createTeacher, getTeachersA, updateTeacherA, deleteTeacherA } from "../../services/teacherService";
+import { createTeacher, getActiveTeachers, updateTeacherA, deleteTeacherA } from "../../services/teacherService";
 import type { PagedData } from "../../interfaces/httpConfig";
 
 //interfaces de configuracion
@@ -15,7 +15,7 @@ interface PropsHook {
 //estado inicial 
 const initialState = () => ({ 
     teachers: [] as Array<ProfesorConfig>,
-    current_page: 1,
+    current_page: 0,
     total: 0
  })
 
@@ -45,7 +45,7 @@ export function TeacherProvider({ children }:PropsHook){
     const getTeachers = async (page: number):Promise<void> => {
         try{
             //pedir los profesores
-            const teachers = await getTeachersA();
+            const teachers = await getActiveTeachers(page);
 
             //guardar en reducer
             dispatch({type: "GET_TEACHERS", payload: teachers as unknown as PagedData<ProfesorConfig>});
@@ -97,6 +97,10 @@ export function TeacherProvider({ children }:PropsHook){
     const searchTeacher = (clave: string) => {
         dispatch({type: "SEARCH_TEACHER", payload: clave});
     }
+
+    useEffect(()=>{
+        getTeachers(state.current_page);
+    },[]);
 
     //componente del provider
     return (
