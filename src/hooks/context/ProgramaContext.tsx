@@ -6,10 +6,11 @@ import { type ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 type ProgramContextConfig = {
     state: ProgramStateProps,
     dispatch: React.Dispatch<ProgramActions>,
-    addProgram: (program: ProgramaConfig) => void,
-    updateProgram: (updated: ProgramaConfig) => void,
-    deleteProgram: (id: number) => void,
-    searchProgram: (id: number) => void
+    getPrograms: (page: number) => Promise<void>,
+    addProgram: (program: ProgramaConfig) => Promise<boolean>,
+    updateProgram: (updated: ProgramaConfig) => Promise<boolean>,
+    deleteProgram: (id: string) => Promise<boolean>,
+    searchProgram: (id: string) => void
 }
 
 export const ProgramContext = createContext<ProgramContextConfig | undefined>(undefined);

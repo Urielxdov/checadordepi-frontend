@@ -45,8 +45,6 @@ export async function createTeacher(prof:ProfesorConfig):Promise<boolean>{
         body: JSON.stringify(modelRemaper(prof))
     })
 
-    console.log(prof)
-
     //revisar si fue exitosa
     if(!response.ok){
         //mostrar error
@@ -70,6 +68,9 @@ export async function updateTeacherA(updated: ProfesorConfig):Promise<boolean>{
         //mostrar error
         throw new Error("Error("+response.status+"): "+response.statusText);
     }
+
+    const data = await response.json();
+    console.log(data);
 
     //avisar de exito
     return true;

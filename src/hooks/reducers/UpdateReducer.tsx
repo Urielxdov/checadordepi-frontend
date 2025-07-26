@@ -9,8 +9,8 @@ interface StateProps<T extends BaseModel>{
 
 //acciones
 type UpdateActions<T extends BaseModel> =
-    |{ type: 'CHANGE', id: string | number, key: keyof T,  value: any}
-    |{ type: 'UPDATE', id: string | number }
+    |{ type: 'CHANGE', id: string, key: keyof T,  value: any}
+    |{ type: 'UPDATE', id: string }
 
 //reducer
 function reduceUpdate<T extends BaseModel>(state:StateProps<T>, action:UpdateActions<T>){
@@ -38,11 +38,11 @@ export function useUpdate<T extends BaseModel>(copy: T[]){
     const [state, dispatch] = useReducer(reduceUpdate, {data: copy});
 
     //operaciones
-    const handleChange = (id: string | number, key: string, value: any) => {
+    const handleChange = (id: string, key: string, value: any) => {
         dispatch({type:'CHANGE', id: id, key: key as keyof T, value: value})
     }
 
-    const handleUpdate = (id: string | number) => {
+    const handleUpdate = (id: string) => {
         dispatch({type: 'UPDATE', id: id})
     }
 

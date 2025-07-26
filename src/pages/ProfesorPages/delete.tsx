@@ -5,6 +5,7 @@ import { PROFESORHEADERS } from "../../utils/Headers";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import PageBar from "../../componets/ui/pageBar";
 
 function DeleteProf(){
     //estado de modal
@@ -37,6 +38,11 @@ function DeleteProf(){
                 all={context.state.teachers}
                 onSearch={context.searchTeacher}
                 onDelete={drop}
+            />
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getTeachers}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>

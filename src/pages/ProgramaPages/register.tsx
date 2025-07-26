@@ -25,10 +25,15 @@ function CreateProg(){
         //activo por defecto
         programa.status = "activo"
         //guardado en el contexto
-        context.addProgram(programa);
-        resetForm();
-        setOpen(true);
-
+        context.addProgram(programa).then(created => {
+            if(created){
+                //mostrar el modal
+                setOpen(true);
+            }else{
+                alert("no se creo!!!");
+            }
+            resetForm();
+        }).catch(e => console.log(e));
     }
 
     //retorno de la vista

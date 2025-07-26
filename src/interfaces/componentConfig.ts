@@ -52,11 +52,14 @@ export type TeacherActions =
 
 export interface ProgramStateProps {
   programs: ProgramaConfig[]
+  current_page: number
+  total: number
   program?: ProgramaConfig
 }
 
 export type ProgramActions = 
+    | {type: "GET_PROGRAMS", payload: PagedData<ProgramaConfig>}
     | {type: "CREATE_PROGRAM", payload: ProgramaConfig}
     | {type: "UPDATE_PROGRAM", payload: ProgramaConfig}
-    | {type: "DELETE_PROGRAM", payload: number}
-    | {type: "SEARCH_PROGRAM", payload: number}
+    | {type: "DELETE_PROGRAM", payload: string}
+    | {type: "SEARCH_PROGRAM", payload: string}

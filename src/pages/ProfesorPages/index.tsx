@@ -3,6 +3,7 @@ import { PROFESORHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import PageBar from "../../componets/ui/pageBar";
 
 function IndexProf(){
     //contexto
@@ -14,6 +15,11 @@ function IndexProf(){
             <Index 
                 headers={PROFESORHEADERS}
                 data={context.state.teachers}
+            />
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getTeachers}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>

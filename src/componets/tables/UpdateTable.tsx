@@ -14,7 +14,7 @@ function UpdateTable<T extends BaseModel>({ headers, body, action }:UpdateTableC
     const { state, handleChange, handleUpdate } = useUpdate(body);
 
     //manejo de update
-    const update = (id: string | number) => {
+    const update = (id: string) => {
         //maneja el hook
         handleUpdate(id);
 

@@ -1,5 +1,5 @@
 export interface BaseModel {
-    id: string | number
+    id: string
     nombre: string
     status: string
 }

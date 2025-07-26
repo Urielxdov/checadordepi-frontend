@@ -5,6 +5,7 @@ import { PROGRAMAHEADERS } from "../../utils/Headers";
 import { usePrograms } from "../../hooks/custom/usePrograms";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import PageBar from "../../componets/ui/pageBar";
 
 function DeleteProg(){
     //estado de modal
@@ -16,9 +17,14 @@ function DeleteProg(){
     //manejo de eliminado
     const drop = (id: string) => {
         //paso al contexto
-        context.deleteProgram(parseInt(id));
-        //abrir modal
-        setOpen(true);
+        context.deleteProgram(id).then(deleted => {
+            if(deleted){
+                //abrir modal
+                setOpen(true);
+            }else{
+                alert("No se elimino!!!");
+            }
+        }).catch(e => console.log(e));
     }
 
     //retorno de la vista
@@ -30,8 +36,13 @@ function DeleteProg(){
                 headers={PROGRAMAHEADERS}
                 entity={context.state.program}
                 all={context.state.programs}
-                onSearch={(s: string) => context.searchProgram(parseInt(s))}
+                onSearch={context.searchProgram}
                 onDelete={drop}
+            />
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getPrograms}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>

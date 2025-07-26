@@ -54,7 +54,6 @@ export function TeacherProvider({ children }:PropsHook){
         }
     }
 
-
     const addTeacher = async (teacher: ProfesorConfig):Promise<boolean> => {
         try{
             //esperar respuesta

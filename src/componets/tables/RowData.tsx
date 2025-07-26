@@ -3,7 +3,7 @@ import type { BaseModel } from "../../interfaces/ModelsInterfaces";
 interface RowDataConfig<T extends BaseModel>{
     data: T
     editable?:boolean,
-    change?: (id: string | number, key: string, value: any) => void
+    change?: (id: string, key: string, value: any) => void
 }
 
 function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T>){

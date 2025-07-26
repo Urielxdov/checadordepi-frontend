@@ -5,6 +5,8 @@ import ReturnButton from "../../componets/utils/buttons/ReturnButton";
 import { PROGRAMAHEADERS } from "../../utils/Headers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import type { BaseModel, ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import PageBar from "../../componets/ui/pageBar";
 
 function UpdateProg(){
     //estado de modal
@@ -14,11 +16,16 @@ function UpdateProg(){
     const context = usePrograms();
 
     //menejo de update
-    const update = (data: Array<any>) => {
+    const update = (updated:BaseModel) => {
         //paso al contexto
-        context.updateProgram(data);
-        //abrir modal
-        setOpen(true);
+        context.updateProgram(updated as ProgramaConfig).then(updated => {
+            if(updated){
+                //abrir modal
+                setOpen(true);
+            }else{
+                alert("No se actualizo!!");
+            }
+        }).catch(e => console.log(e));
     }
 
     return (
@@ -29,8 +36,13 @@ function UpdateProg(){
                 entity={context.state.program}
                 all={context.state.programs}
                 headers={PROGRAMAHEADERS}
-                onSearch={(s: string) => context.searchProgram(parseInt(s))}
+                onSearch={context.searchProgram}
                 onUpdate={update}
+            />
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getPrograms}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>

@@ -6,6 +6,7 @@ import { PROFESORHEADERS } from "../../utils/Headers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 import type { ProfesorConfig, BaseModel } from "../../interfaces/ModelsInterfaces";
+import PageBar from "../../componets/ui/pageBar";
 
 function UpdateProf(){
     //estado de modal
@@ -16,13 +17,15 @@ function UpdateProf(){
 
     //menejo de update
     const update = (updated: BaseModel) => {
-        //paso al contexto
-        if(context.updateTeacher(updated as ProfesorConfig)){
-            //abrir modal
-            setOpen(true);
-        }else{
-            alert("No se actualizo!!!");
-        }
+        context.updateTeacher(updated as ProfesorConfig).then(updated => {
+            //verificar el exito
+            if(updated){
+                //abrir modal
+                setOpen(true);
+            }else{
+                alert("No se actualizo!!!");
+            }
+        })
     }
 
     return (
@@ -35,6 +38,11 @@ function UpdateProf(){
                 headers={PROFESORHEADERS}
                 onSearch={context.searchTeacher}
                 onUpdate={update}
+            />
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getTeachers}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>

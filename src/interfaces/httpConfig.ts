@@ -12,7 +12,7 @@ export interface ValidatedAccess {
 
 // modelos de backend
 export interface ProfesorAPI {
-    clave_profesor: string
+    clave_profesor: string,
     nombre_profesor: string,
     apellido_profesor: string,
     telefono_profesor: string,
@@ -20,4 +20,11 @@ export interface ProfesorAPI {
     grado_maximo: string,
     nombre_grado_maximo: string,
     estatus_profesor: string
+}
+
+export interface ProgramaAPI {
+    clave_programa: string,
+    nombre_programa: string,
+    registro_conahcyt: string,
+    estatus_programa: string
 }

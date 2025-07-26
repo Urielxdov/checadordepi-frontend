@@ -1,33 +1,39 @@
-import type { PagedData } from "../interfaces/httpConfig";
+import type { PagedData, ProgramaAPI } from "../interfaces/httpConfig";
 import type { ProgramaConfig } from "../interfaces/ModelsInterfaces";
 
 //endpoint del api
 const api_url = 'http://localhost:8080/programa_estudios'
 
 //pedir profesores
-export async function getPrograms():Promise<PagedData<ProgramaConfig>>{
+export async function getPrograms(page:number):Promise<PagedData<ProgramaConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/all');
+    const response = await fetch(api_url+'/get/all?page='+page);
 
     //verificar el exito
     if(!response.ok){
-        throw new Error("Fallo al obtener programas!!!");
+        //mostrar error
+        throw new Error(response.status.toString());
     }
 
-    return await response.json();
+    //obtener data
+    const data = await response.json();
+    return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaConfig>
 }
 
 //pedir profesores activos
-export async function getActivePrograms():Promise<PagedData<ProgramaConfig>>{
+export async function getActivePrograms(page:number):Promise<PagedData<ProgramaConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/actives');
+    const response = await fetch(api_url+'/get/actives?page='+page);
 
     //verificar el exito
     if(!response.ok){
-        throw new Error("Fallo al obtener programas!!!");
+        //mostrar error
+        throw new Error(response.status.toString());
     }
 
-    return await response.json();
+    //obtener data
+    const data = await response.json();
+    return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaConfig>
 }
 
 export async function createProgram(prof:ProgramaConfig):Promise<boolean>{
@@ -36,48 +42,67 @@ export async function createProgram(prof:ProgramaConfig):Promise<boolean>{
         method: "POST",
         mode: "cors",
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(prof)
+        body: JSON.stringify(modelRemapper(prof))
     })
 
     //revisar si fue exitosa
     if(!response.ok){
-        throw new Error("Fallo al crear programa!!!");
+        //mostrar error
+        throw new Error(response.status.toString());
     }
     //avisar del exito
     return true;
 }
 
-export async function updateProgram(updated: ProgramaConfig):Promise<boolean>{
+export async function updateProgramA(updated: ProgramaConfig):Promise<boolean>{
     //peticion con fetch
     const response = await fetch(api_url+'/update',{
         method: "PUT",
         mode: "cors",
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(updated)
+        body: JSON.stringify(modelRemapper(updated))
     })
 
     //revisar si fue exitosa
     if(!response.ok){
-        throw new Error("Fallo al actualizar programa");
+        //mostrar error
+        throw new Error(response.status.toString());
     }
 
     //avisar de exito
     return true;
 }
 
-export async function deleteProgram(id: string):Promise<boolean>{
+export async function deleteProgramA(id: string):Promise<boolean>{
     //peticion con fetch
     const response = await fetch(api_url+'/delete/'+id,{
         method:"DELETE",
         mode:"cors",
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({'clave': id})
     });
 
     //revisar si hubo exito
     if(!response.ok){
-        throw new Error("Fallo al eliminar programa");
+        //mostrar error
+        throw new Error(response.status.toString());
     }
 
     return true;
+}
+
+function modelRemapper(prog:ProgramaConfig):ProgramaAPI{
+    return {
+        clave_programa: prog.id,
+        nombre_programa: prog.nombre,
+        registro_conahcyt: prog.registro,
+        estatus_programa: prog.status
+    } as ProgramaAPI
+}
+
+function jsonMapper(prog:ProgramaAPI):ProgramaConfig{
+    return {
+        id: prog.clave_programa,
+        nombre: prog.nombre_programa,
+        registro: prog.registro_conahcyt,
+        status: prog.estatus_programa
+    } as ProgramaConfig
 }

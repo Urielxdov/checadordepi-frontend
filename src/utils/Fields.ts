@@ -95,7 +95,7 @@ export const PROGRAMAFIELDS = [
          {
              label:"Numero de programa",
              name:"id",
-             type:"number",
+             type:"text",
          },
          {
              label:"Nombre",
