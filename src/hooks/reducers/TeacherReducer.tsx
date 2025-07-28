@@ -57,10 +57,15 @@ export function TeacherProvider({ children }:PropsHook){
     const addTeacher = async (teacher: ProfesorConfig):Promise<boolean> => {
         try{
             //esperar respuesta
-            await createTeacher(teacher);
+            const result = await createTeacher(teacher);
+
+            //validar exito
+            if(!result.success){ return result.success }
+            console.log(result);
+
             //guardar en reducer
             dispatch({type: "CREATE_TEACHER", payload: teacher});
-            return true;
+            return result.success;
         }catch(error){
             console.error(error);
             return false;
@@ -70,10 +75,14 @@ export function TeacherProvider({ children }:PropsHook){
     const updateTeacher = async (updated: ProfesorConfig):Promise<boolean> => {
         try{
             //esperar respuesta
-            await updateTeacherA(updated);
+            const result = await updateTeacherA(updated);
+
+            //validar exito
+            if(!result.success){ return result.success }
+
             //modificar el reducer
             dispatch({type: "UPDATE_TEACHER", payload: updated});
-            return true;
+            return result.success;
         }catch(error){
             console.log(error);
             return false
@@ -83,10 +92,14 @@ export function TeacherProvider({ children }:PropsHook){
     const deleteTeacher = async (clave: string):Promise<boolean> => {
         try{
             //esperar respuesta
-            await deleteTeacherA(clave);
+            const result = await deleteTeacherA(clave);
+
+            //validar exito
+            if(!result.success){ return result.success }
+
             //modificar el reducer
             dispatch({type: "DELETE_TEACHER", payload: clave});
-            return true;
+            return result.success;
         }catch(error){
             console.log(error);
             return false;

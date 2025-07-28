@@ -1,4 +1,4 @@
-import type { PagedData, ProgramaAPI } from "../interfaces/httpConfig";
+import type { OperationResponse, PagedData, ProgramaAPI } from "../interfaces/httpConfig";
 import type { ProgramaConfig } from "../interfaces/ModelsInterfaces";
 
 //endpoint del api
@@ -36,7 +36,7 @@ export async function getActivePrograms(page:number):Promise<PagedData<ProgramaC
     return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaConfig>
 }
 
-export async function createProgram(prof:ProgramaConfig):Promise<boolean>{
+export async function createProgram(prof:ProgramaConfig):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/create',{
         method: "POST",
@@ -51,10 +51,10 @@ export async function createProgram(prof:ProgramaConfig):Promise<boolean>{
         throw new Error(response.status.toString());
     }
     //avisar del exito
-    return true;
+    return await response.json();
 }
 
-export async function updateProgramA(updated: ProgramaConfig):Promise<boolean>{
+export async function updateProgramA(updated: ProgramaConfig):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/update',{
         method: "PUT",
@@ -70,10 +70,10 @@ export async function updateProgramA(updated: ProgramaConfig):Promise<boolean>{
     }
 
     //avisar de exito
-    return true;
+    return await response.json();
 }
 
-export async function deleteProgramA(id: string):Promise<boolean>{
+export async function deleteProgramA(id: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/delete/'+id,{
         method:"DELETE",
@@ -86,7 +86,7 @@ export async function deleteProgramA(id: string):Promise<boolean>{
         throw new Error(response.status.toString());
     }
 
-    return true;
+    return await response.json();
 }
 
 function modelRemapper(prog:ProgramaConfig):ProgramaAPI{

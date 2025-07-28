@@ -7,25 +7,29 @@ import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 import type { ProfesorConfig, BaseModel } from "../../interfaces/ModelsInterfaces";
 import PageBar from "../../componets/ui/pageBar";
+import debounce from "../../utils/Debounce";
 
 function UpdateProf(){
     //estado de modal
-    const [open,setOpen] = useState<boolean>(false);
+    const [openSuccess,setOpenSuccess] = useState<boolean>(false);
+    const [openFail,setOpenFail] = useState<boolean>(false);
 
     //contexto de profesor
     const context = useTeachers();
 
     //menejo de update
     const update = (updated: BaseModel) => {
-        context.updateTeacher(updated as ProfesorConfig).then(updated => {
-            //verificar el exito
-            if(updated){
-                //abrir modal
-                setOpen(true);
-            }else{
-                alert("No se actualizo!!!");
-            }
-        })
+        debounce(() => {
+            context.updateTeacher(updated as ProfesorConfig).then(updated => {
+                //verificar el exito
+                if(updated){
+                    //abrir modal
+                    setOpenSuccess(true);
+                }else{
+                    setOpenFail(true);
+                }
+            }).catch(e => console.log(e));
+        },500)();
     }
 
     return (
@@ -50,8 +54,15 @@ function UpdateProf(){
             title="Profesor actualizado"
             message="los datos del profesor han sido actualizados"
             type="success"
-            isOpen={open}
-            onClose={() => setOpen(false)}
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al actualizar"
+            message="el profesor no ha sido actualizado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
         />
         </>
     );

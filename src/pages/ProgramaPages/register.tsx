@@ -7,10 +7,12 @@ import { useForm } from "../../hooks/reducers/FormReducer";
 import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import debounce from "../../utils/Debounce";
 
 function CreateProg(){
     //estado de modal
-    const [open,setOpen] = useState<boolean>(false);
+    const [openSuccess,setOpenSuccess] = useState<boolean>(false);
+    const [openFail,setOpenFail] = useState<boolean>(false);
 
     //uso del contexto
     const context = usePrograms();
@@ -19,7 +21,7 @@ function CreateProg(){
     const { state, handleChange, resetForm } = useForm('Programa');
 
     //manejo de datos
-    const submit = () => {
+    const submit = debounce(() => {
         //obtener el modelo
         const programa = state.data as ProgramaConfig
         //activo por defecto
@@ -28,13 +30,13 @@ function CreateProg(){
         context.addProgram(programa).then(created => {
             if(created){
                 //mostrar el modal
-                setOpen(true);
+                setOpenSuccess(true);
             }else{
-                alert("no se creo!!!");
+                setOpenFail(true);
             }
             resetForm();
         }).catch(e => console.log(e));
-    }
+    },500);
 
     //retorno de la vista
     return (
@@ -52,8 +54,15 @@ function CreateProg(){
             title="Programa creado"
             message="el programa ha sido creado con exito"
             type="success"
-            isOpen={open}
-            onClose={() => setOpen(false)}
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al crear"
+            message="el curso no ha sido creado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
         />
         </>
     );

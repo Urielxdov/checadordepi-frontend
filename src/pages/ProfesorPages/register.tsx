@@ -7,10 +7,12 @@ import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 import { useForm } from "../../hooks/reducers/FormReducer";
+import debounce from "../../utils/Debounce";
 
 function CreateProf(){
     //estado de modal
-    const [open, setOpen] = useState<boolean>(false);
+    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
+    const [openFail, setOpenFail] = useState<boolean>(false);
 
     //uso del contexto
     const context = useTeachers();
@@ -19,23 +21,23 @@ function CreateProf(){
     const {state, handleChange, resetForm } = useForm('Profesor');
 
     //manejo de datos
-    const submit = () => {
+    const submit = debounce(() => {
         //obtener el modelo
         const profesor = state.data as ProfesorConfig;
         //activo por defecto
-        profesor.status = "activo"
+        profesor.status = "Activo"
         //guardado en el contexto
         context.addTeacher(profesor).then(created => {
             if(created){
                 //mostrar modal
-                setOpen(true);
+                setOpenSuccess(true);
             }else{
-                alert("no se creo");
+                setOpenFail(true);
             }
             //resetear formulario
             resetForm();
         }).catch(e => console.log(e));
-    }
+    },500);
 
     //retorno de la vista
     return (
@@ -53,8 +55,15 @@ function CreateProf(){
             title="Profesor creado"
             message="el profesor ha sido creado con exito"
             type="success"
-            isOpen={open}
-            onClose={() => setOpen(false)}
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al crear"
+            message="el profesor no ha sido creado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
         />
         </>
     );

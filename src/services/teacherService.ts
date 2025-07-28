@@ -1,4 +1,4 @@
-import type { PagedData, ProfesorAPI } from "../interfaces/httpConfig";
+import type { OperationResponse, PagedData, ProfesorAPI } from "../interfaces/httpConfig";
 import type { ProfesorConfig } from "../interfaces/ModelsInterfaces";
 
 //endpoint del api
@@ -36,7 +36,7 @@ export async function getActiveTeachers(page:number):Promise<PagedData<ProfesorC
     return {data: data.data.map((p:ProfesorAPI) => jsonMapper(p)), page: data.page, total: data.total};
 }
 
-export async function createTeacher(prof:ProfesorConfig):Promise<boolean>{
+export async function createTeacher(prof:ProfesorConfig):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/create',{
         method: "POST",
@@ -51,10 +51,10 @@ export async function createTeacher(prof:ProfesorConfig):Promise<boolean>{
         throw new Error("Error("+response.status+"): "+response.statusText);
     }
     //avisar del exito
-    return true;
+    return await response.json();
 }
 
-export async function updateTeacherA(updated: ProfesorConfig):Promise<boolean>{
+export async function updateTeacherA(updated: ProfesorConfig):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/update',{
         method: "PUT",
@@ -69,14 +69,11 @@ export async function updateTeacherA(updated: ProfesorConfig):Promise<boolean>{
         throw new Error("Error("+response.status+"): "+response.statusText);
     }
 
-    const data = await response.json();
-    console.log(data);
-
     //avisar de exito
-    return true;
+    return await response.json();
 }
 
-export async function deleteTeacherA(id: string):Promise<boolean>{
+export async function deleteTeacherA(id: string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/delete/'+id,{
         method:"DELETE",
@@ -89,7 +86,7 @@ export async function deleteTeacherA(id: string):Promise<boolean>{
         throw new Error(response.status.toString());
     }
 
-    return true;
+    return await response.json();
 }
 
 function modelRemaper(prof:ProfesorConfig):ProfesorAPI{

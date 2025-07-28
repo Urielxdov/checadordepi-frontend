@@ -56,11 +56,16 @@ export function ProgramProvider({ children }:PropsHook){
     const addProgram = async (program: ProgramaConfig):Promise<boolean> => {
         try{
             //mandar al api
-            await createProgram(program);
+            const result = await createProgram(program);
+
+            //validar el exito
+            if(!result.success){ return result.success }
+
             //guardar en reducer
             dispatch({type: "CREATE_PROGRAM", payload: program});
+
             //caso de exito
-            return true;
+            return result.success;
         }catch(error){
             //mensaje de error y regresar que no se guardo
             console.log(error);
@@ -71,11 +76,16 @@ export function ProgramProvider({ children }:PropsHook){
     const updateProgram = async (updated: ProgramaConfig):Promise<boolean> => {
         try{
             //mandar al api
-            await updateProgramA(updated);
+            const result = await updateProgramA(updated);
+
+            //validar el exito
+            if(!result.success){ return result.success }
+
             //guardar en reducer
             dispatch({type: "UPDATE_PROGRAM", payload: updated});
+
             //caso de exito
-            return true;
+            return result.success;
         }catch(error){
             //mensaje de error y fracaso
             console.log(error);
@@ -86,11 +96,16 @@ export function ProgramProvider({ children }:PropsHook){
     const deleteProgram = async (id: string):Promise<boolean> => {
         try{
             //pedir al api
-            await deleteProgramA(id);
+            const result = await deleteProgramA(id);
+
+            //validar el exito
+            if(!result.success){ return result.success }
+
             //guardar en reducer
             dispatch({type: "DELETE_PROGRAM", payload: id});
+
             //caso de exito
-            return true;
+            return result.success;
         }catch(error){
             //mensaje de error y fracaso
             console.log(error);

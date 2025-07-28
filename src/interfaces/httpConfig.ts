@@ -6,6 +6,13 @@ export interface PagedData<T extends BaseModel>{
     total: number
 }
 
+export interface OperationResponse<P>{
+    success: boolean
+    message: string
+    code_status: number
+    data: P
+}
+
 export interface ValidatedAccess {
     token: string
 }

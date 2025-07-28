@@ -6,25 +6,29 @@ import { usePrograms } from "../../hooks/custom/usePrograms";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 import PageBar from "../../componets/ui/pageBar";
+import debounce from "../../utils/Debounce";
 
 function DeleteProg(){
     //estado de modal
-    const [open, setOpen] = useState<boolean>(false);
+    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
+    const [openFail, setOpenFail] = useState<boolean>(false);
 
     //uso de contexto
     const context = usePrograms();
 
     //manejo de eliminado
     const drop = (id: string) => {
-        //paso al contexto
-        context.deleteProgram(id).then(deleted => {
-            if(deleted){
-                //abrir modal
-                setOpen(true);
-            }else{
-                alert("No se elimino!!!");
-            }
-        }).catch(e => console.log(e));
+        debounce(() => {
+            //paso al contexto
+            context.deleteProgram(id).then(deleted => {
+                if(deleted){
+                    //abrir modal
+                    setOpenSuccess(true);
+                }else{
+                    setOpenFail(true);
+                }
+            }).catch(e => console.log(e))
+        },500)();
     }
 
     //retorno de la vista
@@ -50,8 +54,15 @@ function DeleteProg(){
             title="Programa eliminado"
             message="el alumno ha sido eliminado con exito"
             type="success"
-            isOpen={open}
-            onClose={() => setOpen(false)}
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al eliminar"
+            message="el curso no ha sido eliminado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
         />
         </>
     );

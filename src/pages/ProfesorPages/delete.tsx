@@ -5,26 +5,30 @@ import { PROFESORHEADERS } from "../../utils/Headers";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import debounce from "../../utils/Debounce";
 import PageBar from "../../componets/ui/pageBar";
 
 function DeleteProf(){
     //estado de modal
-    const [open,setOpen] = useState<boolean>(false);
+    const [openSuccess,setOpenSuccess] = useState<boolean>(false);
+    const [openFail,setOpenFail] = useState<boolean>(false);
 
     //uso de contexto
     const context = useTeachers();
 
     //manejo de eliminado
     const drop = (id: string) => {
-        //pasar el id
-        context.deleteTeacher(id).then( deleted => {
-            if(deleted){
-                //abrir modal
-                setOpen(true);
-            }else{
-                alert("No se elimino");
-            }
-        }).catch(e => console.log(e));
+        debounce(() => {
+                //pasar el id
+                context.deleteTeacher(id).then( deleted => {
+                if(deleted){
+                    //abrir modal
+                    setOpenSuccess(true);
+                }else{
+                    setOpenFail(true);
+                }
+            }).catch(e => console.log(e));
+        },500)();
     }
 
     //retorno de la vista
@@ -50,8 +54,15 @@ function DeleteProf(){
             title="Profesor eliminado"
             message="el profesor ha sido eliminado con exito"
             type="success"
-            isOpen={open}
-            onClose={() => setOpen(false)}
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al crear"
+            message="el profesor no ha sido creado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
         />
         </>
     );
