@@ -24,7 +24,7 @@ export default function Input (configuration: InputProps) {
         minLength={configuration.minLength}
         maxLength={configuration.maxLength}
         value={configuration.value}
-        onChange={e => configuration.change(e.target.name, e.target.value)}
+        onChange={e => configuration.change(e.target.name, e.target.files ? e.target.files[0]: e.target.value)}
       />
     </div>
   )

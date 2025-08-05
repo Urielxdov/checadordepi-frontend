@@ -1,4 +1,4 @@
-import type { OperationResponse, PagedData, ProgramaAPI } from "../interfaces/httpConfig";
+import type { SelectItem, OperationResponse, PagedData, ProgramaAPI } from "../interfaces/httpConfig";
 import type { ProgramaConfig } from "../interfaces/ModelsInterfaces";
 
 //endpoint del api
@@ -34,6 +34,19 @@ export async function getActivePrograms(page:number):Promise<PagedData<ProgramaC
     //obtener data
     const data = await response.json();
     return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaConfig>
+}
+
+export async function getProgramSelect():Promise<Array<SelectItem>>{
+    //peticion con fetch
+    const response = await fetch(api_url+"/get/all/select");
+
+    //verificar el exito 
+    if(!response.ok){
+        //mostrat el error
+        throw new Error(response.status.toString());
+    }
+
+    return await response.json();
 }
 
 export async function createProgram(prof:ProgramaConfig):Promise<OperationResponse<ProgramaAPI>>{

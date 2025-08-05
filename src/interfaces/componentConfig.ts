@@ -1,7 +1,7 @@
 import type { PagedData } from "./httpConfig"
 import type { AlumnoConfig, ProfesorConfig, ProgramaConfig } from "./ModelsInterfaces"
 
-export interface FieldProps {
+export interface FieldConfig {
     label: string
     name: string
     type: string
@@ -10,18 +10,10 @@ export interface FieldProps {
     value?: any
 }
 
-export interface ModalConfig {
-    title: string
-    message: string
-    type: string
-}
-
-export interface ReturnButtonConfig {
-    path: string
-}
-
 export interface StudentStateProps {
   students: AlumnoConfig[]
+  current_page: number
+  total: number
   student?: AlumnoConfig
 }
 
@@ -31,6 +23,7 @@ export interface StudentUpdate {
 }
 
 export type StudentActions = 
+    | { type: "GET_STUDENTS", payload: PagedData<AlumnoConfig> }
     | { type: "CREATE_STUDENT"; payload: AlumnoConfig}
     | { type: "UPDATE_STUDENT"; payload: AlumnoConfig}
     | { type: "DELETE_STUDENT"; payload: string}

@@ -5,11 +5,11 @@ import Button from '../../componets/utils/buttons/Button'
 import { type CreateParameters } from '../../interfaces/CRUDInterfaces'
 import { type FieldConfig } from '../../interfaces/componentConfig'
 
-function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: CreateParameters) {
+function UpdateForm ({ module, fields, itemsPf, itemsPr, selectPf, selectPr, onSubmit, onChange }: CreateParameters) {
   //retorno de vista
   return (
     <>
-      <h1 className='font-bold text-xl'>Registrar nuevo {module}</h1>
+      <h1 className='font-bold text-xl'>Actualizar {module}</h1>
       <Form id="create-form" onSubmit={onSubmit}>
         {fields.map((f: FieldConfig) => (
           <Input
@@ -24,10 +24,10 @@ function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: Creat
             key={f.name}
           />
         ))}
-        {module == 'Alumno' ? <ComboBox name="profesor" id='profesor-select' items={itemsPf ? itemsPf:[]} onChange={onChange} />:""}
-        {module == 'Alumno' ? <ComboBox name="programa" id='programa-select' items={itemsPr ? itemsPr:[]} onChange={onChange} />:""}
+        {module == 'Alumno' ? <ComboBox name="profesor" id='profesor-select' select={selectPf as string} items={itemsPf ? itemsPf:[]} onChange={onChange} />:""}
+        {module == 'Alumno' ? <ComboBox name="programa" id='programa-select' select={selectPr as string} items={itemsPr ? itemsPr:[]} onChange={onChange} />:""}
         <Button
-          text='registrar'
+          text='actualizar'
           action={() => {}}
           submit={true}
           styles='p-1 text-white bg-green-500 rounded-sm
@@ -39,4 +39,4 @@ function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: Creat
   )
 }
 
-export default Create
+export default UpdateForm

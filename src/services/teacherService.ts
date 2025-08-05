@@ -1,4 +1,4 @@
-import type { OperationResponse, PagedData, ProfesorAPI } from "../interfaces/httpConfig";
+import type { OperationResponse, PagedData, ProfesorAPI, SelectItem } from "../interfaces/httpConfig";
 import type { ProfesorConfig } from "../interfaces/ModelsInterfaces";
 
 //endpoint del api
@@ -34,6 +34,19 @@ export async function getActiveTeachers(page:number):Promise<PagedData<ProfesorC
     const data = await response.json();
 
     return {data: data.data.map((p:ProfesorAPI) => jsonMapper(p)), page: data.page, total: data.total};
+}
+
+export async function getTeacherSelect():Promise<Array<SelectItem>>{
+    //peticion con fetch
+    const response = await fetch(api_url+"/get/all/select");
+
+    //verificar el exito 
+    if(!response.ok){
+        //mostrat el error
+        throw new Error(response.status.toString());
+    }
+
+    return await response.json();
 }
 
 export async function createTeacher(prof:ProfesorConfig):Promise<OperationResponse<ProfesorAPI>>{

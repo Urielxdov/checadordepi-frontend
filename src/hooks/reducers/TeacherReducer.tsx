@@ -61,7 +61,6 @@ export function TeacherProvider({ children }:PropsHook){
 
             //validar exito
             if(!result.success){ return result.success }
-            console.log(result);
 
             //guardar en reducer
             dispatch({type: "CREATE_TEACHER", payload: teacher});

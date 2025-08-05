@@ -1,7 +1,7 @@
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
-import { PROGRAMAFIELDS } from "../../utils/Fields";
+import { getFieldsProg } from "../../utils/Fields";
 import { usePrograms } from "../../hooks/custom/usePrograms";
 import { useForm } from "../../hooks/reducers/FormReducer";
 import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
@@ -44,7 +44,7 @@ function CreateProg(){
         <HomeLayout title={"Modulo curso"}>
             <Create
                 module="curso"
-                fields={PROGRAMAFIELDS.slice(0, PROGRAMAFIELDS.length-1)}
+                fields={getFieldsProg(state.data as ProgramaConfig)}
                 onSubmit={submit}
                 onChange={handleChange}
             />

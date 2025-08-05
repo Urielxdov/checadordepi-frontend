@@ -8,9 +8,17 @@ export interface PagedData<T extends BaseModel>{
 
 export interface OperationResponse<P>{
     success: boolean
+    exception?: boolean
     message: string
     code_status: number
-    data: P
+    data?: P
+    fields?: Object
+}
+
+export interface SelectItem {
+    key: string
+    fullName?: string
+    name?: string
 }
 
 export interface ValidatedAccess {
@@ -34,4 +42,19 @@ export interface ProgramaAPI {
     nombre_programa: string,
     registro_conahcyt: string,
     estatus_programa: string
+}
+
+export interface AlumnoAPI {
+    numero_control: string,
+    nombre_alumno: string,
+    apellido_alumno: string,
+    telefono_alumno: string,
+    calle_alumno: string,
+    colonia_alumno: string,
+    correo_alumno: string,
+    estatus_alumno: string,
+    clave_profesor: string,
+    clave_programa: string,
+    foto?: string,
+    vector?: string
 }

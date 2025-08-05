@@ -5,21 +5,29 @@ import { ALUMNOHEADERS } from "../../utils/Headers";
 import { useStudents } from "../../hooks/custom/useStudents";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import PageBar from "../../componets/ui/pageBar";
+import debounce from "../../utils/Debounce";
 
 function DeleteAlu(){
     //estado de modal
-    const [open, setOpen] = useState<boolean>(false);
+    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
+    const [openFail, setOpenFail] = useState<boolean>(false);
 
     //contexto de alumno
     const context = useStudents();
 
     //manejo de eliminacion
     const drop = (id: string) => {
-        //eliminar el alumno
-        context.deleteStudent(id);
-
-        //abrir modal
-        setOpen(true);
+        debounce(() => {
+            //eliminar el alumno
+            context.deleteStudent(id).then(deleted => {
+                if(deleted){
+                    setOpenSuccess(true);
+                }else{
+                    setOpenFail(true);
+                }
+            }).catch(e => console.log(e));
+        },500)();
     }
 
     //retorno de componente
@@ -34,14 +42,26 @@ function DeleteAlu(){
                 onSearch={context.searchStudent}
                 onDelete={drop}
             />
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getStudents}
+            />
             <ReturnButton path="/alumno/"/>
         </HomeLayout>
         <Modal
             title="Alumno eliminado"
             message="el alumno ha sido eliminado con exito"
             type="success"
-            isOpen={open}
-            onClose={() => setOpen(false)}
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al eliminar"
+            message="el alumno no ha sido eliminado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
         />
         </>
     );

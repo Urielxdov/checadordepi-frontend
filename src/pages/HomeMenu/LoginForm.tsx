@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { getAuthContext } from "../../hooks/custom/useAuth";
-import { LOGINFIELDS } from "../../utils/Fields";
+import { getFieldsLog } from "../../utils/Fields";
 import { type FieldProps } from "../../interfaces/componentConfig";
 import { type LoginConfig } from "../../interfaces/ModelsInterfaces";
 import Form from "../../componets/forms/Form";
@@ -47,7 +47,7 @@ function LoginView(){
                         <h2 className="text-xl text-left">Sistema de gestion de alumnos</h2>
                     </div>
                     <Form id="login-form" onSubmit={onSubmit}>
-                        {LOGINFIELDS.map((f:FieldProps) => (
+                        {getFieldsLog(state.data as LoginConfig).map((f:FieldProps) => (
                             <Input
                                 label={f.label}
                                 name={f.name}

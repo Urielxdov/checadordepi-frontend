@@ -11,6 +11,9 @@ export interface AlumnoConfig extends BaseModel{
     calle: string
     colonia: string
     correo: string
+    profesor?: string
+    programa?: string
+    foto?: File
 }
 
 export interface ProfesorConfig extends BaseModel{

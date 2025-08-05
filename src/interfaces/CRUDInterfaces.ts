@@ -1,4 +1,5 @@
-import { type FieldProps } from "./componentConfig"
+import { type FieldConfig } from "./componentConfig"
+import type { SelectItem } from "./httpConfig"
 import type { BaseModel } from "./ModelsInterfaces"
 
 export interface IndexParameters {
@@ -17,7 +18,11 @@ export interface DeleteParameters {
 
 export interface CreateParameters {
     module: string
-    fields: Array<FieldProps>
+    fields: Array<FieldConfig>
+    itemsPf?: Array<SelectItem>
+    itemsPr?: Array<SelectItem>
+    selectPf?: string,
+    selectPr?: string,
     onChange: (key: string, value: any) => void
     onSubmit: () => void
 }

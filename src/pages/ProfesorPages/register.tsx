@@ -1,7 +1,7 @@
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
-import { PROFESORFIELDS } from "../../utils/Fields";
+import { getFieldsProf } from "../../utils/Fields";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 import Modal from "../../componets/ui/Modals";
@@ -45,7 +45,7 @@ function CreateProf(){
         <HomeLayout title={"Modulo profesor"}>
             <Create
                 module="profesor"
-                fields={PROFESORFIELDS}
+                fields={getFieldsProf(state.data as ProfesorConfig)}
                 onSubmit={submit}
                 onChange={handleChange}
             />

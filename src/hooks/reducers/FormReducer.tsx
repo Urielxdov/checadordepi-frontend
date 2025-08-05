@@ -9,6 +9,7 @@ interface StateProps<T> {
 //acciones
 type FormActions<T> =
     |{type:'CHANGE', key: keyof T, value: any}
+    |{type:'SET', set: T}
     |{type:'RESET', reset: T}
 
 //reducer de formulario
@@ -19,6 +20,8 @@ function reduceForm<T>(state: StateProps<T>, action:FormActions<T>){
             const newData = {...state.data}
             newData[action.key] = action.value
             return {data: newData}
+        case 'SET':
+            return {data: action.set}
         case 'RESET':
             return {data: action.reset}
     }
@@ -34,7 +37,9 @@ const initialStates = () => ({
         calle: "",
         colonia: "",
         correo: "",
-        status: ""
+        status: "",
+        profesor: "",
+        programa: ""
     } as AlumnoConfig,
     Profesor: {
         id: "",
@@ -47,7 +52,7 @@ const initialStates = () => ({
         status: ""
     } as ProfesorConfig,
     Programa: {
-        id: 0,
+        id: "",
         nombre: "",
         registro: "",
         status: ""
@@ -69,10 +74,15 @@ export function useForm(module: 'Alumno'|'Profesor'|'Programa'|'Login'){
         dispatch({type: 'CHANGE', key: key as keyof typeof initialState, value: value});
     }
 
+    //predefinir valores
+    const setValue = (set: object) => {
+        dispatch({type:'SET', set: set as typeof initialState});
+    } 
+
     //lipieza de formulario
     const resetForm = () => {
         dispatch({type: 'RESET', reset: initialState});
     }
 
-    return { state, handleChange, resetForm }
+    return { state, handleChange, setValue, resetForm }
 }

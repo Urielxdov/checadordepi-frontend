@@ -58,8 +58,8 @@ function DeleteProf(){
             onClose={() => setOpenSuccess(false)}
         />
         <Modal
-            title="Error al crear"
-            message="el profesor no ha sido creado"
+            title="Error al eliminar"
+            message="el profesor no ha sido eliminado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}
