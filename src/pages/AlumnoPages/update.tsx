@@ -11,12 +11,16 @@ import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
 import type { SelectItem } from "../../interfaces/httpConfig";
 import QueryInput from "../../componets/utils/Inputs/QueryInput";
+import CheckBox from "../../componets/utils/Inputs/Checkbox";
 import debounce from "../../utils/Debounce";
 
 function UpdateAlu(){
     //estado de modal
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
+
+    //estado de check
+    const [check, setCheck] = useState<boolean>(false);
 
     //estados de items del select
     const [itemsPf, setItemsPf] = useState<SelectItem[]>([] as Array<SelectItem>);
@@ -47,6 +51,7 @@ function UpdateAlu(){
         getProgramSelect().then((items:Array<SelectItem>) => setItemsPr([{key: "default", fullName: "-- seleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e));
     },[]);
 
+    //poner el preset
     useEffect(() => {
         if(context.state.student){
             setValue(context.state.student);
@@ -73,7 +78,7 @@ function UpdateAlu(){
             <QueryInput action={context.searchStudent} placeholder="buscar alumno"/>
             <UpdateForm
                 module="Alumno"
-                fields={getFieldsAlu(state.data as AlumnoConfig).slice(1)}
+                fields={check ? getFieldsAlu(state.data as AlumnoConfig).slice(1): getFieldsAlu(state.data as AlumnoConfig).slice(1,7)}
                 itemsPf={itemsPf}
                 itemsPr={itemsPr}
                 selectPf={(state.data as AlumnoConfig).profesor}
@@ -81,6 +86,7 @@ function UpdateAlu(){
                 onSubmit={update}
                 onChange={handleChange}
             />
+            <CheckBox text="actualizar foto" onChange={setCheck}/>
             <ReturnButton path="/alumno/"/>
         </HomeLayout>
         <Modal

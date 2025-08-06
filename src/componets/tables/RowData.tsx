@@ -1,4 +1,6 @@
 import type { BaseModel } from "../../interfaces/ModelsInterfaces";
+import ComboBox from "../forms/Combo";
+import { STATUSOPTIONS } from "../../utils/Options";
 
 interface RowDataConfig<T extends BaseModel>{
     data: T
@@ -11,11 +13,22 @@ function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T
     if(editable && change){
         return (
         <>
-            {Object.keys(data).map((key) => (
-                    <td key={key} className='border border-gray-300 p-2 align-top'>
-                        {key != 'id' ? <input name={key} onChange={e => change(data.id, e.target.name, e.target.value)} defaultValue={String(data[key as keyof T])} />:<p>{data.id}</p>}
-                    </td>
-            ))}
+            {Object.keys(data).map((key) => {
+                //status
+                if(key == "status"){
+                    return (<td><ComboBox name="status" id="status-select" items={STATUSOPTIONS} select={data.status} onChange={(key, value) => change(data.id, key, value)}/></td>);
+                }
+                //otros valores
+                if(key != "id"){
+                    return (
+                        <td key={key} className='border border-gray-300 p-2 align-top'>
+                            <input name={key} onChange={e => change(data.id, e.target.name, e.target.value)} defaultValue={String(data[key as keyof T])} />
+                        </td>
+                    );
+                }else{
+                    return <td><p>{data.id}</p></td>;
+                }
+            })}
         </>
     );
     }

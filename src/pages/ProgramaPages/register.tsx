@@ -25,7 +25,7 @@ function CreateProg(){
         //obtener el modelo
         const programa = state.data as ProgramaConfig
         //activo por defecto
-        programa.status = "activo"
+        programa.status = "Activo"
         //guardado en el contexto
         context.addProgram(programa).then(created => {
             if(created){

@@ -20,6 +20,8 @@ function UpdateProg(){
     //menejo de update
     const update = (updated:BaseModel) => {
         debounce(() => {
+            //cambio
+            if(updated.status == "Permiso"){ updated.status = "Inactivo" }
             //paso al contexto
             context.updateProgram(updated as ProgramaConfig).then(updated => {
                 if(updated){
