@@ -1,9 +1,10 @@
-import { useReducer, type ReactNode } from "react";
-import { ProgramContext } from "../context/ProgramContext";
+import { useEffect, useReducer, type ReactNode } from "react";
+import { ProgramContext } from "../context/ProgramaContext";
 import { type ProgramStateProps } from "../../interfaces/componentConfig";
 import { type ProgramActions } from "../../interfaces/componentConfig";
-import { type ProgramaConfig } from "../../interfaces/ModelsInterfaces";
-import type { UpdatePrograma } from "../../interfaces/componentConfig";
+import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import { createProgram, getActivePrograms, updateProgramA, deleteProgramA } from "../../services/programService";
+import type { PagedData } from "../../interfaces/httpConfig";
 
 //interfaces de configuracion
 interface PropsHook {
@@ -12,24 +13,23 @@ interface PropsHook {
 
 //estado inicial 
 const initialState = () => ({
-    programs: [{
-        id: 1,
-        nombre: "Mestria en ciencias de la ingenieria",
-        registro: "TECNM-MCI",
-        status: "activo"
-    }]
+    programs: [] as Array<ProgramaConfig>,
+    current_page: 0,
+    total: 0
 })
 
 //reducer de profesor
 const reducer = (state: ProgramStateProps, action: ProgramActions) => {
     //acciones
     switch(action.type){
+        case 'GET_PROGRAMS':
+            return {programs: action.payload.data, current_page: action.payload.page, total: action.payload.total}
         case 'CREATE_PROGRAM':
-            return {programs: [...state.programs, action.payload]}
+            return {programs: [...state.programs, action.payload], current_page: state.current_page, total: state.total}
         case 'UPDATE_PROGRAM':
-            return {programs: state.programs.map(p => p.id == action.payload.oldId ? action.payload.data: p)}
+            return {programs: state.programs.map(p => p.id == action.payload.id ? action.payload: p), current_page: state.current_page, total: state.total}
         case 'DELETE_PROGRAM':
-            return {programs: state.programs.filter( p => p.id != action.payload)}
+            return {programs: state.programs.filter( p => p.id != action.payload), current_page: state.current_page, total: state.total}
         case 'SEARCH_PROGRAM':
             return {...state, program: state.programs.find(p => p.id == action.payload)}
     }
@@ -41,29 +41,92 @@ export function ProgramProvider({ children }:PropsHook){
     const [state, dispatch] = useReducer(reducer, initialState());
 
     //funciones para compartir
-    const addProgram = (data: FormData) => {
-        const program = formDataToProgramaConfig(data)
-        dispatch({type: "CREATE_PROGRAM", payload: program});
+    const getPrograms = async (page: number):Promise<void> => {
+        try{
+            //peticion al api
+            const programs = await getActivePrograms(page);
+
+            //guardar en el reducer
+            dispatch({type:"GET_PROGRAMS", payload: programs as unknown as PagedData<ProgramaConfig>})
+        }catch(error){
+            console.log(error);
+        }
     }
 
-    const updateProgram = (data: FormData) => {
-        const program = formDataUpdateToProgramaConfig(data)
-        dispatch({type: "UPDATE_PROGRAM", payload: program});
+    const addProgram = async (program: ProgramaConfig):Promise<boolean> => {
+        try{
+            //mandar al api
+            const result = await createProgram(program);
+
+            //validar el exito
+            if(!result.success){ return result.success }
+
+            //guardar en reducer
+            dispatch({type: "CREATE_PROGRAM", payload: program});
+
+            //caso de exito
+            return result.success;
+        }catch(error){
+            //mensaje de error y regresar que no se guardo
+            console.log(error);
+            return false;
+        }
     }
 
-    const deleteProgram = (id: number) => {
-        dispatch({type: "DELETE_PROGRAM", payload: id});
+    const updateProgram = async (updated: ProgramaConfig):Promise<boolean> => {
+        try{
+            //mandar al api
+            const result = await updateProgramA(updated);
+
+            //validar el exito
+            if(!result.success){ return result.success }
+
+            //guardar en reducer
+            dispatch({type: "UPDATE_PROGRAM", payload: updated});
+
+            //caso de exito
+            return result.success;
+        }catch(error){
+            //mensaje de error y fracaso
+            console.log(error);
+            return false;
+        }
     }
 
-    const searchProgram = (id: number) => {
+    const deleteProgram = async (id: string):Promise<boolean> => {
+        try{
+            //pedir al api
+            const result = await deleteProgramA(id);
+
+            //validar el exito
+            if(!result.success){ return result.success }
+
+            //guardar en reducer
+            dispatch({type: "DELETE_PROGRAM", payload: id});
+
+            //caso de exito
+            return result.success;
+        }catch(error){
+            //mensaje de error y fracaso
+            console.log(error);
+            return false;
+        }
+    }
+
+    const searchProgram = (id: string) => {
         dispatch({type: "SEARCH_PROGRAM", payload: id});
     }
+
+    useEffect(() => {
+        getPrograms(state.current_page);
+    },[]);
 
     //componente del provider
     return (
         <ProgramContext.Provider value={{
             state,
             dispatch,
+            getPrograms,
             addProgram,
             updateProgram,
             deleteProgram,

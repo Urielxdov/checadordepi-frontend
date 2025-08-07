@@ -1,42 +1,73 @@
-import { useEffect } from 'react'
-import Update from '../CrudActions/Update'
-import { usePrograms } from '../../hooks/custom/usePrograms'
-import HomeLayout from '../Layouts/HomeLayout'
-import ReturnButton from '../../componets/utils/buttons/ReturnButton'
-import { PROGRAMAHEADERS } from '../../utils/Headers'
+import Update from "../CrudActions/Update";
+import { usePrograms } from "../../hooks/custom/usePrograms";
+import HomeLayout from "../Layouts/HomeLayout";
+import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import { PROGRAMAHEADERS } from "../../utils/Headers";
+import Modal from "../../componets/ui/Modals";
+import { useState } from "react";
+import type { BaseModel, ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import PageBar from "../../componets/ui/pageBar";
+import debounce from "../../utils/Debounce";
 
 function UpdateProg(){
-    //obtener el contexto
+    //estado de modal
+    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
+    const [openFail, setOpenFail] = useState<boolean>(false);
+
+    //contexto de programa
     const context = usePrograms();
 
-    //si no hay regresar error
-    if(!context){ return <div>No hay contexto!!!</div> }
+    //menejo de update
+    const update = (updated:BaseModel) => {
+        debounce(() => {
+            //cambio
+            if(updated.status == "Permiso"){ updated.status = "Inactivo" }
+            //paso al contexto
+            context.updateProgram(updated as ProgramaConfig).then(updated => {
+                if(updated){
+                    //abrir modal
+                    setOpenSuccess(true);
+                }else{
+                    setOpenFail(true);
+                }
+            }).catch(e => console.log(e));
+        },500)();
+    }
 
-    //obtener lo necesario
-    const { state, searchProgram, updateProgram } = context
-
-    //efecto para busqueda
-    useEffect(() => {
-        if(state.program){
-            console.log("profesor encontrado")
-        }else{
-            console.log("profesor no encontrado")
-        }
-    },[state.program])
-
-    //retorno de componente
     return (
-        <HomeLayout title="Modulo profesor">
+        <>
+        <HomeLayout title="Modulo curso">
             <Update
-                module='profesor'
+                module='curso'
+                entity={context.state.program}
+                all={context.state.programs}
                 headers={PROGRAMAHEADERS}
-                body={state.programs}
-                onSearch={(s: string) => searchProgram(parseInt(s))}
-                onUpdate={updateProgram}
+                onSearch={context.searchProgram}
+                onUpdate={update}
             />
-            <ReturnButton path='/profesor/'/>
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getPrograms}
+            />
+            <ReturnButton path="/curso/"/>
         </HomeLayout>
+        <Modal
+            title="Programa actualizado"
+            message="los datos del programa han sido actualizados"
+            type="success"
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al actualizar"
+            message="el curso no ha sido actualizado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
+        />
+        </>
     );
 }
 
-export default UpdateProg
+export default UpdateProg;

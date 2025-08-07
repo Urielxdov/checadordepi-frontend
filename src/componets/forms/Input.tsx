@@ -6,7 +6,8 @@ interface InputProps {
   required?: boolean
   minLength?: number
   maxLength?: number
-  value: string | File | null
+  value?: any
+  change: (key: string, value: any) => void
 }
 
 export default function Input (configuration: InputProps) {
@@ -26,10 +27,8 @@ export default function Input (configuration: InputProps) {
         required={configuration.required}
         minLength={configuration.minLength}
         maxLength={configuration.maxLength}
-        accept={isFileInput ? 'image/*' : undefined} // opcional, para restringir a imágenes
-        {...(!isFileInput && typeof configuration.value === 'string'
-          ? { defaultValue: configuration.value }
-          : {})}
+        value={configuration.value}
+        onChange={e => configuration.change(e.target.name, e.target.files ? e.target.files[0]: e.target.value)}
       />
     </div>
   )

@@ -6,6 +6,8 @@ export const ALUMNOHEADERS = [
                     "calle",
                     "colonia",
                     "correo",
+                    "asesor (clave)",
+                    "programa de estudios (clave)",
                     "estatus"
                 ]
 

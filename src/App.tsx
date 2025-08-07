@@ -20,6 +20,11 @@ import DeleteProg from './pages/ProgramaPages/delete'
 //wrappers
 import StudentWrapper from './componets/utils/wrappers/StudentWrapper'
 import AuthWrapper from './componets/utils/wrappers/AuthWrapper'
+import ProtectedRoute from './componets/utils/wrappers/ProtectedRoute';
+import TeacherWrapper from './componets/utils/wrappers/TeacherWrapper';
+import ProgramWrapper from './componets/utils/wrappers/ProgramWrapper';
+import UpdateProf from './pages/ProfesorPages/update';
+import UpdateProg from './pages/ProgramaPages/update';
 import ProtectedRoute from './componets/utils/wrappers/ProtectedRoute'
 import TeacherWrapper from './componets/utils/wrappers/TeacherWrapper'
 import ProgramWrapper from './componets/utils/wrappers/ProgramWrapper'
@@ -44,6 +49,12 @@ function App () {
           <Route path='/alumno/update' element={<UpdateAlu />} />
         </Route>
         {/** Rutas de profesor */}
+        <Route element={<TeacherWrapper/>}>
+            <Route path='/profesor' element={<EntityModules entity='profesor' />} />
+            <Route path='/profesor/get' element={<IndexProf/>} />
+            <Route path='/profesor/create' element={<CreateProf/>} />
+            <Route path='/profesor/delete' element={<DeleteProf/>} />
+            <Route path='/profesor/update' element={<UpdateProf/>} />
         <Route element={<TeacherWrapper />}>
           <Route
             path='/profesor'
@@ -55,6 +66,12 @@ function App () {
           <Route path='/profesor/update' element={<UpdateProf />} />
         </Route>
         {/** Rutas de programa/curso */}
+        <Route element={<ProgramWrapper/>}>
+            <Route path='/curso' element={<EntityModules entity='curso' />} />
+            <Route path='/curso/get' element={<IndexProg />} />
+            <Route path='/curso/create' element={<CreateProg />} />
+            <Route path='/curso/delete' element={<DeleteProg />} />
+            <Route path='/curso/update' element={<UpdateProg />} />
         <Route element={<ProgramWrapper />}>
           <Route path='/curso' element={<EntityModules entity='curso' />} />
           <Route path='/curso/get' element={<IndexProg />} />

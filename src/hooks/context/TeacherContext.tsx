@@ -5,9 +5,10 @@ import { type TeacherActions } from "../../interfaces/componentConfig";
 type TeacherContextConfig = {
     state: TeacherStateProps,
     dispatch: React.Dispatch<TeacherActions>,
-    addTeacher: (data: FormData) => void,
-    updateTeacher: (data: FormData) => void,
-    deleteTeacher: (clave: string) => void,
+    getTeachers: (page: number) => Promise<void>
+    addTeacher: (teacher: ProfesorConfig) => Promise<boolean>,
+    updateTeacher: (updated: ProfesorConfig) => Promise<boolean>,
+    deleteTeacher: (clave: string) => Promise<boolean>,
     searchTeacher: (clave: string) => void
 }
 

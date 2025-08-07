@@ -1,10 +1,13 @@
 import React from 'react'
 import Button from './Button'
 import { ArrowLeft } from 'lucide-react'
-import { type ReturnButtonConfig } from '../../../interfaces/componentConfig'
 import { useNavigate } from 'react-router-dom'
 
-export default function ReturnButton ({ path }:ReturnButtonConfig) {
+interface ReturnButtonProps {
+    path: string
+}
+
+export default function ReturnButton ({ path }:ReturnButtonProps) {
   //navegacion
   const navigate = useNavigate();
 

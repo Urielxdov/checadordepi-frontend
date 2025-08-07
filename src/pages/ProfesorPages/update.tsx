@@ -1,42 +1,71 @@
-import { useEffect } from 'react'
-import Update from '../CrudActions/Update'
-import { useTeachers } from '../../hooks/custom/useTeachers'
-import HomeLayout from '../Layouts/HomeLayout'
-import ReturnButton from '../../componets/utils/buttons/ReturnButton'
-import { PROFESORHEADERS } from '../../utils/Headers'
+import Update from "../CrudActions/Update";
+import { useTeachers } from "../../hooks/custom/useTeachers";
+import HomeLayout from "../Layouts/HomeLayout";
+import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import { PROFESORHEADERS } from "../../utils/Headers";
+import Modal from "../../componets/ui/Modals";
+import { useState } from "react";
+import type { ProfesorConfig, BaseModel } from "../../interfaces/ModelsInterfaces";
+import PageBar from "../../componets/ui/pageBar";
+import debounce from "../../utils/Debounce";
 
 function UpdateProf(){
-    //obtener el contexto
+    //estado de modal
+    const [openSuccess,setOpenSuccess] = useState<boolean>(false);
+    const [openFail,setOpenFail] = useState<boolean>(false);
+
+    //contexto de profesor
     const context = useTeachers();
 
-    //si no hay regresar error
-    if(!context){ return <div>No hay contexto!!!</div> }
+    //menejo de update
+    const update = (updated: BaseModel) => {
+        debounce(() => {
+            context.updateTeacher(updated as ProfesorConfig).then(updated => {
+                //verificar el exito
+                if(updated){
+                    //abrir modal
+                    setOpenSuccess(true);
+                }else{
+                    setOpenFail(true);
+                }
+            }).catch(e => console.log(e));
+        },500)();
+    }
 
-    //obtener lo necesario
-    const { state, searchTeacher, updateTeacher } = context
-
-    //efecto para busqueda
-    useEffect(() => {
-        if(state.teacher){
-            console.log("profesor encontrado")
-        }else{
-            console.log("profesor no encontrado")
-        }
-    },[state.teacher])
-
-    //retorno de componente
     return (
+        <>
         <HomeLayout title="Modulo profesor">
             <Update
                 module='profesor'
+                entity={context.state.teacher}
+                all={context.state.teachers}
                 headers={PROFESORHEADERS}
-                body={state.teachers}
-                onSearch={searchTeacher}
-                onUpdate={updateTeacher}
+                onSearch={context.searchTeacher}
+                onUpdate={update}
             />
-            <ReturnButton path='/profesor/'/>
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getTeachers}
+            />
+            <ReturnButton path="/profesor/"/>
         </HomeLayout>
+        <Modal
+            title="Profesor actualizado"
+            message="los datos del profesor han sido actualizados"
+            type="success"
+            isOpen={openSuccess}
+            onClose={() => setOpenSuccess(false)}
+        />
+        <Modal
+            title="Error al actualizar"
+            message="el profesor no ha sido actualizado"
+            type="failure"
+            isOpen={openFail}
+            onClose={() => setOpenFail(false)}
+        />
+        </>
     );
 }
 
-export default UpdateProf
+export default UpdateProf;

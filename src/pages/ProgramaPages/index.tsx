@@ -3,6 +3,7 @@ import { PROGRAMAHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import PageBar from "../../componets/ui/pageBar";
 
 function IndexProg(){
     //contexto
@@ -14,7 +15,11 @@ function IndexProg(){
             <Index 
                 headers={PROGRAMAHEADERS}
                 data={context.state.programs}
-                action={(s: string) => context.searchProgram(parseInt(s))}
+            />
+            <PageBar
+                current={context.state.current_page}
+                total={context.state.total}
+                onChange={context.getPrograms}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>

@@ -1,12 +1,13 @@
 import React from 'react'
-import type { RowData } from '../../utils/generateTableData'
+import RowData from './RowData';
+import type { BaseModel } from '../../interfaces/ModelsInterfaces';
 
-interface TableProps<T = any> {
+interface TableProps<T extends BaseModel> {
   header: string[]
-  body: RowData<T>[] | null
+  body: T[] | null
 }
 
-export default function Table<T> ({ header, body }: TableProps<T>) {
+export default function Table<T extends BaseModel>({ header, body }: TableProps<T>) {
   if (header.length === 0) {
     return <div className='text-gray-600'>No hay datos para mostrar</div>
   }
@@ -32,20 +33,12 @@ export default function Table<T> ({ header, body }: TableProps<T>) {
 
         <tbody>
           {body && body.length > 0 ? (
-            body.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                data-id={row.id}
-                className='odd:bg-white even:bg-gray-100'
-              >
-                {row.cells.map((cell, cellIndex) => (
-                  <td
-                    key={cellIndex}
-                    className='border border-gray-300 p-2 align-top'
-                  >
-                    {cell}
-                  </td>
-                ))}
+            body.map((row) => (
+              <tr key={row.id} className='odd:bg-white even:bg-gray-100' data-id={row.id}>
+                <RowData
+                  key={row.id}
+                  data={row}
+                />
               </tr>
             ))
           ) : (
