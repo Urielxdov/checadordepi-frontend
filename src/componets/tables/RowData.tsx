@@ -16,7 +16,7 @@ function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T
             {Object.keys(data).map((key) => {
                 //status
                 if(key == "status"){
-                    return (<td><ComboBox name="status" id="status-select" items={STATUSOPTIONS} select={data.status} onChange={(key, value) => change(data.id, key, value)}/></td>);
+                    return (<td key={key}><ComboBox name="status" id="status-select" items={STATUSOPTIONS} select={data.status} onChange={(key, value) => change(data.id, key, value)}/></td>);
                 }
                 //otros valores
                 if(key != "id"){

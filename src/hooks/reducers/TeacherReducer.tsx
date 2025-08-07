@@ -127,32 +127,3 @@ export function TeacherProvider({ children }:PropsHook){
         </TeacherContext.Provider>
     );
 }
-
-function formDataToProfesorConfig (data: FormData): ProfesorConfig {
-  return {
-    id: data.get('id') as string,
-    nombre: data.get('nombre') as string,
-    apellidos: data.get('apellidos') as string,
-    telefono: data.get('telefono') as string,
-    correo: data.get('correo') as string,
-    grado: data.get('grado') as string,
-    nombre_grado: data.get('nombre_grado') as string,
-    status: data.get('status') ? data.get('status') as string : 'activo'
-  }
-}
-
-function formDataUpdateToProfesorConfig (data: FormData): UpdateProfesor {
-  return {
-        oldId: data.get('clave') as string,
-        data: {
-        id: data.get('id') as string,
-        nombre: data.get('nombre') as string,
-        apellidos: data.get('apellidos') as string,
-        telefono: data.get('telefono') as string,
-        correo: data.get('correo') as string,
-        grado: data.get('grado') as string,
-        nombre_grado: data.get('nombre_grado') as string,
-        status: data.get('status') as string
-        }
-    }
-}

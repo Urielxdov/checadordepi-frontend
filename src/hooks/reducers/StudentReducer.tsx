@@ -123,32 +123,3 @@ export function StudentProvider ({ children }: PropsHook) {
     </StudentsContext.Provider>
   )
 }
-
-function formDataToAlumnoConfig (data: FormData): AlumnoConfig {
-  return {
-    id: data.get('id') as string,
-    nombre: data.get('nombre') as string,
-    apellidos: data.get('apellidos') as string,
-    telefono: data.get('telefono') as string,
-    calle: data.get('calle') as string,
-    colonia: data.get('colonia') as string,
-    correo: data.get('correo') as string,
-    status: data.get('status') ? data.get('status') as string : 'activo'
-  }
-}
-
-function formDataUpdateToAlumnoConfig (data: FormData): UpdateAlumno {
-  return {
-    oldId: data.get('clave') as string,
-    data: {
-      id: data.get('id') as string,
-      nombre: data.get('nombre') as string,
-      apellidos: data.get('apellidos') as string,
-      telefono: data.get('telefono') as string,
-      calle: data.get('calle') as string,
-      colonia: data.get('colonia') as string,
-      correo: data.get('correo') as string,
-      status: data.get('status') as string
-    }
-  }
-}

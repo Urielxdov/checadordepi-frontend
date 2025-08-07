@@ -36,6 +36,7 @@ function DeleteProf(){
         <>
         <HomeLayout title="Modulo profesor">
             <Delete
+                module="profesor"
                 headers={PROFESORHEADERS}
                 entity={context.state.teacher}
                 all={context.state.teachers}

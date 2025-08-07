@@ -7,7 +7,7 @@ import PageBar from "../../componets/ui/pageBar";
 
 function IndexAlu () {
   //hook de alumnos
-  const context = useContext(StudentsContext)
+  const context = useStudents();
 
   if (!context) return <div>Error: contexto no disponible</div>
 

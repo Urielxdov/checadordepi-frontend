@@ -1,27 +1,12 @@
 import Table from '../../componets/tables/Table'
-import QueryInput from '../../componets/utils/Inputs/QueryInput'
-import type {
-  AlumnoConfig,
-  ProfesorConfig,
-  ProgramaConfig
-} from '../../interfaces/ModelsInterfaces'
-import { generateTableData } from '../../utils/generateTableData'
+import type { IndexParameters } from '../../interfaces/CRUDInterfaces'
 
-export interface IndexParameters {
-  headers: Array<string>
-  data: Array<AlumnoConfig | ProfesorConfig | ProgramaConfig>
-  action: (value: string) => void
-}
-
-function Index ({ headers, data, action }: IndexParameters) {
+function Index ({ headers, data }: IndexParameters) {
   return (
-    <>
-      <QueryInput action={action} placeholder='Buscar' />
-      <Table
-        header={headers}
-        body={generateTableData(data, item => item.id, undefined, false)}
-      />
-    </>
+    <Table
+      header={headers}
+      body={data}
+    />
   )
 }
 

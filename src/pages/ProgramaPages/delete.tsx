@@ -36,7 +36,7 @@ function DeleteProg(){
         <>
         <HomeLayout title="Modulo curso">
             <Delete
-                entity="curso"
+                module="curso"
                 headers={PROGRAMAHEADERS}
                 entity={context.state.program}
                 all={context.state.programs}

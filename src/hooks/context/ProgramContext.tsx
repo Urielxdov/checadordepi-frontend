@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { type ProgramActions } from "../../interfaces/componentConfig";
 import { type ProgramStateProps } from "../../interfaces/componentConfig";
+import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 
 type ProgramContextConfig = {
     state: ProgramStateProps,

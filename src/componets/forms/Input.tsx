@@ -11,8 +11,6 @@ interface InputProps {
 }
 
 export default function Input (configuration: InputProps) {
-  const isFileInput = configuration.type === 'file'
-
   return (
     <div className='flex flex-col gap-2 text-left'>
       <label className='font-bold' htmlFor={configuration.name}>

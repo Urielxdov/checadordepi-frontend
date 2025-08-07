@@ -1,6 +1,7 @@
 import { createContext } from 'react'
 import { type StudentStateProps } from '../../interfaces/componentConfig'
-import type { StudentActions } from '../reducers/StudentReducer'
+import type { StudentActions } from '../../interfaces/componentConfig'
+import type { AlumnoConfig } from '../../interfaces/ModelsInterfaces'
 
 type StudentContextType = {
     state: StudentStateProps

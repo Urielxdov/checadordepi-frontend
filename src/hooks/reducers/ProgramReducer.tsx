@@ -1,5 +1,5 @@
 import { useEffect, useReducer, type ReactNode } from "react";
-import { ProgramContext } from "../context/ProgramaContext";
+import { ProgramContext } from "../context/ProgramContext";
 import { type ProgramStateProps } from "../../interfaces/componentConfig";
 import { type ProgramActions } from "../../interfaces/componentConfig";
 import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
@@ -135,25 +135,4 @@ export function ProgramProvider({ children }:PropsHook){
             {children}
         </ProgramContext.Provider>
     );
-}
-
-function formDataToProgramaConfig (data: FormData): ProgramaConfig {
-  return {
-    id: parseInt(data.get('id') as string),
-    nombre: data.get('nombre') as string,
-    registro: data.get("registro") as string,
-    status: data.get('status') ? data.get('status') as string : 'activo'
-  }
-}
-
-function formDataUpdateToProgramaConfig (data: FormData): UpdatePrograma {
-  return {
-        oldId: parseInt(data.get('clave') as string),
-        data: {
-            id: parseInt(data.get('id') as string),
-            nombre: data.get('nombre') as string,
-            registro: data.get("registro") as string,
-            status: data.get('status') ? data.get('status') as string : 'activo'
-        }
-    }
 }

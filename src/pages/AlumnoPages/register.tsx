@@ -61,11 +61,6 @@ function CreateAlu(){
                 onSubmit={onSubmit}
                 onChange={handleChange}
             />
-            <PageBar
-                current={context.state.current_page}
-                total={context.state.total}
-                onChange={context.getStudents}
-            />
             <ReturnButton path="/alumno/"/>
          </HomeLayout>
          <Modal
