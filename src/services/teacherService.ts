@@ -5,9 +5,13 @@ import type { ProfesorConfig } from "../interfaces/ModelsInterfaces";
 const api_url = 'http://localhost:8080/profesor'
 
 //pedir profesores
-export async function getTeachersA(page:number):Promise<PagedData<ProfesorConfig>>{
+export async function getTeachersA(page:number, token:string):Promise<PagedData<ProfesorConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/all?page='+page);
+    const response = await fetch(api_url+'/get/all?page='+page,{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar el exito
     if(!response.ok){
@@ -21,9 +25,13 @@ export async function getTeachersA(page:number):Promise<PagedData<ProfesorConfig
 }
 
 //pedir profesores activos
-export async function getActiveTeachers(page:number):Promise<PagedData<ProfesorConfig>>{
+export async function getActiveTeachers(page:number, token:string):Promise<PagedData<ProfesorConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/actives?page='+page);
+    const response = await fetch(api_url+'/get/actives?page='+page,{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar el exito
     if(!response.ok){
@@ -36,9 +44,13 @@ export async function getActiveTeachers(page:number):Promise<PagedData<ProfesorC
     return {data: data.data.map((p:ProfesorAPI) => jsonMapper(p)), page: data.page, total: data.total};
 }
 
-export async function getTeacherSelect():Promise<Array<SelectItem>>{
+export async function getTeacherSelect(token:string):Promise<Array<SelectItem>>{
     //peticion con fetch
-    const response = await fetch(api_url+"/get/all/select");
+    const response = await fetch(api_url+"/get/all/select",{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar el exito 
     if(!response.ok){
@@ -49,12 +61,12 @@ export async function getTeacherSelect():Promise<Array<SelectItem>>{
     return await response.json();
 }
 
-export async function createTeacher(prof:ProfesorConfig):Promise<OperationResponse<ProfesorAPI>>{
+export async function createTeacher(prof:ProfesorConfig, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/create',{
         method: "POST",
         mode: "cors",
-        headers: {'Content-Type':'application/json'},
+        headers: {'Content-Type':'application/json', "access-token":token},
         body: JSON.stringify(modelRemaper(prof))
     })
 
@@ -67,12 +79,12 @@ export async function createTeacher(prof:ProfesorConfig):Promise<OperationRespon
     return await response.json();
 }
 
-export async function updateTeacherA(updated: ProfesorConfig):Promise<OperationResponse<ProfesorAPI>>{
+export async function updateTeacherA(updated: ProfesorConfig, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/update',{
         method: "PUT",
         mode: "cors",
-        headers: {'Content-Type':'application/json'},
+        headers: {'Content-Type':'application/json',"access-token":token},
         body: JSON.stringify(modelRemaper(updated))
     })
 
@@ -86,11 +98,12 @@ export async function updateTeacherA(updated: ProfesorConfig):Promise<OperationR
     return await response.json();
 }
 
-export async function deleteTeacherA(id: string):Promise<OperationResponse<ProfesorAPI>>{
+export async function deleteTeacherA(id: string, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/delete/'+id,{
         method:"DELETE",
-        mode:"cors"
+        mode:"cors",
+        headers:{"access-token":token}
     });
 
     //revisar si hubo exito

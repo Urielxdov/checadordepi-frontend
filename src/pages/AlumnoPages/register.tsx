@@ -11,7 +11,6 @@ import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
 import type { SelectItem } from "../../interfaces/httpConfig";
 import debounce from "../../utils/Debounce";
-import PageBar from "../../componets/ui/pageBar";
 
 function CreateAlu(){
    //estado para modal
@@ -46,8 +45,8 @@ function CreateAlu(){
    },500)
 
    useEffect(() => {
-      getTeacherSelect().then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e))
-      getProgramSelect().then((items:Array<SelectItem>) => setItemsPr([{key: "default", name: "-- sleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e))
+      getTeacherSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e))
+      getProgramSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPr([{key: "default", name: "-- sleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e))
    },[]);
      //retorno de vista
      return (

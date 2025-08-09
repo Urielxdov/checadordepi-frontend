@@ -1,9 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { getAuthContext } from "../../../hooks/custom/useAuth";
 
 function ProtectedRoute() {
-    const context = getAuthContext();
-    return context.valid ?<Outlet/>:<Navigate to="/"/>;
+    const token = localStorage.getItem("access-token");
+    return token ?<Outlet/>:<Navigate to="/"/>;
 }
 
 export default ProtectedRoute;

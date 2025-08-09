@@ -5,9 +5,13 @@ import type { ProgramaConfig } from "../interfaces/ModelsInterfaces";
 const api_url = 'http://localhost:8080/programa_estudios'
 
 //pedir profesores
-export async function getPrograms(page:number):Promise<PagedData<ProgramaConfig>>{
+export async function getPrograms(page:number, token: string):Promise<PagedData<ProgramaConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/all?page='+page);
+    const response = await fetch(api_url+'/get/all?page='+page,{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar el exito
     if(!response.ok){
@@ -21,9 +25,13 @@ export async function getPrograms(page:number):Promise<PagedData<ProgramaConfig>
 }
 
 //pedir profesores activos
-export async function getActivePrograms(page:number):Promise<PagedData<ProgramaConfig>>{
+export async function getActivePrograms(page:number, token: string):Promise<PagedData<ProgramaConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/actives?page='+page);
+    const response = await fetch(api_url+'/get/actives?page='+page,{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar el exito
     if(!response.ok){
@@ -36,9 +44,13 @@ export async function getActivePrograms(page:number):Promise<PagedData<ProgramaC
     return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaConfig>
 }
 
-export async function getProgramSelect():Promise<Array<SelectItem>>{
+export async function getProgramSelect(token: string):Promise<Array<SelectItem>>{
     //peticion con fetch
-    const response = await fetch(api_url+"/get/all/select");
+    const response = await fetch(api_url+"/get/all/select",{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar el exito 
     if(!response.ok){
@@ -49,12 +61,12 @@ export async function getProgramSelect():Promise<Array<SelectItem>>{
     return await response.json();
 }
 
-export async function createProgram(prof:ProgramaConfig):Promise<OperationResponse<ProgramaAPI>>{
+export async function createProgram(prof:ProgramaConfig, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/create',{
         method: "POST",
         mode: "cors",
-        headers: {'Content-Type':'application/json'},
+        headers: {'Content-Type':'application/json','access-token':token},
         body: JSON.stringify(modelRemapper(prof))
     })
 
@@ -67,12 +79,12 @@ export async function createProgram(prof:ProgramaConfig):Promise<OperationRespon
     return await response.json();
 }
 
-export async function updateProgramA(updated: ProgramaConfig):Promise<OperationResponse<ProgramaAPI>>{
+export async function updateProgramA(updated: ProgramaConfig, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/update',{
         method: "PUT",
         mode: "cors",
-        headers: {'Content-Type':'application/json'},
+        headers: {'Content-Type':'application/json','access-token':token},
         body: JSON.stringify(modelRemapper(updated))
     })
 
@@ -86,11 +98,12 @@ export async function updateProgramA(updated: ProgramaConfig):Promise<OperationR
     return await response.json();
 }
 
-export async function deleteProgramA(id: string):Promise<OperationResponse<ProgramaAPI>>{
+export async function deleteProgramA(id: string, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(api_url+'/delete/'+id,{
         method:"DELETE",
         mode:"cors",
+        headers:{'access-token':token}
     });
 
     //revisar si hubo exito

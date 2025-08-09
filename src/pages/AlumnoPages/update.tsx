@@ -47,8 +47,8 @@ function UpdateAlu(){
 
     //obtener los items del select
     useEffect(() => {
-        getTeacherSelect().then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e));
-        getProgramSelect().then((items:Array<SelectItem>) => setItemsPr([{key: "default", fullName: "-- seleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e));
+        getTeacherSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e));
+        getProgramSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPr([{key: "default", fullName: "-- seleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e));
     },[]);
 
     //poner el preset

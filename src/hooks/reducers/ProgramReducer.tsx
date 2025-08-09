@@ -44,7 +44,7 @@ export function ProgramProvider({ children }:PropsHook){
     const getPrograms = async (page: number):Promise<void> => {
         try{
             //peticion al api
-            const programs = await getActivePrograms(page);
+            const programs = await getActivePrograms(page, localStorage.getItem("access-token") as string);
 
             //guardar en el reducer
             dispatch({type:"GET_PROGRAMS", payload: programs as unknown as PagedData<ProgramaConfig>})
@@ -56,7 +56,7 @@ export function ProgramProvider({ children }:PropsHook){
     const addProgram = async (program: ProgramaConfig):Promise<boolean> => {
         try{
             //mandar al api
-            const result = await createProgram(program);
+            const result = await createProgram(program, localStorage.getItem("access-token") as string);
 
             //validar el exito
             if(!result.success){ return result.success }
@@ -76,7 +76,7 @@ export function ProgramProvider({ children }:PropsHook){
     const updateProgram = async (updated: ProgramaConfig):Promise<boolean> => {
         try{
             //mandar al api
-            const result = await updateProgramA(updated);
+            const result = await updateProgramA(updated, localStorage.getItem("access-token") as string);
 
             //validar el exito
             if(!result.success){ return result.success }
@@ -96,7 +96,7 @@ export function ProgramProvider({ children }:PropsHook){
     const deleteProgram = async (id: string):Promise<boolean> => {
         try{
             //pedir al api
-            const result = await deleteProgramA(id);
+            const result = await deleteProgramA(id, localStorage.getItem("access-token") as string);
 
             //validar el exito
             if(!result.success){ return result.success }

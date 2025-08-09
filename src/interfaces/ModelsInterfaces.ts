@@ -32,5 +32,6 @@ export interface ProgramaConfig extends BaseModel{
 
 export interface LoginConfig {
     user: string
-    password: string
+    password?: string
+    rol?: string
 }

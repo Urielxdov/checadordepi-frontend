@@ -44,7 +44,7 @@ export function TeacherProvider({ children }:PropsHook){
     const getTeachers = async (page: number):Promise<void> => {
         try{
             //pedir los profesores
-            const teachers = await getActiveTeachers(page);
+            const teachers = await getActiveTeachers(page, localStorage.getItem("access-token") as string);
 
             //guardar en reducer
             dispatch({type: "GET_TEACHERS", payload: teachers as unknown as PagedData<ProfesorConfig>});
@@ -56,7 +56,7 @@ export function TeacherProvider({ children }:PropsHook){
     const addTeacher = async (teacher: ProfesorConfig):Promise<boolean> => {
         try{
             //esperar respuesta
-            const result = await createTeacher(teacher);
+            const result = await createTeacher(teacher, localStorage.getItem("access-token") as string);
 
             //validar exito
             if(!result.success){ return result.success }
@@ -73,7 +73,7 @@ export function TeacherProvider({ children }:PropsHook){
     const updateTeacher = async (updated: ProfesorConfig):Promise<boolean> => {
         try{
             //esperar respuesta
-            const result = await updateTeacherA(updated);
+            const result = await updateTeacherA(updated, localStorage.getItem("access-token") as string);
 
             //validar exito
             if(!result.success){ return result.success }
@@ -90,7 +90,7 @@ export function TeacherProvider({ children }:PropsHook){
     const deleteTeacher = async (clave: string):Promise<boolean> => {
         try{
             //esperar respuesta
-            const result = await deleteTeacherA(clave);
+            const result = await deleteTeacherA(clave, localStorage.getItem("access-token") as string);
 
             //validar exito
             if(!result.success){ return result.success }

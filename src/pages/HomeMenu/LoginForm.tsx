@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { getAuthContext } from "../../hooks/custom/useAuth";
 import { getFieldsLog } from "../../utils/Fields";
-import { type FieldProps } from "../../interfaces/componentConfig";
+import type { FieldConfig } from "../../interfaces/componentConfig";
 import { type LoginConfig } from "../../interfaces/ModelsInterfaces";
 import Form from "../../componets/forms/Form";
 import Input from "../../componets/forms/Input";
@@ -9,30 +8,28 @@ import Button from "../../componets/utils/buttons/Button";
 import logoTec from '../../assets/logo_login_tecnm.png';
 import logoITL from '../../assets/110053_login.png';
 import { useForm } from "../../hooks/reducers/FormReducer";
+import { validateAccess } from "../../services/userService";
 
 function LoginView(){
-    //contexto
-    const context = getAuthContext();
-
     //hook de formulario
     const { state, handleChange, resetForm } = useForm('Login');
 
   //navegacion
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
     //obtencion de datos
     const onSubmit = () => {
         const login = state.data as LoginConfig
         //validar acceso
-        if(login.user as String =='admin'&&login.password as String =='12345'){
-            alert("Acceso exitoso!!!!");
-            context.validate(true);
-            navigate('/home');
-        }else{
-            alert("Credenciales invalidas");
-        }
-
-        resetForm();
+        validateAccess(login).then(token => {
+            if(token){
+                alert("bienvenido :"+login.user);
+                localStorage.setItem("access-token",token);
+                navigate("/home");
+            }else{
+                alert("credenciales invalidas!!!");
+            }
+        }).catch(e => {console.log(e); resetForm();});
     }
 
     return(
@@ -47,7 +44,7 @@ function LoginView(){
                         <h2 className="text-xl text-left">Sistema de gestion de alumnos</h2>
                     </div>
                     <Form id="login-form" onSubmit={onSubmit}>
-                        {getFieldsLog(state.data as LoginConfig).map((f:FieldProps) => (
+                        {getFieldsLog(state.data as LoginConfig).map((f:FieldConfig) => (
                             <Input
                                 label={f.label}
                                 name={f.name}

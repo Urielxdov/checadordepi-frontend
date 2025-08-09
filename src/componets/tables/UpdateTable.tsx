@@ -53,6 +53,7 @@ function UpdateTable<T extends BaseModel>({ headers, body, action }:UpdateTableC
                     />
                     <td>
                     <UpdateButton
+                        key={row.id}
                         action={() => update(row.id)}
                     />
                     </td>

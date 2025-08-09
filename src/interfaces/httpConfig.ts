@@ -8,7 +8,7 @@ export interface PagedData<T extends BaseModel>{
 
 export interface OperationResponse<P>{
     success: boolean
-    exception?: boolean
+    exception: boolean
     message: string
     code_status: number
     data?: P
@@ -19,10 +19,6 @@ export interface SelectItem {
     key: string
     fullName?: string
     name?: string
-}
-
-export interface ValidatedAccess {
-    token: string
 }
 
 // modelos de backend
@@ -57,4 +53,10 @@ export interface AlumnoAPI {
     clave_programa: string,
     foto?: string,
     vector?: string
+}
+
+export interface LoginAPI {
+    username: string
+    password?: string
+    role?: string
 }

@@ -4,9 +4,13 @@ import type { AlumnoAPI } from "../interfaces/httpConfig";
 
 const apiUrl = 'http://localhost:8080/alumno'
 
-export async function getStudentsA(page:number):Promise<PagedData<AlumnoConfig>>{
+export async function getStudentsA(page:number, token: string):Promise<PagedData<AlumnoConfig>>{
     //peticion con fetch
-    const response = await fetch(apiUrl+'/get/all?page='+page);
+    const response = await fetch(apiUrl+'/get/all?page='+page,{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar exito
     if(!response.ok){
@@ -18,9 +22,13 @@ export async function getStudentsA(page:number):Promise<PagedData<AlumnoConfig>>
     return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoConfig>
 }
 
-export async function getActiveStudents(page:number):Promise<PagedData<AlumnoConfig>>{
+export async function getActiveStudents(page:number, token: string):Promise<PagedData<AlumnoConfig>>{
     //peticion con fetch
-    const response = await fetch(apiUrl+'/get/actives?page='+page);
+    const response = await fetch(apiUrl+'/get/actives?page='+page,{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
 
     //verificar exito
     if(!response.ok){
@@ -32,7 +40,7 @@ export async function getActiveStudents(page:number):Promise<PagedData<AlumnoCon
     return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoConfig>
 }
 
-export async function createStudent(a:AlumnoConfig, foto:File):Promise<OperationResponse<AlumnoConfig>>{
+export async function createStudent(a:AlumnoConfig, foto:File, token: string):Promise<OperationResponse<AlumnoConfig>>{
     //preparar form data
     const data = new FormData();
     //pasarlo a blob para incluir el content-type
@@ -43,6 +51,7 @@ export async function createStudent(a:AlumnoConfig, foto:File):Promise<Operation
     const response = await fetch(apiUrl+'/create',{
         method: 'POST',
         mode: 'cors',
+        headers: {'access-token':token},
         body: data
     });
 
@@ -56,11 +65,12 @@ export async function createStudent(a:AlumnoConfig, foto:File):Promise<Operation
     return {...result, data: jsonMapper(result.data as AlumnoAPI)} as OperationResponse<AlumnoConfig>;
 }
 
-export async function deleteStudentA(id: string):Promise<OperationResponse<AlumnoAPI>>{
+export async function deleteStudentA(id: string, token: string):Promise<OperationResponse<AlumnoAPI>>{
     //peticion al api
     const response = await fetch(apiUrl+'/delete/'+id,{
       method: "DELETE",
-      mode:"cors"
+      mode:"cors",
+      headers: {"access-token":token}
     });
     //validar exito
     if(!response.ok){
@@ -70,7 +80,7 @@ export async function deleteStudentA(id: string):Promise<OperationResponse<Alumn
     return await response.json();
 }
 
-export async function updateStudentA(a:AlumnoConfig, foto:File):Promise<OperationResponse<AlumnoConfig>>{
+export async function updateStudentA(a:AlumnoConfig, foto:File, token: string):Promise<OperationResponse<AlumnoConfig>>{
     //preparar formdata
     const data = new FormData();
     data.append("student",new Blob([JSON.stringify(modelRemaper(a))],{type:'application/json'}));
@@ -79,6 +89,7 @@ export async function updateStudentA(a:AlumnoConfig, foto:File):Promise<Operatio
     const response = await fetch(apiUrl+'/update',{
       method: "PATCH",
       mode: "cors",
+      headers:{"access-token":token},
       body: data
     });
     //verificar exito

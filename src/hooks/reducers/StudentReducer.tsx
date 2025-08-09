@@ -36,7 +36,7 @@ export function StudentProvider ({ children }: PropsHook) {
   const getStudents = async (page: number):Promise<void> => {
       try{
         //pedir al api
-        const students = await getActiveStudents(page);
+        const students = await getActiveStudents(page, localStorage.getItem("access-token") as string);
         //guardar en reducer
         dispatch({ type:"GET_STUDENTS", payload: students });
       }catch(error){
@@ -48,7 +48,7 @@ export function StudentProvider ({ children }: PropsHook) {
   const addStudent = async (student: AlumnoConfig):Promise<boolean> => {
       try{
         //pedir al api
-        const result = await createStudent(student, student.foto as File);
+        const result = await createStudent(student, student.foto as File, localStorage.getItem("access-token") as string);
         //verificar exito
         if(!result.success){ return result.success }
         //guardar en reducer
@@ -65,7 +65,7 @@ export function StudentProvider ({ children }: PropsHook) {
   const deleteStudent = async (numberControl: string):Promise<boolean> => {
       try{
         //peticion al api
-        const result = await deleteStudentA(numberControl);
+        const result = await deleteStudentA(numberControl, localStorage.getItem("access-token") as string);
         //verificar exito
         if(!result.success){ return result.success }
         //modificar reducer
@@ -82,7 +82,7 @@ export function StudentProvider ({ children }: PropsHook) {
   const updateStudent = async (updated: AlumnoConfig) => {
       try{
         //peticion al api
-        const result = await updateStudentA(updated, updated.foto as File);
+        const result = await updateStudentA(updated, updated.foto as File,localStorage.getItem("access-token") as string);
         //verificar exito
         if(!result.success){ return result.success }
         //guardar en reducer
