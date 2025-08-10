@@ -60,3 +60,8 @@ export interface LoginAPI {
     password?: string
     role?: string
 }
+
+export interface TokenConfig{
+    token: string,
+    expiration: number
+}

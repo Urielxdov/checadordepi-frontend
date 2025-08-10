@@ -7,6 +7,7 @@ import Modal from "../../componets/ui/Modals";
 import { useEffect, useState } from "react";
 import { getFieldsAlu } from "../../utils/Fields";
 import { useForm } from "../../hooks/reducers/FormReducer";
+import { useAuth } from "../../hooks/custom/useAuth";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
 import type { SelectItem } from "../../interfaces/httpConfig";
@@ -15,6 +16,9 @@ import CheckBox from "../../componets/utils/Inputs/Checkbox";
 import debounce from "../../utils/Debounce";
 
 function UpdateAlu(){
+    //hook de jwt
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
@@ -35,7 +39,7 @@ function UpdateAlu(){
     //menejo de update
     const update = debounce(() => {
         //obtener el alumno del hook de form
-        context.updateStudent(state.data as AlumnoConfig).then(updated => {
+        context.updateStudent(state.data as AlumnoConfig, jwt.token).then(updated => {
             if(updated){
                 setOpenSuccess(true);
             }else{
@@ -47,8 +51,8 @@ function UpdateAlu(){
 
     //obtener los items del select
     useEffect(() => {
-        getTeacherSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e));
-        getProgramSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPr([{key: "default", fullName: "-- seleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e));
+        getTeacherSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e));
+        getProgramSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPr([{key: "default", fullName: "-- seleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e));
     },[]);
 
     //poner el preset

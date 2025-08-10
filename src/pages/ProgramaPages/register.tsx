@@ -8,8 +8,12 @@ import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 import debounce from "../../utils/Debounce";
+import { useAuth } from "../../hooks/custom/useAuth";
 
 function CreateProg(){
+    //hook de jwt
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess,setOpenSuccess] = useState<boolean>(false);
     const [openFail,setOpenFail] = useState<boolean>(false);
@@ -27,7 +31,7 @@ function CreateProg(){
         //activo por defecto
         programa.status = "Activo"
         //guardado en el contexto
-        context.addProgram(programa).then(created => {
+        context.addProgram(programa, jwt.token).then(created => {
             if(created){
                 //mostrar el modal
                 setOpenSuccess(true);

@@ -8,8 +8,12 @@ import { useState } from "react";
 import type { BaseModel, ProgramaConfig } from "../../interfaces/ModelsInterfaces";
 import PageBar from "../../componets/ui/pageBar";
 import debounce from "../../utils/Debounce";
+import { useAuth } from "../../hooks/custom/useAuth";
 
 function UpdateProg(){
+    //hook de jwt
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
@@ -23,7 +27,7 @@ function UpdateProg(){
             //cambio
             if(updated.status == "Permiso"){ updated.status = "Inactivo" }
             //paso al contexto
-            context.updateProgram(updated as ProgramaConfig).then(updated => {
+            context.updateProgram(updated as ProgramaConfig, jwt.token).then(updated => {
                 if(updated){
                     //abrir modal
                     setOpenSuccess(true);
@@ -48,7 +52,7 @@ function UpdateProg(){
             <PageBar
                 current={context.state.current_page}
                 total={context.state.total}
-                onChange={context.getPrograms}
+                onChange={(page: number) => context.getPrograms(page, jwt.token)}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>

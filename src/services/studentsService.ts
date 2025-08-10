@@ -80,11 +80,11 @@ export async function deleteStudentA(id: string, token: string):Promise<Operatio
     return await response.json();
 }
 
-export async function updateStudentA(a:AlumnoConfig, foto:File, token: string):Promise<OperationResponse<AlumnoConfig>>{
+export async function updateStudentA(a:AlumnoConfig, foto:File | undefined, token: string):Promise<OperationResponse<AlumnoConfig>>{
     //preparar formdata
     const data = new FormData();
     data.append("student",new Blob([JSON.stringify(modelRemaper(a))],{type:'application/json'}));
-    data.append("image",foto);
+    if(foto) data.append("image",foto);
     //peticion al api
     const response = await fetch(apiUrl+'/update',{
       method: "PATCH",

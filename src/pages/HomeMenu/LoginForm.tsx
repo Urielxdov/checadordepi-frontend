@@ -9,13 +9,17 @@ import logoTec from '../../assets/logo_login_tecnm.png';
 import logoITL from '../../assets/110053_login.png';
 import { useForm } from "../../hooks/reducers/FormReducer";
 import { validateAccess } from "../../services/userService";
+import { useAuth } from "../../hooks/custom/useAuth";
 
 function LoginView(){
+    //contexto de autenticado
+    const jwt = useAuth();
+
     //hook de formulario
     const { state, handleChange, resetForm } = useForm('Login');
 
-  //navegacion
-  const navigate = useNavigate();
+    //navegacion
+    const navigate = useNavigate();
 
     //obtencion de datos
     const onSubmit = () => {
@@ -23,13 +27,14 @@ function LoginView(){
         //validar acceso
         validateAccess(login).then(token => {
             if(token){
-                alert("bienvenido :"+login.user);
-                localStorage.setItem("access-token",token);
+                alert("bienvenido "+login.user);
+                jwt.store(token, 2040000);
                 navigate("/home");
             }else{
                 alert("credenciales invalidas!!!");
             }
-        }).catch(e => {console.log(e); resetForm();});
+            resetForm();
+        }).catch(e => {alert("credenciales invalidas!!!!"); console.log(e); resetForm();});
     }
 
     return(
@@ -53,6 +58,7 @@ function LoginView(){
                                 maxLength={f.maxlength?f.maxlength:200}
                                 minLength={f.minlength?f.minlength:1}
                                 change={handleChange}
+                                value={f.value}
                                 key={f.name}
                             />
                         ))}

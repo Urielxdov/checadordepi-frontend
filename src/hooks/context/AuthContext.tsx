@@ -1,8 +1,9 @@
 import { createContext } from "react";
 
 type AuthContextType = {
-    valid: boolean,
-    validate: (v:boolean) => void
+    token: string
+    store: (token: string, expiration: number) => void
+    clear: () => void
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);

@@ -41,10 +41,10 @@ export function TeacherProvider({ children }:PropsHook){
     const [state, dispatch] = useReducer(reducer, initialState());
 
     //funciones para compartir
-    const getTeachers = async (page: number):Promise<void> => {
+    const getTeachers = async (page: number, tk:string):Promise<void> => {
         try{
             //pedir los profesores
-            const teachers = await getActiveTeachers(page, localStorage.getItem("access-token") as string);
+            const teachers = await getActiveTeachers(page, tk);
 
             //guardar en reducer
             dispatch({type: "GET_TEACHERS", payload: teachers as unknown as PagedData<ProfesorConfig>});
@@ -53,10 +53,10 @@ export function TeacherProvider({ children }:PropsHook){
         }
     }
 
-    const addTeacher = async (teacher: ProfesorConfig):Promise<boolean> => {
+    const addTeacher = async (teacher: ProfesorConfig, tk:string):Promise<boolean> => {
         try{
             //esperar respuesta
-            const result = await createTeacher(teacher, localStorage.getItem("access-token") as string);
+            const result = await createTeacher(teacher, tk);
 
             //validar exito
             if(!result.success){ return result.success }
@@ -70,10 +70,10 @@ export function TeacherProvider({ children }:PropsHook){
         }
     }
 
-    const updateTeacher = async (updated: ProfesorConfig):Promise<boolean> => {
+    const updateTeacher = async (updated: ProfesorConfig, tk:string):Promise<boolean> => {
         try{
             //esperar respuesta
-            const result = await updateTeacherA(updated, localStorage.getItem("access-token") as string);
+            const result = await updateTeacherA(updated, tk);
 
             //validar exito
             if(!result.success){ return result.success }
@@ -87,10 +87,10 @@ export function TeacherProvider({ children }:PropsHook){
         }
     }
 
-    const deleteTeacher = async (clave: string):Promise<boolean> => {
+    const deleteTeacher = async (clave: string, tk:string):Promise<boolean> => {
         try{
             //esperar respuesta
-            const result = await deleteTeacherA(clave, localStorage.getItem("access-token") as string);
+            const result = await deleteTeacherA(clave, tk);
 
             //validar exito
             if(!result.success){ return result.success }
@@ -109,7 +109,11 @@ export function TeacherProvider({ children }:PropsHook){
     }
 
     useEffect(()=>{
-        getTeachers(state.current_page);
+        const backup = localStorage.getItem("access-token");
+        if(backup){
+            const jwt = JSON.parse(backup);
+            getTeachers(state.current_page, jwt.token);
+        }
     },[]);
 
     //componente del provider

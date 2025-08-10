@@ -9,10 +9,14 @@ import Modal from "../../componets/ui/Modals";
 import { useEffect, useState } from "react";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
+import { useAuth } from "../../hooks/custom/useAuth";
 import type { SelectItem } from "../../interfaces/httpConfig";
 import debounce from "../../utils/Debounce";
 
 function CreateAlu(){
+   //contexto de jwt
+   const jwt = useAuth();
+
    //estado para modal
    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
    const [openFail, setOpenFail] = useState<boolean>(false);
@@ -34,7 +38,7 @@ function CreateAlu(){
       //activo por defecto
       alumno.status = "Activo"
       //gurdado en el contexto
-      context.addStudent(alumno).then(created => {
+      context.addStudent(alumno, jwt.token).then(created => {
          if(created){
             setOpenSuccess(true);
          }else{
@@ -45,8 +49,8 @@ function CreateAlu(){
    },500)
 
    useEffect(() => {
-      getTeacherSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e))
-      getProgramSelect(localStorage.getItem("access-token") as string).then((items:Array<SelectItem>) => setItemsPr([{key: "default", name: "-- sleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e))
+      getTeacherSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e))
+      getProgramSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPr([{key: "default", name: "-- sleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e))
    },[]);
      //retorno de vista
      return (

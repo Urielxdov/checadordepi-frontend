@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../../hooks/custom/useAuth";
 
 function Logout(){
-    //limpiar el localstorage
-    localStorage.clear();
+    //limpiar la sesion
+    useAuth().clear();
 
     //redirigir al login
     return (

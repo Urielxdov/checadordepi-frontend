@@ -8,8 +8,12 @@ import { useState } from "react";
 import type { ProfesorConfig, BaseModel } from "../../interfaces/ModelsInterfaces";
 import PageBar from "../../componets/ui/pageBar";
 import debounce from "../../utils/Debounce";
+import { useAuth } from "../../hooks/custom/useAuth";
 
 function UpdateProf(){
+    //hook de jwt
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess,setOpenSuccess] = useState<boolean>(false);
     const [openFail,setOpenFail] = useState<boolean>(false);
@@ -20,7 +24,7 @@ function UpdateProf(){
     //menejo de update
     const update = (updated: BaseModel) => {
         debounce(() => {
-            context.updateTeacher(updated as ProfesorConfig).then(updated => {
+            context.updateTeacher(updated as ProfesorConfig, jwt.token).then(updated => {
                 //verificar el exito
                 if(updated){
                     //abrir modal
@@ -46,7 +50,7 @@ function UpdateProf(){
             <PageBar
                 current={context.state.current_page}
                 total={context.state.total}
-                onChange={context.getTeachers}
+                onChange={(page: number) => context.getTeachers(page, jwt.token)}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>

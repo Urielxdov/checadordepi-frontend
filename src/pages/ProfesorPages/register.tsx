@@ -8,8 +8,12 @@ import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 import { useForm } from "../../hooks/reducers/FormReducer";
 import debounce from "../../utils/Debounce";
+import { useAuth } from "../../hooks/custom/useAuth";
 
 function CreateProf(){
+    //hook de jwt
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
@@ -27,7 +31,7 @@ function CreateProf(){
         //activo por defecto
         profesor.status = "Activo"
         //guardado en el contexto
-        context.addTeacher(profesor).then(created => {
+        context.addTeacher(profesor, jwt.token).then(created => {
             if(created){
                 //mostrar modal
                 setOpenSuccess(true);

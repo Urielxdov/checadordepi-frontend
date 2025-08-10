@@ -5,10 +5,14 @@ import { ALUMNOHEADERS } from "../../utils/Headers";
 import { useStudents } from "../../hooks/custom/useStudents";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import { useAuth } from "../../hooks/custom/useAuth";
 import PageBar from "../../componets/ui/pageBar";
 import debounce from "../../utils/Debounce";
 
 function DeleteAlu(){
+    //contexto de autenticacion
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
@@ -20,7 +24,7 @@ function DeleteAlu(){
     const drop = (id: string) => {
         debounce(() => {
             //eliminar el alumno
-            context.deleteStudent(id).then(deleted => {
+            context.deleteStudent(id, jwt.token as string).then(deleted => {
                 if(deleted){
                     setOpenSuccess(true);
                 }else{
@@ -45,7 +49,7 @@ function DeleteAlu(){
             <PageBar
                 current={context.state.current_page}
                 total={context.state.total}
-                onChange={context.getStudents}
+                onChange={(page: number) => context.getStudents(page, jwt.token as string)}
             />
             <ReturnButton path="/alumno/"/>
         </HomeLayout>

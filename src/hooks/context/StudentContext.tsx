@@ -6,10 +6,10 @@ import type { AlumnoConfig } from '../../interfaces/ModelsInterfaces'
 type StudentContextType = {
     state: StudentStateProps
     dispatch: React.Dispatch<StudentActions>
-    getStudents: (page: number) => Promise<void>
-    addStudent: (student: AlumnoConfig) => Promise<boolean>
-    updateStudent: (updated: AlumnoConfig) => Promise<boolean>
-    deleteStudent: (numberControl: string) => Promise<boolean>
+    getStudents: (page: number, tk:string) => Promise<void>
+    addStudent: (student: AlumnoConfig, tk:string) => Promise<boolean>
+    updateStudent: (updated: AlumnoConfig, tk:string) => Promise<boolean>
+    deleteStudent: (numberControl: string, tk:string) => Promise<boolean>
     searchStudent: (numberControl: string) => void
 }
 

@@ -41,10 +41,10 @@ export function ProgramProvider({ children }:PropsHook){
     const [state, dispatch] = useReducer(reducer, initialState());
 
     //funciones para compartir
-    const getPrograms = async (page: number):Promise<void> => {
+    const getPrograms = async (page: number, tk:string):Promise<void> => {
         try{
             //peticion al api
-            const programs = await getActivePrograms(page, localStorage.getItem("access-token") as string);
+            const programs = await getActivePrograms(page, tk);
 
             //guardar en el reducer
             dispatch({type:"GET_PROGRAMS", payload: programs as unknown as PagedData<ProgramaConfig>})
@@ -53,10 +53,10 @@ export function ProgramProvider({ children }:PropsHook){
         }
     }
 
-    const addProgram = async (program: ProgramaConfig):Promise<boolean> => {
+    const addProgram = async (program: ProgramaConfig, tk:string):Promise<boolean> => {
         try{
             //mandar al api
-            const result = await createProgram(program, localStorage.getItem("access-token") as string);
+            const result = await createProgram(program, tk);
 
             //validar el exito
             if(!result.success){ return result.success }
@@ -73,10 +73,10 @@ export function ProgramProvider({ children }:PropsHook){
         }
     }
 
-    const updateProgram = async (updated: ProgramaConfig):Promise<boolean> => {
+    const updateProgram = async (updated: ProgramaConfig, tk:string):Promise<boolean> => {
         try{
             //mandar al api
-            const result = await updateProgramA(updated, localStorage.getItem("access-token") as string);
+            const result = await updateProgramA(updated, tk);
 
             //validar el exito
             if(!result.success){ return result.success }
@@ -93,10 +93,10 @@ export function ProgramProvider({ children }:PropsHook){
         }
     }
 
-    const deleteProgram = async (id: string):Promise<boolean> => {
+    const deleteProgram = async (id: string, tk:string):Promise<boolean> => {
         try{
             //pedir al api
-            const result = await deleteProgramA(id, localStorage.getItem("access-token") as string);
+            const result = await deleteProgramA(id, tk);
 
             //validar el exito
             if(!result.success){ return result.success }
@@ -118,7 +118,11 @@ export function ProgramProvider({ children }:PropsHook){
     }
 
     useEffect(() => {
-        getPrograms(state.current_page);
+        const backup = localStorage.getItem("access-token");
+        if(backup){
+            const jwt = JSON.parse(backup);
+            getPrograms(state.current_page, jwt.token);
+        }
     },[]);
 
     //componente del provider

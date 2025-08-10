@@ -7,8 +7,12 @@ import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
 import PageBar from "../../componets/ui/pageBar";
 import debounce from "../../utils/Debounce";
+import { useAuth } from "../../hooks/custom/useAuth";
 
 function DeleteProg(){
+    //hook de jwt
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
@@ -20,7 +24,7 @@ function DeleteProg(){
     const drop = (id: string) => {
         debounce(() => {
             //paso al contexto
-            context.deleteProgram(id).then(deleted => {
+            context.deleteProgram(id, jwt.token).then(deleted => {
                 if(deleted){
                     //abrir modal
                     setOpenSuccess(true);
@@ -46,7 +50,7 @@ function DeleteProg(){
             <PageBar
                 current={context.state.current_page}
                 total={context.state.total}
-                onChange={context.getPrograms}
+                onChange={(page: number) => context.getPrograms(page, jwt.token)}
             />
             <ReturnButton path="/curso/"/>
         </HomeLayout>

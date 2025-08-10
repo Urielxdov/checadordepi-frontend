@@ -6,10 +6,10 @@ import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
 type TeacherContextConfig = {
     state: TeacherStateProps,
     dispatch: React.Dispatch<TeacherActions>,
-    getTeachers: (page: number) => Promise<void>
-    addTeacher: (teacher: ProfesorConfig) => Promise<boolean>,
-    updateTeacher: (updated: ProfesorConfig) => Promise<boolean>,
-    deleteTeacher: (clave: string) => Promise<boolean>,
+    getTeachers: (page: number, tk:string) => Promise<void>
+    addTeacher: (teacher: ProfesorConfig, tk:string) => Promise<boolean>,
+    updateTeacher: (updated: ProfesorConfig, tk:string) => Promise<boolean>,
+    deleteTeacher: (clave: string, tk:string) => Promise<boolean>,
     searchTeacher: (clave: string) => void
 }
 

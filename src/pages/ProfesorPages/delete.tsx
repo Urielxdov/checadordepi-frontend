@@ -5,10 +5,14 @@ import { PROFESORHEADERS } from "../../utils/Headers";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import Modal from "../../componets/ui/Modals";
 import { useState } from "react";
+import { useAuth } from "../../hooks/custom/useAuth";
 import debounce from "../../utils/Debounce";
 import PageBar from "../../componets/ui/pageBar";
 
 function DeleteProf(){
+    //hook de jwt
+    const jwt = useAuth();
+
     //estado de modal
     const [openSuccess,setOpenSuccess] = useState<boolean>(false);
     const [openFail,setOpenFail] = useState<boolean>(false);
@@ -20,7 +24,7 @@ function DeleteProf(){
     const drop = (id: string) => {
         debounce(() => {
                 //pasar el id
-                context.deleteTeacher(id).then( deleted => {
+                context.deleteTeacher(id, jwt.token).then( deleted => {
                 if(deleted){
                     //abrir modal
                     setOpenSuccess(true);
@@ -46,7 +50,7 @@ function DeleteProf(){
             <PageBar
                 current={context.state.current_page}
                 total={context.state.total}
-                onChange={context.getTeachers}
+                onChange={(page: number) => context.getTeachers(page, jwt.token)}
             />
             <ReturnButton path="/profesor/"/>
         </HomeLayout>
