@@ -33,10 +33,10 @@ function App () {
       <Route element={<AuthWrapper/>}>
         {/** Ruta de login */}
         <Route path='/' element={<LoginView />} />
+        <Route path='/logout' element={<Logout />} />
         {/** Rutas protegidas */}
         <Route element={<ProtectedRoute />}>
           <Route path='/home' element={<HomePage />} />
-          <Route path='/logout' element={<Logout />} />
         </Route>
         {/** Rutas de alumno */}
         <Route element={<StudentWrapper />}>

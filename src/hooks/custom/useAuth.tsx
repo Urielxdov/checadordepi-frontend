@@ -42,7 +42,6 @@ export function AuthProvider({ children }:AuthProviderProps){
         localStorage.setItem("access-token",JSON.stringify(newJWT));
         //guardar en estado
         setJwt(newJWT);
-        console.log(newJWT);
         //fijar el temporizador
         if(timeoutRef.current) clearTimeout(timeoutRef.current);
         timeoutRef.current = setTimeout(()=>{
@@ -57,6 +56,7 @@ export function AuthProvider({ children }:AuthProviderProps){
 
     //limpiar el estado
     const clear = () => {
+        console.log("se limpia");
         //limpiar el localstorage
         localStorage.clear();
         setJwt({token: "", expiration: 0});
