@@ -13,6 +13,7 @@ export function useCamera (
 
       if (!video || !canvas) {
         console.error('Video o canvas no encontrados')
+        return
       }
 
       if (!navigator.mediaDevices?.getUserMedia) {

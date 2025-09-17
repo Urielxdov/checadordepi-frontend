@@ -8,6 +8,7 @@ export default function Camera () {
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  
   useCamera(videoRef, canvasRef)
 
   return (
