@@ -47,7 +47,7 @@ export const getFieldsAlu = (preset:AlumnoConfig)=> ([
              value: preset.correo
          },
          {
-            label:"Foto:",
+            label:"Foto (sin accesorios como lentes o gorras) :",
             name:"foto",
             type:"file",
          }
