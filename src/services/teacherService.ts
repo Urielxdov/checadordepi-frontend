@@ -1,13 +1,11 @@
 import type { OperationResponse, PagedData, ProfesorAPI, SelectItem } from "../interfaces/httpConfig";
 import type { ProfesorConfig } from "../interfaces/ModelsInterfaces";
-
-//endpoint del api
-const api_url = 'http://localhost:8080/profesor'
+import { TEACHERURL } from "../utils/APIurls";
 
 //pedir profesores
 export async function getTeachersA(page:number, token:string):Promise<PagedData<ProfesorConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/all?page='+page,{
+    const response = await fetch(TEACHERURL+'/get/all?page='+page,{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -27,7 +25,7 @@ export async function getTeachersA(page:number, token:string):Promise<PagedData<
 //pedir profesores activos
 export async function getActiveTeachers(page:number, token:string):Promise<PagedData<ProfesorConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/actives?page='+page,{
+    const response = await fetch(TEACHERURL+'/get/actives?page='+page,{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -46,7 +44,7 @@ export async function getActiveTeachers(page:number, token:string):Promise<Paged
 
 export async function getTeacherSelect(token:string):Promise<Array<SelectItem>>{
     //peticion con fetch
-    const response = await fetch(api_url+"/get/all/select",{
+    const response = await fetch(TEACHERURL+"/get/all/select",{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -63,7 +61,7 @@ export async function getTeacherSelect(token:string):Promise<Array<SelectItem>>{
 
 export async function createTeacher(prof:ProfesorConfig, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/create',{
+    const response = await fetch(TEACHERURL+'/create',{
         method: "POST",
         mode: "cors",
         headers: {'Content-Type':'application/json', "access-token":token},
@@ -81,7 +79,7 @@ export async function createTeacher(prof:ProfesorConfig, token:string):Promise<O
 
 export async function updateTeacherA(updated: ProfesorConfig, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/update',{
+    const response = await fetch(TEACHERURL+'/update',{
         method: "PUT",
         mode: "cors",
         headers: {'Content-Type':'application/json',"access-token":token},
@@ -100,7 +98,7 @@ export async function updateTeacherA(updated: ProfesorConfig, token:string):Prom
 
 export async function deleteTeacherA(id: string, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/delete/'+id,{
+    const response = await fetch(TEACHERURL+'/delete/'+id,{
         method:"DELETE",
         mode:"cors",
         headers:{"access-token":token}

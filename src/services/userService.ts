@@ -1,13 +1,11 @@
 import type { OperationResponse, LoginAPI } from "../interfaces/httpConfig";
 import type { LoginConfig } from "../interfaces/ModelsInterfaces";
-
-//endpoint del api
-const api_url = 'http://localhost:8080/auth'
+import { USERURL } from "../utils/APIurls";
 
 //validar acceso y obtener el token
 export async function validateAccess(login: LoginConfig):Promise<string|null>{
     //peticion con fetch
-    const response = await fetch(api_url+"/login",{
+    const response = await fetch(USERURL+"/login",{
         method: "POST",
         mode: "cors",
         headers: {"Content-Type":"application/json"},

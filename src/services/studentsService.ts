@@ -1,12 +1,11 @@
 import type { OperationResponse, PagedData } from "../interfaces/httpConfig"
 import type { AlumnoConfig } from "../interfaces/ModelsInterfaces"
 import type { AlumnoAPI } from "../interfaces/httpConfig";
-
-const apiUrl = 'http://localhost:8080/alumno'
+import { STUDENTURL } from "../utils/APIurls";
 
 export async function getStudentsA(page:number, token: string):Promise<PagedData<AlumnoConfig>>{
     //peticion con fetch
-    const response = await fetch(apiUrl+'/get/all?page='+page,{
+    const response = await fetch(STUDENTURL+'/get/all?page='+page,{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -24,7 +23,7 @@ export async function getStudentsA(page:number, token: string):Promise<PagedData
 
 export async function getActiveStudents(page:number, token: string):Promise<PagedData<AlumnoConfig>>{
     //peticion con fetch
-    const response = await fetch(apiUrl+'/get/actives?page='+page,{
+    const response = await fetch(STUDENTURL+'/get/actives?page='+page,{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -48,7 +47,7 @@ export async function createStudent(a:AlumnoConfig, foto:File, token: string):Pr
     data.append("image", foto);
   
     //peticion con fetch
-    const response = await fetch(apiUrl+'/create',{
+    const response = await fetch(STUDENTURL+'/create',{
         method: 'POST',
         mode: 'cors',
         headers: {'access-token':token},
@@ -67,7 +66,7 @@ export async function createStudent(a:AlumnoConfig, foto:File, token: string):Pr
 
 export async function deleteStudentA(id: string, token: string):Promise<OperationResponse<AlumnoAPI>>{
     //peticion al api
-    const response = await fetch(apiUrl+'/delete/'+id,{
+    const response = await fetch(STUDENTURL+'/delete/'+id,{
       method: "DELETE",
       mode:"cors",
       headers: {"access-token":token}
@@ -86,7 +85,7 @@ export async function updateStudentA(a:AlumnoConfig, foto:File | undefined, toke
     data.append("student",new Blob([JSON.stringify(modelRemaper(a))],{type:'application/json'}));
     if(foto) data.append("image",foto);
     //peticion al api
-    const response = await fetch(apiUrl+'/update',{
+    const response = await fetch(STUDENTURL+'/update',{
       method: "PATCH",
       mode: "cors",
       headers:{"access-token":token},

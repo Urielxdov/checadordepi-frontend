@@ -1,17 +1,19 @@
-import { useEffect, useRef } from 'react'
-import { loadFaceDetectionModels } from '../../FaceRecognition/loadModels'
-import { startFaceDetection } from '../../FaceRecognition/startDetection'
+import { useEffect, type RefObject } from "react"
 
+//props de camara
+interface CameraProps {
+  videoRef: RefObject<HTMLVideoElement | null>,
+  canvasRef: RefObject<HTMLCanvasElement | null>,
+  initCamera: (video: HTMLVideoElement | null, canvas: HTMLCanvasElement | null) => Promise<void>,
+  closeCamera: () => void;
+}
 
-export default function Camera () {
+//componente camara
+export default function Camera ({ videoRef, canvasRef, initCamera, closeCamera }:CameraProps) {
   const CAMERA_ID = 'FACE_RECOGNITION'
   const CANVAS_ID = 'CANVAS_FACE_RECOGNITION'
 
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const streamRef = useRef<MediaStream>(null);
-  
-  //obtener componente al montar
+  //efecto al montar
   useEffect(() => {
     //verificar si se puede usar media devices
     if (!navigator.mediaDevices) {
@@ -19,39 +21,11 @@ export default function Camera () {
         return;
     }
 
-    //iniciar camara
-    (async (video: HTMLVideoElement | null, canvas:HTMLCanvasElement | null) => {
-      //validar camara y canvas
-      if(!video || !canvas){
-        return;
-      }
+    //activar la camara
+    initCamera(videoRef.current, canvasRef.current);
 
-      try {
-          await loadFaceDetectionModels()
-
-          streamRef.current = await navigator.mediaDevices.getUserMedia({
-            video: true
-          })
-          video.srcObject = streamRef.current;
-
-          video.onloadedmetadata = () => {
-            video.play()
-
-            canvas.width = video.width
-            canvas.height = video.height
-
-            startFaceDetection(video, canvas)
-          }
-      } catch (err) {
-        console.error(`Error accediendo a la cámara: ${err}`)
-      }
-    })(videoRef.current,canvasRef.current);
-
-    //al desmontar se limpia o cierra lo que abra el efecto
-    return () => {
-      streamRef.current && streamRef.current.getTracks().forEach(track => track.stop());
-      streamRef.current = null;
-    }; 
+    //cerrar el stream
+    return closeCamera;
   },[]);
 
   //componente de camara

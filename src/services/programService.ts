@@ -1,13 +1,11 @@
 import type { SelectItem, OperationResponse, PagedData, ProgramaAPI } from "../interfaces/httpConfig";
 import type { ProgramaConfig } from "../interfaces/ModelsInterfaces";
-
-//endpoint del api
-const api_url = 'http://localhost:8080/programa_estudios'
+import { PROGRAMURL } from "../utils/APIurls";
 
 //pedir profesores
 export async function getPrograms(page:number, token: string):Promise<PagedData<ProgramaConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/all?page='+page,{
+    const response = await fetch(PROGRAMURL+'/get/all?page='+page,{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -27,7 +25,7 @@ export async function getPrograms(page:number, token: string):Promise<PagedData<
 //pedir profesores activos
 export async function getActivePrograms(page:number, token: string):Promise<PagedData<ProgramaConfig>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/get/actives?page='+page,{
+    const response = await fetch(PROGRAMURL+'/get/actives?page='+page,{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -46,7 +44,7 @@ export async function getActivePrograms(page:number, token: string):Promise<Page
 
 export async function getProgramSelect(token: string):Promise<Array<SelectItem>>{
     //peticion con fetch
-    const response = await fetch(api_url+"/get/all/select",{
+    const response = await fetch(PROGRAMURL+"/get/all/select",{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
@@ -63,7 +61,7 @@ export async function getProgramSelect(token: string):Promise<Array<SelectItem>>
 
 export async function createProgram(prof:ProgramaConfig, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/create',{
+    const response = await fetch(PROGRAMURL+'/create',{
         method: "POST",
         mode: "cors",
         headers: {'Content-Type':'application/json','access-token':token},
@@ -81,7 +79,7 @@ export async function createProgram(prof:ProgramaConfig, token: string):Promise<
 
 export async function updateProgramA(updated: ProgramaConfig, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/update',{
+    const response = await fetch(PROGRAMURL+'/update',{
         method: "PUT",
         mode: "cors",
         headers: {'Content-Type':'application/json','access-token':token},
@@ -100,7 +98,7 @@ export async function updateProgramA(updated: ProgramaConfig, token: string):Pro
 
 export async function deleteProgramA(id: string, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
-    const response = await fetch(api_url+'/delete/'+id,{
+    const response = await fetch(PROGRAMURL+'/delete/'+id,{
         method:"DELETE",
         mode:"cors",
         headers:{'access-token':token}

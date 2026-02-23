@@ -1,4 +1,5 @@
 import * as faceapi from 'face-api.js'
+import { checkAttendance } from '../services/attendantService'
 
 let recognitionLock = false
 
@@ -42,31 +43,21 @@ export async function startFaceDetection(
 }
 
 function sendFaceToServer(blob: Blob) {
+  //mandar al servidor
+  checkAttendance(blob).then(checkout => {
+    //verificar asistencia
+    if(checkout){
+      //mensaje de marcado
+      alert("Asistencia marcada!!");
+    }else{
+      //mensaje de no marcado
+      alert("Asistencia no marcada");
+    }
+  }).catch(err => console.error(err));
 
-  const formData = new FormData()
-  formData.append('file', blob, 'face.jpg')
-
-  //esta ruta va a cambiar para el backend de java
-  fetch('http://localhost:8080/facial-recognition/student-attendance', {
-    method: 'POST',
-    body: formData,
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-      return response.json()
-    })
-    .then(data => {
-      console.log('Imagen enviada exitosamente:', data);
-    })
-    .catch(error => {
-      console.error('Error al enviar la imagen:', error)
-      console.error('Error details:', error.message)
-    })
-
+  //retirar el lock
   setTimeout(() => {
     recognitionLock = false
     console.log('Recognition lock liberado')
-  }, 10000)
+  }, 10000);
 }
