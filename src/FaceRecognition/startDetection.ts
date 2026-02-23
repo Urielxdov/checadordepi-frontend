@@ -46,7 +46,7 @@ function sendFaceToServer(blob: Blob) {
   const formData = new FormData()
   formData.append('file', blob, 'face.jpg')
 
-  //esta ruta va a cambiar parael backend de java
+  //esta ruta va a cambiar para el backend de java
   fetch('http://localhost:8080/facial-recognition/student-attendance', {
     method: 'POST',
     body: formData,
@@ -58,7 +58,7 @@ function sendFaceToServer(blob: Blob) {
       return response.json()
     })
     .then(data => {
-      console.log('Imagen enviada exitosamente:', data)
+      console.log('Imagen enviada exitosamente:', data);
     })
     .catch(error => {
       console.error('Error al enviar la imagen:', error)
