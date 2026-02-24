@@ -5,7 +5,7 @@ interface CameraProps {
   videoRef: RefObject<HTMLVideoElement | null>,
   canvasRef: RefObject<HTMLCanvasElement | null>,
   initCamera: (video: HTMLVideoElement | null, canvas: HTMLCanvasElement | null) => Promise<void>,
-  closeCamera: () => void;
+  closeCamera: () => void
 }
 
 //componente camara
