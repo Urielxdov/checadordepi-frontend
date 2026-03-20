@@ -115,7 +115,6 @@ export function StudentProvider ({ children }: PropsHook) {
     <StudentsContext.Provider
       value={{
         state,
-        dispatch,
         getStudents,
         addStudent,
         updateStudent,

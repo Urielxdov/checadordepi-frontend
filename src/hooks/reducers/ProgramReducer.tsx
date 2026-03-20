@@ -129,7 +129,6 @@ export function ProgramProvider({ children }:PropsHook){
     return (
         <ProgramContext.Provider value={{
             state,
-            dispatch,
             getPrograms,
             addProgram,
             updateProgram,

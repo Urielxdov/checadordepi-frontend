@@ -1,11 +1,11 @@
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { getFieldsProg } from "../../utils/Fields";
 import { usePrograms } from "../../hooks/custom/usePrograms";
 import { useForm } from "../../hooks/reducers/FormReducer";
 import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
-import Modal from "../../componets/ui/Modals";
+import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import debounce from "../../utils/Debounce";
 import { useAuth } from "../../hooks/custom/useAuth";

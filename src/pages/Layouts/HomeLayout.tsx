@@ -1,5 +1,5 @@
-import Footer from '../../componets/utils/essentials/Footer'
-import Header from '../../componets/utils/essentials/Header'
+import Footer from '../../components/utils/essentials/Footer'
+import Header from '../../components/utils/essentials/Header'
 
 interface Props {
   title: string

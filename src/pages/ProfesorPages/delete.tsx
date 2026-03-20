@@ -1,13 +1,13 @@
 import Delete from "../CrudActions/Delete";
 import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import { useTeachers } from "../../hooks/custom/useTeachers";
-import Modal from "../../componets/ui/Modals";
+import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import { useAuth } from "../../hooks/custom/useAuth";
 import debounce from "../../utils/Debounce";
-import PageBar from "../../componets/ui/pageBar";
+import PageBar from "../../components/ui/pageBar";
 
 function DeleteProf(){
     //hook de jwt

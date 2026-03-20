@@ -19,12 +19,12 @@ import CreateProg from './pages/ProgramaPages/register'
 import DeleteProg from './pages/ProgramaPages/delete'
 
 //wrappers
-import AuthWrapper from './componets/utils/wrappers/AuthWrapper'
-import StudentWrapper from './componets/utils/wrappers/StudentWrapper'
+import AuthWrapper from './components/utils/wrappers/AuthWrapper'
+import StudentWrapper from './components/utils/wrappers/StudentWrapper'
 import UpdateProg from './pages/ProgramaPages/update';
-import ProtectedRoute from './componets/utils/wrappers/ProtectedRoute'
-import TeacherWrapper from './componets/utils/wrappers/TeacherWrapper'
-import ProgramWrapper from './componets/utils/wrappers/ProgramWrapper'
+import ProtectedRoute from './components/utils/wrappers/ProtectedRoute'
+import TeacherWrapper from './components/utils/wrappers/TeacherWrapper'
+import ProgramWrapper from './components/utils/wrappers/ProgramWrapper'
 import FacialRecognition from './pages/FacialRecognition/FacialRecognition'
 
 function App () {

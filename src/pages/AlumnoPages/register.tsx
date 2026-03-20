@@ -1,11 +1,11 @@
 import { useStudents } from "../../hooks/custom/useStudents";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
 import { getFieldsAlu } from "../../utils/Fields";
 import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
 import { useForm } from "../../hooks/reducers/FormReducer";
-import Modal from "../../componets/ui/Modals";
+import Modal from "../../components/ui/Modals";
 import { useEffect, useState } from "react";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";

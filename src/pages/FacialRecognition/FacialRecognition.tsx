@@ -1,9 +1,9 @@
-import Camera from '../../componets/FacialRecognition/Camera'
+import Camera from '../../components/FacialRecognition/Camera'
 import useCamera from '../../hooks/custom/useCamera';
-import Clock from '../../componets/utils/general/Clock'
-import DateDisplay from '../../componets/utils/general/DateDisplay'
+import Clock from '../../components/utils/general/Clock'
+import DateDisplay from '../../components/utils/general/DateDisplay'
 import HomeLayout from '../Layouts/HomeLayout'
-import Modal from '../../componets/ui/Modals';
+import Modal from '../../components/ui/Modals';
 import { useEffect, useState } from 'react';
 
 export default function FacialRecognition () {

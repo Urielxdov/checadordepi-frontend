@@ -1,6 +1,6 @@
 import { type DeleteParameters } from "../../interfaces/CRUDInterfaces";
-import QueryInput from "../../componets/utils/Inputs/QueryInput";
-import DeleteTable from "../../componets/tables/DeleteTable";
+import QueryInput from "../../components/utils/Inputs/QueryInput";
+import DeleteTable from "../../components/tables/DeleteTable";
 
 function Delete({module, headers, entity, all, onSearch, onDelete}:DeleteParameters){
     //validar entidad

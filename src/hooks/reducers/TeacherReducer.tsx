@@ -120,7 +120,6 @@ export function TeacherProvider({ children }:PropsHook){
     return (
         <TeacherContext.Provider value={{
             state,
-            dispatch,
             getTeachers,
             addTeacher,
             updateTeacher,

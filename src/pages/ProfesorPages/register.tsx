@@ -1,10 +1,10 @@
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { getFieldsProf } from "../../utils/Fields";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
-import Modal from "../../componets/ui/Modals";
+import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import { useForm } from "../../hooks/reducers/FormReducer";
 import debounce from "../../utils/Debounce";

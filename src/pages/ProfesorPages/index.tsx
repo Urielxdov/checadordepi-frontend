@@ -2,8 +2,8 @@ import { useTeachers } from "../../hooks/custom/useTeachers";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
 import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
-import PageBar from "../../componets/ui/pageBar";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
+import PageBar from "../../components/ui/pageBar";
 import { useAuth } from "../../hooks/custom/useAuth";
 
 function IndexProf(){

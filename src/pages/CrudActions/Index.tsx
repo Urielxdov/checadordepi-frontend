@@ -1,4 +1,4 @@
-import Table from '../../componets/tables/Table'
+import Table from '../../components/tables/Table'
 import type { IndexParameters } from '../../interfaces/CRUDInterfaces'
 
 function Index ({ headers, data }: IndexParameters) {

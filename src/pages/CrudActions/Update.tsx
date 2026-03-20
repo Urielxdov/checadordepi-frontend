@@ -1,6 +1,6 @@
-import QueryInput from "../../componets/utils/Inputs/QueryInput";
+import QueryInput from "../../components/utils/Inputs/QueryInput";
 import { type UpdateParameters } from "../../interfaces/CRUDInterfaces";
-import UpdateTable from "../../componets/tables/UpdateTable";
+import UpdateTable from "../../components/tables/UpdateTable";
 
 function Update({module, entity, headers, all, onSearch, onUpdate}:UpdateParameters){
     if(!entity){

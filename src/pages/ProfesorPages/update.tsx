@@ -1,12 +1,12 @@
 import Update from "../CrudActions/Update";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { PROFESORHEADERS } from "../../utils/Headers";
-import Modal from "../../componets/ui/Modals";
+import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import type { ProfesorConfig, BaseModel } from "../../interfaces/ModelsInterfaces";
-import PageBar from "../../componets/ui/pageBar";
+import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
 import { useAuth } from "../../hooks/custom/useAuth";
 

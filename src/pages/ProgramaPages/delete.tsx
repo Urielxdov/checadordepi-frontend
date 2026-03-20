@@ -1,11 +1,11 @@
 import Delete from "../CrudActions/Delete";
 import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { PROGRAMAHEADERS } from "../../utils/Headers";
 import { usePrograms } from "../../hooks/custom/usePrograms";
-import Modal from "../../componets/ui/Modals";
+import Modal from "../../components/ui/Modals";
 import { useState } from "react";
-import PageBar from "../../componets/ui/pageBar";
+import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
 import { useAuth } from "../../hooks/custom/useAuth";
 

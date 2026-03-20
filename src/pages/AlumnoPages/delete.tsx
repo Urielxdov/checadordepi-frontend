@@ -1,12 +1,12 @@
 import Delete from "../CrudActions/Delete";
 import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../componets/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { ALUMNOHEADERS } from "../../utils/Headers";
 import { useStudents } from "../../hooks/custom/useStudents";
-import Modal from "../../componets/ui/Modals";
+import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import { useAuth } from "../../hooks/custom/useAuth";
-import PageBar from "../../componets/ui/pageBar";
+import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
 
 function DeleteAlu(){

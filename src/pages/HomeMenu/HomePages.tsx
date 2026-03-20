@@ -1,5 +1,5 @@
-import Card from '../../componets/ui/Card'
-import AccessButton from '../../componets/utils/buttons/AccessButton'
+import Card from '../../components/ui/Card'
+import AccessButton from '../../components/utils/buttons/AccessButton'
 import HomeLayout from '../Layouts/HomeLayout'
 
 export default function HomePage () {
