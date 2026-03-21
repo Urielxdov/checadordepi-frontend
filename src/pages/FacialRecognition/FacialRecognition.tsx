@@ -5,13 +5,16 @@ import DateDisplay from '../../components/utils/general/DateDisplay'
 import HomeLayout from '../Layouts/HomeLayout'
 import Modal from '../../components/ui/Modals';
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 export default function FacialRecognition () {
   //hook de camara
   const { videoRef, canvasRef, checked, initCamera, closeCamera } = useCamera();
 
+  //estados
+  const [redirect,setRedirect] = useState<boolean>(false);
+
   //modales
-  const [openSuccessCheck, setOpenSuccessCheck] = useState<boolean>(false);
   const [openFailureCheck, setOpenFailureCheck] = useState<boolean>(false);
 
   //verificar cual ventana se abre
@@ -21,12 +24,20 @@ export default function FacialRecognition () {
 
     //en funcion de la respuesta
     if(checked){
-      setOpenSuccessCheck(true);
+      setRedirect(true);
     }else{
       setOpenFailureCheck(true);
     }
   },[checked]);
 
+  //redireccion
+  if(redirect){
+    return (
+      <Navigate to={"/asistencia/valida"}/>
+    );
+  }
+
+  //vista
   return (
     <>
       <HomeLayout title='Registro de Asistencia'>
@@ -41,13 +52,6 @@ export default function FacialRecognition () {
           closeCamera={closeCamera}
         />
       </HomeLayout>
-      <Modal 
-        title='Asistencia marcada'
-        message='La asistencia ha sido marcada'
-        type="success"
-        isOpen={openSuccessCheck}
-        onClose={ () => setOpenSuccessCheck(false) }
-      />
       <Modal 
         title='Asistencia no marcada'
         message='La asistencia no se ha podido marcar'

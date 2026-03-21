@@ -17,6 +17,8 @@ import UpdateProf from './pages/ProfesorPages/update'
 import IndexProg from './pages/ProgramaPages'
 import CreateProg from './pages/ProgramaPages/register'
 import DeleteProg from './pages/ProgramaPages/delete'
+import FacialRecognition from './pages/FacialRecognition/FacialRecognition'
+import AttendanceChecked from './pages/FacialRecognition/AttendanceChecked'
 
 //wrappers
 import AuthWrapper from './components/utils/wrappers/AuthWrapper'
@@ -25,7 +27,6 @@ import UpdateProg from './pages/ProgramaPages/update';
 import ProtectedRoute from './components/utils/wrappers/ProtectedRoute'
 import TeacherWrapper from './components/utils/wrappers/TeacherWrapper'
 import ProgramWrapper from './components/utils/wrappers/ProgramWrapper'
-import FacialRecognition from './pages/FacialRecognition/FacialRecognition'
 
 function App () {
   return (
@@ -64,6 +65,7 @@ function App () {
         </Route>
       </Route>
       <Route path='/asistencia' element={<FacialRecognition />} />
+      <Route path='/asistencia/valida' element={<AttendanceChecked />} />
     </Routes>
   )
 }
