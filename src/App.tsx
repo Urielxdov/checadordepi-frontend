@@ -49,19 +49,19 @@ function App () {
         </Route>
         {/** Rutas de profesor */}
         <Route element={<TeacherWrapper/>}>
-            <Route path='/profesor' element={<EntityModules entity='profesor' />} />
-            <Route path='/profesor/get' element={<IndexProf/>} />
-            <Route path='/profesor/create' element={<CreateProf/>} />
-            <Route path='/profesor/delete' element={<DeleteProf/>} />
-            <Route path='/profesor/update' element={<UpdateProf/>} />
+            <Route path='/asesor' element={<EntityModules entity='asesor' />} />
+            <Route path='/asesor/get' element={<IndexProf />} />
+            <Route path='/asesor/create' element={<CreateProf />} />
+            <Route path='/asesor/delete' element={<DeleteProf />} />
+            <Route path='/asesor/update' element={<UpdateProf />} />
         </Route>
         {/** Rutas de programa/curso */}
         <Route element={<ProgramWrapper/>}>
-            <Route path='/curso' element={<EntityModules entity='curso' />} />
-            <Route path='/curso/get' element={<IndexProg />} />
-            <Route path='/curso/create' element={<CreateProg />} />
-            <Route path='/curso/delete' element={<DeleteProg />} />
-            <Route path='/curso/update' element={<UpdateProg />} />
+            <Route path='/programa' element={<EntityModules entity='programa' />} />
+            <Route path='/programa/get' element={<IndexProg />} />
+            <Route path='/programa/create' element={<CreateProg />} />
+            <Route path='/programa/delete' element={<DeleteProg />} />
+            <Route path='/programa/update' element={<UpdateProg />} />
         </Route>
       </Route>
       <Route path='/asistencia' element={<FacialRecognition />} />

@@ -46,25 +46,25 @@ function CreateProf(){
     //retorno de la vista
     return (
         <>
-        <HomeLayout title={"Modulo profesor"}>
+        <HomeLayout title={"Modulo asesor"}>
             <Create
-                module="profesor"
+                module="asesor"
                 fields={getFieldsProf(state.data as ProfesorConfig)}
                 onSubmit={submit}
                 onChange={handleChange}
             />
-            <ReturnButton path="/profesor/"/>
+            <ReturnButton path="/asesor/"/>
         </HomeLayout>
         <Modal
-            title="Profesor creado"
-            message="el profesor ha sido creado con exito"
+            title="Asesor registrado"
+            message="el asesor ha sido registrado con exito"
             type="success"
             isOpen={openSuccess}
             onClose={() => setOpenSuccess(false)}
         />
         <Modal
-            title="Error al crear"
-            message="el profesor no ha sido creado"
+            title="Error al registrar"
+            message="el asesor no ha sido registrado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}

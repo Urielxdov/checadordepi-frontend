@@ -15,7 +15,7 @@ function IndexProf(){
 
     //vista de la pagina
     return (
-        <HomeLayout title="Lista de profesores">
+        <HomeLayout title="Lista de asesores">
             <Index 
                 headers={PROFESORHEADERS}
                 data={context.state.teachers}
@@ -25,7 +25,7 @@ function IndexProf(){
                 total={context.state.total}
                 onChange={(page: number) => context.getTeachers(page, jwt.token)}
             />
-            <ReturnButton path="/profesor/"/>
+            <ReturnButton path="/asesor/"/>
         </HomeLayout>
     );
 }

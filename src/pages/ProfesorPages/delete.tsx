@@ -38,9 +38,9 @@ function DeleteProf(){
     //retorno de la vista
     return(
         <>
-        <HomeLayout title="Modulo profesor">
+        <HomeLayout title="Modulo asesor">
             <Delete
-                module="profesor"
+                module="asesor"
                 headers={PROFESORHEADERS}
                 entity={context.state.teacher}
                 all={context.state.teachers}
@@ -52,18 +52,18 @@ function DeleteProf(){
                 total={context.state.total}
                 onChange={(page: number) => context.getTeachers(page, jwt.token)}
             />
-            <ReturnButton path="/profesor/"/>
+            <ReturnButton path="/asesor/"/>
         </HomeLayout>
         <Modal
-            title="Profesor eliminado"
-            message="el profesor ha sido eliminado con exito"
+            title="Asesor eliminado"
+            message="el asesor ha sido eliminado con exito"
             type="success"
             isOpen={openSuccess}
             onClose={() => setOpenSuccess(false)}
         />
         <Modal
             title="Error al eliminar"
-            message="el profesor no ha sido eliminado"
+            message="el asesor no ha sido eliminado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}

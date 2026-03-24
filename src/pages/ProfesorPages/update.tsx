@@ -38,9 +38,9 @@ function UpdateProf(){
 
     return (
         <>
-        <HomeLayout title="Modulo profesor">
+        <HomeLayout title="Modulo asesor">
             <Update
-                module='profesor'
+                module='asesor'
                 entity={context.state.teacher}
                 all={context.state.teachers}
                 headers={PROFESORHEADERS}
@@ -52,18 +52,18 @@ function UpdateProf(){
                 total={context.state.total}
                 onChange={(page: number) => context.getTeachers(page, jwt.token)}
             />
-            <ReturnButton path="/profesor/"/>
+            <ReturnButton path="/asesor/"/>
         </HomeLayout>
         <Modal
-            title="Profesor actualizado"
-            message="los datos del profesor han sido actualizados"
+            title="Asesor actualizado"
+            message="los datos del asesor han sido actualizados"
             type="success"
             isOpen={openSuccess}
             onClose={() => setOpenSuccess(false)}
         />
         <Modal
             title="Error al actualizar"
-            message="el profesor no ha sido actualizado"
+            message="el asesor no ha sido actualizado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}
