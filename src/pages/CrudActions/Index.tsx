@@ -1,4 +1,4 @@
-import Table from '../../components/tables/Table'
+import Table from '../../components/ui/tables/Table'
 
 export interface IndexParameters {
     headers: Array<string>,

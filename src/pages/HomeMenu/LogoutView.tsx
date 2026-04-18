@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/custom/useAuth";
 import { useEffect } from "react";
-import HomeLayout from "../Layouts/HomeLayout";
+import HomeLayout from "../../components/ui/HomeLayout";
 
 function Logout(){
     //contexto de jwt
@@ -16,8 +16,8 @@ function Logout(){
     return (
         <HomeLayout title="Sesion terminada">
             <>
-            <p className="text-center">La sesion se ha cerrado o ha expirado, para volver a ingresar de click en el enlace</p>
-            <Link className="text-blue-600" to="/">volver a acceder</Link>
+                <p className="text-center">La sesion se ha cerrado o ha expirado, para volver a ingresar de click en el enlace</p>
+                <Link className="text-blue-600 text-center" to="/">volver a acceder</Link>
             </>
         </HomeLayout>
     );

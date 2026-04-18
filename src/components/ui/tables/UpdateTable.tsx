@@ -1,7 +1,7 @@
-import type { BaseModel } from "../../interfaces/Models";
-import { useUpdate } from "../../hooks/reducers/UpdateReducer";
+import type { BaseModel } from "../../../interfaces/Models";
+import { useUpdate } from "../../../hooks/reducers/UpdateReducer";
 import RowData from "./RowData";
-import UpdateButton from "../utils/buttons/UpdateButton";
+import UpdateButton from "../../interactives/buttons/UpdateButton";
 
 interface UpdateTableConfig<T extends BaseModel>{
     headers: Array<string>,

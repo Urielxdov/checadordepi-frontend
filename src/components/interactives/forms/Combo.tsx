@@ -1,4 +1,4 @@
-import type { SelectItem } from "../../interfaces/httpModels";
+import type { SelectItem } from "../../../interfaces/httpModels";
 
 interface ComboBoxProps {
     name: string

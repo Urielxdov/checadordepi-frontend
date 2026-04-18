@@ -1,8 +1,8 @@
 import Camera from '../../components/FacialRecognition/Camera'
 import useCamera from '../../hooks/custom/useCamera';
-import Clock from '../../components/utils/general/Clock'
-import DateDisplay from '../../components/utils/general/DateDisplay'
-import HomeLayout from '../Layouts/HomeLayout'
+import Clock from '../../components/FacialRecognition/Clock'
+import DateDisplay from '../../components/FacialRecognition/DateDisplay'
+import HomeLayout from '../../components/ui/HomeLayout'
 import Modal from '../../components/ui/Modals';
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';

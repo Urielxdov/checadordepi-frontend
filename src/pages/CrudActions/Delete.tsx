@@ -1,6 +1,6 @@
 import { type BaseModel } from "../../interfaces/Models";
-import QueryInput from "../../components/utils/Inputs/QueryInput";
-import DeleteTable from "../../components/tables/DeleteTable";
+import QueryInput from "../../components/interactives/inputs/QueryInput";
+import DeleteTable from "../../components/ui/tables/DeleteTable";
 
 export interface DeleteParameters {
     module: string

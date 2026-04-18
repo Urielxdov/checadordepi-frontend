@@ -1,6 +1,6 @@
-import type { BaseModel } from "../../interfaces/Models";
+import type { BaseModel } from "../../../interfaces/Models";
 import RowData from "./RowData";
-import DeleteButton from "../utils/buttons/DeleteButton";
+import DeleteButton from "../../interactives/buttons/DeleteButton";
 
 interface DeleteTableConfig<T extends BaseModel> {
     headers: Array<string>

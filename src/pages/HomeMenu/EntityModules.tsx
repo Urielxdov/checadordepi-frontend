@@ -1,6 +1,6 @@
 import Card from '../../components/ui/Card'
-import AccessButton from '../../components/utils/buttons/AccessButton'
-import HomeLayout from '../Layouts/HomeLayout'
+import AccessButton from '../../components/interactives/buttons/AccessButton'
+import HomeLayout from '../../components/ui/HomeLayout'
 
 interface Module {
   title: string

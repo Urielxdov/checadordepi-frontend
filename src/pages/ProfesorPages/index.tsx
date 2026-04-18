@@ -1,8 +1,8 @@
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import Index from "../CrudActions/Index";
-import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../components/utils/buttons/ReturnButton";
+import HomeLayout from "../../components/ui/HomeLayout";
+import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import PageBar from "../../components/ui/pageBar";
 import { useAuth } from "../../hooks/custom/useAuth";
 

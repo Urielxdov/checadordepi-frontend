@@ -1,7 +1,7 @@
-import ComboBox from '../../components/forms/Combo'
-import Form from '../../components/forms/Form'
-import Input from '../../components/forms/Input'
-import Button from '../../components/utils/buttons/Button'
+import ComboBox from '../../components/interactives/forms/Combo'
+import Form from '../../components/interactives/forms/Form'
+import Input from '../../components/interactives/forms/Input'
+import Button from '../../components/interactives/buttons/Button'
 import { type SelectItem } from '../../interfaces/httpModels'
 import type { FieldConfig } from '../../utils/Fields'
 
@@ -20,7 +20,7 @@ function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: Creat
   //retorno de vista
   return (
     <>
-      <h1 className='font-bold text-xl'>Registrar nuevo {module}</h1>
+      <h1 className='font-bold text-xl text-center'>Registrar nuevo {module}</h1>
       <Form id="create-form" onSubmit={onSubmit}>
         {fields.map((f:FieldConfig) => (
           <Input

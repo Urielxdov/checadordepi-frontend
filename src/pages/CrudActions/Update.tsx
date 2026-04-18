@@ -1,6 +1,6 @@
-import QueryInput from "../../components/utils/Inputs/QueryInput";
+import QueryInput from "../../components/interactives/inputs/QueryInput";
 import { type BaseModel } from "../../interfaces/Models";
-import UpdateTable from "../../components/tables/UpdateTable";
+import UpdateTable from "../../components/ui/tables/UpdateTable";
 
 export interface UpdateParameters {
     module: string,

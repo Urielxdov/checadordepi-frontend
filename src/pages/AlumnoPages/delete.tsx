@@ -1,6 +1,6 @@
 import Delete from "../CrudActions/Delete";
-import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../components/utils/buttons/ReturnButton";
+import HomeLayout from "../../components/ui/HomeLayout";
+import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { ALUMNOHEADERS } from "../../utils/Headers";
 import { useStudents } from "../../hooks/custom/useStudents";
 import Modal from "../../components/ui/Modals";

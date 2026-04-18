@@ -1,7 +1,7 @@
-import ComboBox from '../../components/forms/Combo'
-import Form from '../../components/forms/Form'
-import Input from '../../components/forms/Input'
-import Button from '../../components/utils/buttons/Button'
+import ComboBox from '../../components/interactives/forms/Combo'
+import Form from '../../components/interactives/forms/Form'
+import Input from '../../components/interactives/forms/Input'
+import Button from '../../components/interactives/buttons/Button'
 import type { CreateParameters } from './Create'
 import type { FieldConfig } from '../../utils/Fields'
 

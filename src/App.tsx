@@ -21,12 +21,12 @@ import FacialRecognition from './pages/FacialRecognition/FacialRecognition'
 import AttendanceChecked from './pages/FacialRecognition/AttendanceChecked'
 
 //wrappers
-import AuthWrapper from './components/utils/wrappers/AuthWrapper'
-import StudentWrapper from './components/utils/wrappers/StudentWrapper'
+import AuthWrapper from './components/wrappers/AuthWrapper'
+import StudentWrapper from './components/wrappers/StudentWrapper'
 import UpdateProg from './pages/ProgramaPages/update';
-import ProtectedRoute from './components/utils/wrappers/ProtectedRoute'
-import TeacherWrapper from './components/utils/wrappers/TeacherWrapper'
-import ProgramWrapper from './components/utils/wrappers/ProgramWrapper'
+import ProtectedRoute from './components/wrappers/ProtectedRoute'
+import TeacherWrapper from './components/wrappers/TeacherWrapper'
+import ProgramWrapper from './components/wrappers/ProgramWrapper'
 
 function App () {
   return (

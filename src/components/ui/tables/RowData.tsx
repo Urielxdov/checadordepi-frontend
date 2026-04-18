@@ -1,6 +1,6 @@
-import type { BaseModel } from "../../interfaces/Models";
-import ComboBox from "../forms/Combo";
-import { STATUSOPTIONS } from "../../utils/Options";
+import type { BaseModel } from "../../../interfaces/Models";
+import ComboBox from "../../interactives/forms/Combo";
+import { STATUSOPTIONS } from "../../../utils/Options";
 
 interface RowDataConfig<T extends BaseModel>{
     data: T

@@ -1,4 +1,4 @@
-import { AuthProvider } from "../../../hooks/custom/useAuth";
+import { AuthProvider } from "../../hooks/custom/useAuth";
 import { Outlet } from "react-router-dom";
 
 function AuthWrapper(){

@@ -1,6 +1,6 @@
 import Card from '../../components/ui/Card'
-import AccessButton from '../../components/utils/buttons/AccessButton'
-import HomeLayout from '../Layouts/HomeLayout'
+import AccessButton from '../../components/interactives/buttons/AccessButton'
+import HomeLayout from '../../components/ui/HomeLayout'
 
 export default function HomePage () {
   const modules = [
@@ -11,12 +11,12 @@ export default function HomePage () {
     },
     {
       title: 'Asesor',
-      description: 'Operaciones relacionadas con la gestión de profesores',
+      description: 'Operaciones relacionadas con la gestión de asesores',
       url: '/asesor'
     },
     {
       title: 'Programa',
-      description: 'Operaciones relacionadas con la administración de cursos',
+      description: 'Operaciones relacionadas con la administración de programas',
       url: '/programa'
     }
   ]

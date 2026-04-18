@@ -1,5 +1,5 @@
 import { Link, Navigate } from "react-router-dom";
-import HomeLayout from "../Layouts/HomeLayout";
+import HomeLayout from "../../components/ui/HomeLayout";
 import { useEffect, useState } from "react";
 
 export default function AttendanceChecked(){

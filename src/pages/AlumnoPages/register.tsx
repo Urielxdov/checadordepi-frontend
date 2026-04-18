@@ -1,7 +1,7 @@
 import { useStudents } from "../../hooks/custom/useStudents";
-import ReturnButton from "../../components/utils/buttons/ReturnButton";
+import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import Create from "../CrudActions/Create";
-import HomeLayout from "../Layouts/HomeLayout";
+import HomeLayout from "../../components/ui/HomeLayout";
 import { getFieldsAlu } from "../../utils/Fields";
 import type { AlumnoModel } from "../../interfaces/Models";
 import { useForm } from "../../hooks/reducers/FormReducer";
@@ -22,8 +22,8 @@ function CreateAlu(){
    const [openFail, setOpenFail] = useState<boolean>(false);
 
    //estados de items del select
-   const [itemsPf, setItemsPf] = useState<SelectItem[]>([]);
-   const [itemsPr, setItemsPr] = useState<SelectItem[]>([]);
+   const [itemsPf, setItemsPf] = useState<SelectItem[]>([{key: "default", fullName: "-- seleccione un profesor --"}]);
+   const [itemsPr, setItemsPr] = useState<SelectItem[]>([{key: "default", fullName: "-- seleccione un programa --"}]);
 
    //contexto de alumno
    const context = useStudents();
@@ -50,8 +50,8 @@ function CreateAlu(){
    },500)
 
    useEffect(() => {
-      getTeacherSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPf([{key: "default", fullName: "-- seleccione un profesor --"} as SelectItem,...items])).catch(e => console.log(e))
-      getProgramSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPr([{key: "default", name: "-- sleccione un programa --"} as SelectItem,...items])).catch(e => console.log(e))
+      getTeacherSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPf([itemsPf[0],...items])).catch(e => console.log(e))
+      getProgramSelect(jwt.token).then((items:Array<SelectItem>) => setItemsPr([itemsPr[0],...items])).catch(e => console.log(e))
    },[]);
      //retorno de vista
      return (

@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from './Button'
 import { ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'

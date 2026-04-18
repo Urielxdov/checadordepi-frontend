@@ -1,7 +1,7 @@
 import Update from "../CrudActions/Update";
 import { useTeachers } from "../../hooks/custom/useTeachers";
-import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../components/utils/buttons/ReturnButton";
+import HomeLayout from "../../components/ui/HomeLayout";
+import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";

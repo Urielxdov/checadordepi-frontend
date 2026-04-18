@@ -1,4 +1,4 @@
-import Button from "../utils/buttons/Button";
+import Button from "../interactives/buttons/Button";
 
 interface PageBarProps{
     current: number

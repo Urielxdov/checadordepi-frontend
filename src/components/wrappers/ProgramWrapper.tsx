@@ -1,4 +1,4 @@
-import { ProgramProvider } from "../../../hooks/reducers/ProgramReducer";
+import { ProgramProvider } from "../../hooks/reducers/ProgramReducer";
 import ProtectedRoute from "./ProtectedRoute";
 
 function ProgramWrapper(){

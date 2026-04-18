@@ -1,7 +1,7 @@
 import UpdateForm from "../CrudActions/UpdateForm";
 import { useStudents } from "../../hooks/custom/useStudents";
-import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../components/utils/buttons/ReturnButton";
+import HomeLayout from "../../components/ui/HomeLayout";
+import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { type AlumnoModel } from "../../interfaces/Models";
 import Modal from "../../components/ui/Modals";
 import { useEffect, useState } from "react";
@@ -11,8 +11,8 @@ import { useAuth } from "../../hooks/custom/useAuth";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
 import type { SelectItem } from "../../interfaces/httpModels";
-import QueryInput from "../../components/utils/Inputs/QueryInput";
-import CheckBox from "../../components/utils/Inputs/Checkbox";
+import QueryInput from "../../components/interactives/inputs/QueryInput";
+import CheckBox from "../../components/interactives/inputs/Checkbox";
 import debounce from "../../utils/Debounce";
 
 function UpdateAlu(){

@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 import { getFieldsLog } from "../../utils/Fields";
 import type { FieldConfig } from "../../utils/Fields";
 import { type LoginModel } from "../../interfaces/Models";
-import Form from "../../components/forms/Form";
-import Input from "../../components/forms/Input";
-import Button from "../../components/utils/buttons/Button";
+import Form from "../../components/interactives/forms/Form";
+import Input from "../../components/interactives/forms/Input";
+import Button from "../../components/interactives/buttons/Button";
 import logoTec from '../../assets/logo_login_tecnm.png';
 import logoITL from '../../assets/110053_login.png';
 import { useForm } from "../../hooks/reducers/FormReducer";
@@ -45,7 +45,7 @@ function LoginView(){
     },[]);
 
     return(
-        <div className="fixed inset-0 bg-indigo-950 flex items-center justify-center">
+        <div className="w-full h-full fixed inset-0 bg-indigo-950 flex items-center justify-center">
             <div className="bg-white rounded-lg w-230 h-150 flex flex-row">
                 <div>
                     <img className="h-150 w-100 rounded-lg object-cover" src={logoTec} alt="Logo del tec" />

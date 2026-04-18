@@ -31,8 +31,6 @@ export async function getActiveTeachers(page:number, token:string):Promise<Paged
         headers: {"access-token": token}
     });
 
-    console.log(token);
-
     //verificar el exito
     if(!response.ok){
         //mostrar error

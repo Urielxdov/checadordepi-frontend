@@ -1,5 +1,5 @@
 //API base
-const BASEAPIURL = "http://localhost:8080/";
+const BASEAPIURL = "http://localhost:8000/";
 
 //enpoints de entidad
 export const STUDENTURL = BASEAPIURL+"alumno";

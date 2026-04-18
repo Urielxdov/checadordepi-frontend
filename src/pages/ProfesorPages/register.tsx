@@ -1,6 +1,6 @@
 import Create from "../CrudActions/Create";
-import HomeLayout from "../Layouts/HomeLayout";
-import ReturnButton from "../../components/utils/buttons/ReturnButton";
+import HomeLayout from "../../components/ui/HomeLayout";
+import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { getFieldsProf } from "../../utils/Fields";
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import type { ProfesorModel } from "../../interfaces/Models";
