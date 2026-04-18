@@ -1,6 +1,15 @@
-import type { AlumnoConfig, LoginConfig, ProfesorConfig, ProgramaConfig } from "../interfaces/ModelsInterfaces"
+import type { AlumnoModel, LoginModel, ProfesorModel, ProgramaModel } from "../interfaces/Models"
 
-export const getFieldsAlu = (preset:AlumnoConfig)=> ([
+export interface FieldConfig {
+    label: string
+    name: string
+    type: string
+    maxlength?: number
+    minlength?: number
+    value?: any
+}
+
+export const getFieldsAlu = (preset:AlumnoModel):Array<FieldConfig> => ([
          {
              label:"Numero de control",
              name:"id",
@@ -53,7 +62,7 @@ export const getFieldsAlu = (preset:AlumnoConfig)=> ([
          }
      ])
 
-export const getFieldsProf = (preset: ProfesorConfig) => ([
+export const getFieldsProf = (preset: ProfesorModel):Array<FieldConfig> => ([
          {
              label:"clave",
              name:"id",
@@ -101,7 +110,7 @@ export const getFieldsProf = (preset: ProfesorConfig) => ([
          }
      ])
 
-export const getFieldsProg = (preset: ProgramaConfig) => ([
+export const getFieldsProg = (preset: ProgramaModel):Array<FieldConfig> => ([
          {
              label:"Numero de programa",
              name:"id",
@@ -123,7 +132,7 @@ export const getFieldsProg = (preset: ProgramaConfig) => ([
          }
      ])
 
-export const getFieldsLog = (preset: LoginConfig) =>  [
+export const getFieldsLog = (preset: LoginModel):Array<FieldConfig> =>  [
         {
             label:"Usuario",
             name:"user",

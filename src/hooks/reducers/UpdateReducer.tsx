@@ -1,4 +1,4 @@
-import type { BaseModel } from "../../interfaces/ModelsInterfaces";
+import type { BaseModel } from "../../interfaces/Models";
 import { useReducer } from "react";
 
 //configuracion de estado

@@ -1,22 +1,30 @@
 import { useEffect, useReducer, type ReactNode } from "react";
 import { ProgramContext } from "../context/ProgramContext";
-import { type ProgramStateProps } from "../../interfaces/componentConfig";
-import { type ProgramActions } from "../../interfaces/componentConfig";
-import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import type { ProgramaModel } from "../../interfaces/Models";
 import { createProgram, getActivePrograms, updateProgramA, deleteProgramA } from "../../services/programService";
-import type { PagedData } from "../../interfaces/httpConfig";
+import type { PagedData } from "../../interfaces/httpModels";
 
 //interfaces de configuracion
-interface PropsHook {
-    children: ReactNode
+export interface ProgramStateProps {
+  programs: ProgramaModel[]
+  current_page: number
+  total: number
+  program?: ProgramaModel
 }
 
 //estado inicial 
 const initialState = () => ({
-    programs: [] as Array<ProgramaConfig>,
+    programs: [] as Array<ProgramaModel>,
     current_page: 0,
     total: 0
 })
+
+export type ProgramActions = 
+    | {type: "GET_PROGRAMS", payload: PagedData<ProgramaModel>}
+    | {type: "CREATE_PROGRAM", payload: ProgramaModel}
+    | {type: "UPDATE_PROGRAM", payload: ProgramaModel}
+    | {type: "DELETE_PROGRAM", payload: string}
+    | {type: "SEARCH_PROGRAM", payload: string}
 
 //reducer de profesor
 const reducer = (state: ProgramStateProps, action: ProgramActions) => {
@@ -35,6 +43,10 @@ const reducer = (state: ProgramStateProps, action: ProgramActions) => {
     }
 }
 
+interface PropsHook {
+    children: ReactNode
+}
+
 //provider de profesor
 export function ProgramProvider({ children }:PropsHook){
     //uso de reducer
@@ -47,13 +59,13 @@ export function ProgramProvider({ children }:PropsHook){
             const programs = await getActivePrograms(page, tk);
 
             //guardar en el reducer
-            dispatch({type:"GET_PROGRAMS", payload: programs as unknown as PagedData<ProgramaConfig>})
+            dispatch({type:"GET_PROGRAMS", payload: programs as unknown as PagedData<ProgramaModel>})
         }catch(error){
             console.log(error);
         }
     }
 
-    const addProgram = async (program: ProgramaConfig, tk:string):Promise<boolean> => {
+    const addProgram = async (program: ProgramaModel, tk:string):Promise<boolean> => {
         try{
             //mandar al api
             const result = await createProgram(program, tk);
@@ -73,7 +85,7 @@ export function ProgramProvider({ children }:PropsHook){
         }
     }
 
-    const updateProgram = async (updated: ProgramaConfig, tk:string):Promise<boolean> => {
+    const updateProgram = async (updated: ProgramaModel, tk:string):Promise<boolean> => {
         try{
             //mandar al api
             const result = await updateProgramA(updated, tk);

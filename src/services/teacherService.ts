@@ -1,9 +1,9 @@
-import type { OperationResponse, PagedData, ProfesorAPI, SelectItem } from "../interfaces/httpConfig";
-import type { ProfesorConfig } from "../interfaces/ModelsInterfaces";
+import type { OperationResponse, PagedData, ProfesorAPI, SelectItem } from "../interfaces/httpModels";
+import type { ProfesorModel } from "../interfaces/Models";
 import { TEACHERURL } from "../utils/APIurls";
 
 //pedir profesores
-export async function getTeachersA(page:number, token:string):Promise<PagedData<ProfesorConfig>>{
+export async function getTeachersA(page:number, token:string):Promise<PagedData<ProfesorModel>>{
     //peticion con fetch
     const response = await fetch(TEACHERURL+'/get/all?page='+page,{
         method:"GET",
@@ -19,17 +19,19 @@ export async function getTeachersA(page:number, token:string):Promise<PagedData<
 
     //obtener data
     const data = await response.json();
-    return {data: data.data.map((p:ProfesorAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProfesorConfig>
+    return {data: data.data.map((p:ProfesorAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProfesorModel>
 }
 
 //pedir profesores activos
-export async function getActiveTeachers(page:number, token:string):Promise<PagedData<ProfesorConfig>>{
+export async function getActiveTeachers(page:number, token:string):Promise<PagedData<ProfesorModel>>{
     //peticion con fetch
     const response = await fetch(TEACHERURL+'/get/actives?page='+page,{
         method:"GET",
         mode:"cors",
         headers: {"access-token": token}
     });
+
+    console.log(token);
 
     //verificar el exito
     if(!response.ok){
@@ -59,7 +61,7 @@ export async function getTeacherSelect(token:string):Promise<Array<SelectItem>>{
     return await response.json();
 }
 
-export async function createTeacher(prof:ProfesorConfig, token:string):Promise<OperationResponse<ProfesorAPI>>{
+export async function createTeacher(prof:ProfesorModel, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(TEACHERURL+'/create',{
         method: "POST",
@@ -77,7 +79,7 @@ export async function createTeacher(prof:ProfesorConfig, token:string):Promise<O
     return await response.json();
 }
 
-export async function updateTeacherA(updated: ProfesorConfig, token:string):Promise<OperationResponse<ProfesorAPI>>{
+export async function updateTeacherA(updated: ProfesorModel, token:string):Promise<OperationResponse<ProfesorAPI>>{
     //peticion con fetch
     const response = await fetch(TEACHERURL+'/update',{
         method: "PUT",
@@ -113,20 +115,20 @@ export async function deleteTeacherA(id: string, token:string):Promise<Operation
     return await response.json();
 }
 
-function modelRemaper(prof:ProfesorConfig):ProfesorAPI{
+function modelRemaper(prof:ProfesorModel):ProfesorAPI{
     return {
-        "clave_profesor": prof.id as string,
-        "nombre_profesor": prof.nombre,
-        "apellido_profesor": prof.apellidos,
-        "telefono_profesor":prof.telefono,
-        "correo_profesor":prof.correo,
-        "grado_maximo":prof.grado,
-        "nombre_grado_maximo":prof.nombre_grado,
-        "estatus_profesor":prof.status
+        clave_profesor: prof.id,
+        nombre_profesor: prof.nombre,
+        apellido_profesor: prof.apellidos,
+        telefono_profesor:prof.telefono,
+        correo_profesor:prof.correo,
+        grado_maximo:prof.grado,
+        nombre_grado_maximo:prof.nombre_grado,
+        estatus_profesor:prof.status
     } as ProfesorAPI
 }
 
-function jsonMapper(prof:ProfesorAPI):ProfesorConfig{
+function jsonMapper(prof:ProfesorAPI):ProfesorModel{
     return {
         id: prof.clave_profesor,
         nombre: prof.nombre_profesor,
@@ -136,5 +138,5 @@ function jsonMapper(prof:ProfesorAPI):ProfesorConfig{
         grado: prof.grado_maximo,
         nombre_grado: prof.nombre_grado_maximo,
         status: prof.estatus_profesor
-    } as ProfesorConfig
+    } as ProfesorModel
 }

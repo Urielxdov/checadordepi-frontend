@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { getFieldsLog } from "../../utils/Fields";
-import type { FieldConfig } from "../../interfaces/componentConfig";
-import { type LoginConfig } from "../../interfaces/ModelsInterfaces";
+import type { FieldConfig } from "../../utils/Fields";
+import { type LoginModel } from "../../interfaces/Models";
 import Form from "../../components/forms/Form";
 import Input from "../../components/forms/Input";
 import Button from "../../components/utils/buttons/Button";
@@ -10,6 +10,7 @@ import logoITL from '../../assets/110053_login.png';
 import { useForm } from "../../hooks/reducers/FormReducer";
 import { validateAccess } from "../../services/userService";
 import { useAuth } from "../../hooks/custom/useAuth";
+import { useEffect } from "react";
 
 function LoginView(){
     //contexto de autenticado
@@ -23,7 +24,7 @@ function LoginView(){
 
     //obtencion de datos
     const onSubmit = () => {
-        const login = state.data as LoginConfig
+        const login = state.data as LoginModel
         //validar acceso
         validateAccess(login).then(token => {
             if(token){
@@ -37,6 +38,12 @@ function LoginView(){
         }).catch(e => {alert("credenciales invalidas!!!!"); console.log(e); resetForm();});
     }
 
+    //limpiar rastros de sesion
+    useEffect(()=>{
+        //borrar localstorage
+        jwt.clear();
+    },[]);
+
     return(
         <div className="fixed inset-0 bg-indigo-950 flex items-center justify-center">
             <div className="bg-white rounded-lg w-230 h-150 flex flex-row">
@@ -49,7 +56,7 @@ function LoginView(){
                         <h2 className="text-xl text-left">Sistema de gestion de alumnos</h2>
                     </div>
                     <Form id="login-form" onSubmit={onSubmit}>
-                        {getFieldsLog(state.data as LoginConfig).map((f:FieldConfig) => (
+                        {getFieldsLog(state.data as LoginModel).map((f:FieldConfig) => (
                             <Input
                                 label={f.label}
                                 name={f.name}
@@ -68,12 +75,12 @@ function LoginView(){
                             submit={true}
                             styles='px-4 py-2 rounded bg-blue-500 text-white
                             hover:bg-blue-600 hover:cursor-pointer'
-            />
-          </Form>
+                        />
+                    </Form>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    )
 }
 
 export default LoginView

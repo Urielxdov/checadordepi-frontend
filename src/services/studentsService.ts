@@ -1,9 +1,9 @@
-import type { OperationResponse, PagedData } from "../interfaces/httpConfig"
-import type { AlumnoConfig } from "../interfaces/ModelsInterfaces"
-import type { AlumnoAPI } from "../interfaces/httpConfig";
+import type { OperationResponse, PagedData } from "../interfaces/httpModels"
+import type { AlumnoModel } from "../interfaces/Models"
+import type { AlumnoAPI } from "../interfaces/httpModels";
 import { STUDENTURL } from "../utils/APIurls";
 
-export async function getStudentsA(page:number, token: string):Promise<PagedData<AlumnoConfig>>{
+export async function getStudentsA(page:number, token: string):Promise<PagedData<AlumnoModel>>{
     //peticion con fetch
     const response = await fetch(STUDENTURL+'/get/all?page='+page,{
         method:"GET",
@@ -18,10 +18,10 @@ export async function getStudentsA(page:number, token: string):Promise<PagedData
 
     //retorno de datos
     const data = await response.json()
-    return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoConfig>
+    return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoModel>
 }
 
-export async function getActiveStudents(page:number, token: string):Promise<PagedData<AlumnoConfig>>{
+export async function getActiveStudents(page:number, token: string):Promise<PagedData<AlumnoModel>>{
     //peticion con fetch
     const response = await fetch(STUDENTURL+'/get/actives?page='+page,{
         method:"GET",
@@ -36,10 +36,10 @@ export async function getActiveStudents(page:number, token: string):Promise<Page
 
     //retorno de datos
     const data = await response.json()
-    return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoConfig>
+    return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoModel>
 }
 
-export async function createStudent(a:AlumnoConfig, foto:File, token: string):Promise<OperationResponse<AlumnoConfig>>{
+export async function createStudent(a:AlumnoModel, foto:File, token: string):Promise<OperationResponse<AlumnoModel>>{
     //preparar form data
     const data = new FormData();
     //pasarlo a blob para incluir el content-type
@@ -61,7 +61,7 @@ export async function createStudent(a:AlumnoConfig, foto:File, token: string):Pr
 
     //retorno de respuesta
     const result = await response.json() as OperationResponse<AlumnoAPI>;
-    return {...result, data: jsonMapper(result.data as AlumnoAPI)} as OperationResponse<AlumnoConfig>;
+    return {...result, data: jsonMapper(result.data as AlumnoAPI)} as OperationResponse<AlumnoModel>;
 }
 
 export async function deleteStudentA(id: string, token: string):Promise<OperationResponse<AlumnoAPI>>{
@@ -79,7 +79,7 @@ export async function deleteStudentA(id: string, token: string):Promise<Operatio
     return await response.json();
 }
 
-export async function updateStudentA(a:AlumnoConfig, foto:File | undefined, token: string):Promise<OperationResponse<AlumnoConfig>>{
+export async function updateStudentA(a:AlumnoModel, foto:File | undefined, token: string):Promise<OperationResponse<AlumnoModel>>{
     //preparar formdata
     const data = new FormData();
     data.append("student",new Blob([JSON.stringify(modelRemaper(a))],{type:'application/json'}));
@@ -97,11 +97,11 @@ export async function updateStudentA(a:AlumnoConfig, foto:File | undefined, toke
     }
     //retorno de datos
     const result = await response.json() as OperationResponse<AlumnoAPI>;
-    return {...result, data: jsonMapper(result.data as AlumnoAPI)} as OperationResponse<AlumnoConfig>;
+    return {...result, data: jsonMapper(result.data as AlumnoAPI)} as OperationResponse<AlumnoModel>;
 }
 
 //remappers
-function modelRemaper(a: AlumnoConfig):AlumnoAPI{
+function modelRemaper(a: AlumnoModel):AlumnoAPI{
     return {
       numero_control: a.id,
       nombre_alumno: a.nombre,
@@ -113,10 +113,10 @@ function modelRemaper(a: AlumnoConfig):AlumnoAPI{
       clave_profesor: a.profesor,
       clave_programa: a.programa,
       estatus_alumno: a.status
-    } as AlumnoAPI;
+    };
 }
 
-function jsonMapper(a: AlumnoAPI):AlumnoConfig{
+function jsonMapper(a: AlumnoAPI):AlumnoModel{
     return {
       id: a.numero_control,
       nombre: a.nombre_alumno,
@@ -128,5 +128,5 @@ function jsonMapper(a: AlumnoAPI):AlumnoConfig{
       profesor: a.clave_profesor,
       programa: a.clave_programa,
       status: a.estatus_alumno,
-    } as AlumnoConfig;
+    } as AlumnoModel;
 }

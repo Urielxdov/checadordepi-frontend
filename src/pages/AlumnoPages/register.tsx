@@ -3,14 +3,14 @@ import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import Create from "../CrudActions/Create";
 import HomeLayout from "../Layouts/HomeLayout";
 import { getFieldsAlu } from "../../utils/Fields";
-import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
+import type { AlumnoModel } from "../../interfaces/Models";
 import { useForm } from "../../hooks/reducers/FormReducer";
 import Modal from "../../components/ui/Modals";
 import { useEffect, useState } from "react";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
 import { useAuth } from "../../hooks/custom/useAuth";
-import type { SelectItem } from "../../interfaces/httpConfig";
+import type { SelectItem } from "../../interfaces/httpModels";
 import debounce from "../../utils/Debounce";
 
 function CreateAlu(){
@@ -22,8 +22,8 @@ function CreateAlu(){
    const [openFail, setOpenFail] = useState<boolean>(false);
 
    //estados de items del select
-   const [itemsPf, setItemsPf] = useState<SelectItem[]>([] as Array<SelectItem>);
-   const [itemsPr, setItemsPr] = useState<SelectItem[]>([] as Array<SelectItem>);
+   const [itemsPf, setItemsPf] = useState<SelectItem[]>([]);
+   const [itemsPr, setItemsPr] = useState<SelectItem[]>([]);
 
    //contexto de alumno
    const context = useStudents();
@@ -34,7 +34,7 @@ function CreateAlu(){
    //funcion de manejo
    const onSubmit = debounce(() => {
       //obtener el modelo
-      const alumno = state.data as AlumnoConfig
+      const alumno = state.data as AlumnoModel
       //activo por defecto
       alumno.status = "Activo"
       //gurdado en el contexto
@@ -58,7 +58,7 @@ function CreateAlu(){
         <HomeLayout title="Modulo Alumno">
            <Create
                 module="Alumno"
-                fields={getFieldsAlu(state.data as AlumnoConfig)}
+                fields={getFieldsAlu(state.data as AlumnoModel)}
                 itemsPf={itemsPf}
                 itemsPr={itemsPr}
                 onSubmit={onSubmit}

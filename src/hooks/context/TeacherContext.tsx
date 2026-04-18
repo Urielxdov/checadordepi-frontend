@@ -1,12 +1,12 @@
 import { createContext } from "react";
-import { type TeacherStateProps } from "../../interfaces/componentConfig";
-import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
+import type { TeacherStateProps } from "../reducers/TeacherReducer";
+import type { ProfesorModel } from "../../interfaces/Models";
 
 type TeacherContextConfig = {
     state: TeacherStateProps,
     getTeachers: (page: number, tk:string) => Promise<void>
-    addTeacher: (teacher: ProfesorConfig, tk:string) => Promise<boolean>,
-    updateTeacher: (updated: ProfesorConfig, tk:string) => Promise<boolean>,
+    addTeacher: (teacher: ProfesorModel, tk:string) => Promise<boolean>,
+    updateTeacher: (updated: ProfesorModel, tk:string) => Promise<boolean>,
     deleteTeacher: (clave: string, tk:string) => Promise<boolean>,
     searchTeacher: (clave: string) => void
 }

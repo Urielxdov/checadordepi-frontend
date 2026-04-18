@@ -5,7 +5,7 @@ import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
-import type { ProfesorConfig, BaseModel } from "../../interfaces/ModelsInterfaces";
+import type { ProfesorModel, BaseModel } from "../../interfaces/Models";
 import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
 import { useAuth } from "../../hooks/custom/useAuth";
@@ -24,7 +24,7 @@ function UpdateProf(){
     //menejo de update
     const update = (updated: BaseModel) => {
         debounce(() => {
-            context.updateTeacher(updated as ProfesorConfig, jwt.token).then(updated => {
+            context.updateTeacher(updated as ProfesorModel, jwt.token).then(updated => {
                 //verificar el exito
                 if(updated){
                     //abrir modal

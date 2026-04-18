@@ -1,5 +1,9 @@
 import Table from '../../components/tables/Table'
-import type { IndexParameters } from '../../interfaces/CRUDInterfaces'
+
+export interface IndexParameters {
+    headers: Array<string>,
+    data: Array<any>
+}
 
 function Index ({ headers, data }: IndexParameters) {
   return (

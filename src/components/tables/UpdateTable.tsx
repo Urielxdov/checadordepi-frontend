@@ -1,4 +1,4 @@
-import type { BaseModel } from "../../interfaces/ModelsInterfaces";
+import type { BaseModel } from "../../interfaces/Models";
 import { useUpdate } from "../../hooks/reducers/UpdateReducer";
 import RowData from "./RowData";
 import UpdateButton from "../utils/buttons/UpdateButton";

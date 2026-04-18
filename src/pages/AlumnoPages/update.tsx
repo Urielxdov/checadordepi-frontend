@@ -2,7 +2,7 @@ import UpdateForm from "../CrudActions/UpdateForm";
 import { useStudents } from "../../hooks/custom/useStudents";
 import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../components/utils/buttons/ReturnButton";
-import { type AlumnoConfig } from "../../interfaces/ModelsInterfaces";
+import { type AlumnoModel } from "../../interfaces/Models";
 import Modal from "../../components/ui/Modals";
 import { useEffect, useState } from "react";
 import { getFieldsAlu } from "../../utils/Fields";
@@ -10,7 +10,7 @@ import { useForm } from "../../hooks/reducers/FormReducer";
 import { useAuth } from "../../hooks/custom/useAuth";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
-import type { SelectItem } from "../../interfaces/httpConfig";
+import type { SelectItem } from "../../interfaces/httpModels";
 import QueryInput from "../../components/utils/Inputs/QueryInput";
 import CheckBox from "../../components/utils/Inputs/Checkbox";
 import debounce from "../../utils/Debounce";
@@ -27,8 +27,8 @@ function UpdateAlu(){
     const [check, setCheck] = useState<boolean>(false);
 
     //estados de items del select
-    const [itemsPf, setItemsPf] = useState<SelectItem[]>([] as Array<SelectItem>);
-    const [itemsPr, setItemsPr] = useState<SelectItem[]>([] as Array<SelectItem>);
+    const [itemsPf, setItemsPf] = useState<SelectItem[]>([]);
+    const [itemsPr, setItemsPr] = useState<SelectItem[]>([]);
 
     //contexto de alumno
     const context = useStudents();
@@ -39,7 +39,7 @@ function UpdateAlu(){
     //menejo de update
     const update = debounce(() => {
         //obtener el alumno del hook de form
-        context.updateStudent(state.data as AlumnoConfig, jwt.token).then(updated => {
+        context.updateStudent(state.data as AlumnoModel, jwt.token).then(updated => {
             if(updated){
                 setOpenSuccess(true);
             }else{
@@ -82,11 +82,11 @@ function UpdateAlu(){
             <QueryInput action={context.searchStudent} placeholder="buscar alumno"/>
             <UpdateForm
                 module="Alumno"
-                fields={check ? getFieldsAlu(state.data as AlumnoConfig).slice(1): getFieldsAlu(state.data as AlumnoConfig).slice(1,7)}
+                fields={check ? getFieldsAlu(state.data as AlumnoModel).slice(1): getFieldsAlu(state.data as AlumnoModel).slice(1,7)}
                 itemsPf={itemsPf}
                 itemsPr={itemsPr}
-                selectPf={(state.data as AlumnoConfig).profesor}
-                selectPr={(state.data as AlumnoConfig).programa}
+                selectPf={(state.data as AlumnoModel).profesor}
+                selectPr={(state.data as AlumnoModel).programa}
                 onSubmit={update}
                 onChange={handleChange}
             />

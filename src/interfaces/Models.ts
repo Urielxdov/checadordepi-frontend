@@ -4,19 +4,19 @@ export interface BaseModel {
     status: string
 }
 
-export interface AlumnoConfig extends BaseModel{
+export interface AlumnoModel extends BaseModel{
     //atributos propios
     apellidos: string
     telefono: string
     calle: string
     colonia: string
     correo: string
-    profesor?: string
-    programa?: string
+    profesor: string
+    programa: string
     foto?: File
 }
 
-export interface ProfesorConfig extends BaseModel{
+export interface ProfesorModel extends BaseModel{
     //atributos propios
     apellidos: string
     telefono: string
@@ -25,12 +25,12 @@ export interface ProfesorConfig extends BaseModel{
     nombre_grado: string
 }
 
-export interface ProgramaConfig extends BaseModel{
+export interface ProgramaModel extends BaseModel{
     //atributos propios
     registro: string
 }
 
-export interface LoginConfig {
+export interface LoginModel {
     user: string
     password?: string
     rol?: string

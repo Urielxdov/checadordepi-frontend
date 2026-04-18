@@ -1,22 +1,29 @@
 import { useEffect, useReducer, type ReactNode } from "react";
 import { TeacherContext } from "../context/TeacherContext";
-import { type TeacherStateProps } from "../../interfaces/componentConfig";
-import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
-import { type TeacherActions } from "../../interfaces/componentConfig";
+import type { ProfesorModel } from "../../interfaces/Models";
 import { createTeacher, getActiveTeachers, updateTeacherA, deleteTeacherA } from "../../services/teacherService";
-import type { PagedData } from "../../interfaces/httpConfig";
+import type { PagedData } from "../../interfaces/httpModels";
 
-//interfaces de configuracion
-interface PropsHook {
-    children: ReactNode
+export interface TeacherStateProps {
+  teachers: ProfesorModel[]
+  current_page: number
+  total: number
+  teacher?: ProfesorModel
 }
 
 //estado inicial 
 const initialState = () => ({ 
-    teachers: [] as Array<ProfesorConfig>,
+    teachers: [] as Array<ProfesorModel>,
     current_page: 0,
     total: 0
  })
+
+type TeacherActions = 
+    | {type: "GET_TEACHERS", payload: PagedData<ProfesorModel>}
+    | {type: "CREATE_TEACHER", payload: ProfesorModel}
+    | {type: "UPDATE_TEACHER", payload: ProfesorModel}
+    | {type: "DELETE_TEACHER", payload: string}
+    | {type: "SEARCH_TEACHER", payload: string}
 
 //reducer de profesor
 const reducer = (state: TeacherStateProps, action: TeacherActions) => {
@@ -35,6 +42,11 @@ const reducer = (state: TeacherStateProps, action: TeacherActions) => {
     }
 }
 
+//interfaces de configuracion
+interface PropsHook {
+    children: ReactNode
+}
+
 //provider de profesor
 export function TeacherProvider({ children }:PropsHook){
     //uso de reducer
@@ -47,13 +59,13 @@ export function TeacherProvider({ children }:PropsHook){
             const teachers = await getActiveTeachers(page, tk);
 
             //guardar en reducer
-            dispatch({type: "GET_TEACHERS", payload: teachers as unknown as PagedData<ProfesorConfig>});
+            dispatch({type: "GET_TEACHERS", payload: teachers as unknown as PagedData<ProfesorModel>});
         }catch(error){
             console.log(error);
         }
     }
 
-    const addTeacher = async (teacher: ProfesorConfig, tk:string):Promise<boolean> => {
+    const addTeacher = async (teacher: ProfesorModel, tk:string):Promise<boolean> => {
         try{
             //esperar respuesta
             const result = await createTeacher(teacher, tk);
@@ -70,7 +82,7 @@ export function TeacherProvider({ children }:PropsHook){
         }
     }
 
-    const updateTeacher = async (updated: ProfesorConfig, tk:string):Promise<boolean> => {
+    const updateTeacher = async (updated: ProfesorModel, tk:string):Promise<boolean> => {
         try{
             //esperar respuesta
             const result = await updateTeacherA(updated, tk);

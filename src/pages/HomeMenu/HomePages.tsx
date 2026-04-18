@@ -10,14 +10,14 @@ export default function HomePage () {
       url: '/alumno'
     },
     {
-      title: 'Profesor',
+      title: 'Asesor',
       description: 'Operaciones relacionadas con la gestión de profesores',
-      url: '/profesor'
+      url: '/asesor'
     },
     {
-      title: 'Curso',
+      title: 'Programa',
       description: 'Operaciones relacionadas con la administración de cursos',
-      url: '/curso'
+      url: '/programa'
     }
   ]
 

@@ -1,6 +1,5 @@
-import React from 'react'
 import RowData from './RowData';
-import type { BaseModel } from '../../interfaces/ModelsInterfaces';
+import type { BaseModel } from '../../interfaces/Models';
 
 interface TableProps<T extends BaseModel> {
   header: string[]

@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import type { AlumnoConfig, ProfesorConfig, ProgramaConfig, LoginConfig } from "../../interfaces/ModelsInterfaces";
+import type { AlumnoModel, ProfesorConfig, ProgramaConfig, LoginConfig } from "../../interfaces/Models";
 
 //propiedades de eestados
 interface StateProps<T> {
@@ -40,7 +40,7 @@ const initialStates = () => ({
         status: "",
         profesor: "",
         programa: ""
-    } as AlumnoConfig,
+    } as AlumnoModel,
     Profesor: {
         id: "",
         nombre: "",

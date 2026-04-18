@@ -3,7 +3,7 @@ import Form from '../../components/forms/Form'
 import Input from '../../components/forms/Input'
 import Button from '../../components/utils/buttons/Button'
 import { type CreateParameters } from '../../interfaces/CRUDInterfaces'
-import { type FieldConfig } from '../../interfaces/componentConfig'
+import type { FieldConfig } from '../../utils/Fields'
 
 function UpdateForm ({ module, fields, itemsPf, itemsPr, selectPf, selectPr, onSubmit, onChange }: CreateParameters) {
   //retorno de vista

@@ -1,9 +1,9 @@
-import type { OperationResponse, LoginAPI } from "../interfaces/httpConfig";
-import type { LoginConfig } from "../interfaces/ModelsInterfaces";
+import type { OperationResponse, LoginAPI } from "../interfaces/httpModels";
+import type { LoginModel } from "../interfaces/Models";
 import { USERURL } from "../utils/APIurls";
 
 //validar acceso y obtener el token
-export async function validateAccess(login: LoginConfig):Promise<string|null>{
+export async function validateAccess(login: LoginModel):Promise<string|null>{
     //peticion con fetch
     const response = await fetch(USERURL+"/login",{
         method: "POST",
@@ -25,16 +25,9 @@ export async function validateAccess(login: LoginConfig):Promise<string|null>{
     return response.headers.get("access-token") as string;
 }
 
-function modelRemapper(l:LoginConfig):LoginAPI{
+function modelRemapper(l:LoginModel):LoginAPI{
     return {
         username: l.user,
         password: l.password
     } as LoginAPI;
-}
-
-function jsonMapper(l:LoginAPI):LoginConfig{
-    return {
-        user: l.username,
-        rol: l.role
-    } as LoginConfig
 }

@@ -2,8 +2,19 @@ import ComboBox from '../../components/forms/Combo'
 import Form from '../../components/forms/Form'
 import Input from '../../components/forms/Input'
 import Button from '../../components/utils/buttons/Button'
-import { type CreateParameters } from '../../interfaces/CRUDInterfaces'
-import { type FieldConfig } from '../../interfaces/componentConfig'
+import { type SelectItem } from '../../interfaces/httpModels'
+import type { FieldConfig } from '../../utils/Fields'
+
+export interface CreateParameters {
+    module: string
+    fields: Array<FieldConfig>
+    itemsPf?: Array<SelectItem>
+    itemsPr?: Array<SelectItem>
+    selectPf?: string,
+    selectPr?: string,
+    onChange: (key: string, value: any) => void
+    onSubmit: () => void
+}
 
 function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: CreateParameters) {
   //retorno de vista
@@ -11,7 +22,7 @@ function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: Creat
     <>
       <h1 className='font-bold text-xl'>Registrar nuevo {module}</h1>
       <Form id="create-form" onSubmit={onSubmit}>
-        {fields.map((f: FieldConfig) => (
+        {fields.map((f:FieldConfig) => (
           <Input
             label={f.label}
             name={f.name}

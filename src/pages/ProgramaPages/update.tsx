@@ -5,7 +5,7 @@ import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { PROGRAMAHEADERS } from "../../utils/Headers";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
-import type { BaseModel, ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import type { BaseModel, ProgramaModel } from "../../interfaces/Models";
 import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
 import { useAuth } from "../../hooks/custom/useAuth";
@@ -27,7 +27,7 @@ function UpdateProg(){
             //cambio
             if(updated.status == "Permiso"){ updated.status = "Inactivo" }
             //paso al contexto
-            context.updateProgram(updated as ProgramaConfig, jwt.token).then(updated => {
+            context.updateProgram(updated as ProgramaModel, jwt.token).then(updated => {
                 if(updated){
                     //abrir modal
                     setOpenSuccess(true);

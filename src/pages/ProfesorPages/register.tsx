@@ -3,7 +3,7 @@ import HomeLayout from "../Layouts/HomeLayout";
 import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { getFieldsProf } from "../../utils/Fields";
 import { useTeachers } from "../../hooks/custom/useTeachers";
-import type { ProfesorConfig } from "../../interfaces/ModelsInterfaces";
+import type { ProfesorModel } from "../../interfaces/Models";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import { useForm } from "../../hooks/reducers/FormReducer";
@@ -27,7 +27,7 @@ function CreateProf(){
     //manejo de datos
     const submit = debounce(() => {
         //obtener el modelo
-        const profesor = state.data as ProfesorConfig;
+        const profesor = state.data as ProfesorModel;
         //activo por defecto
         profesor.status = "Activo"
         //guardado en el contexto
@@ -49,7 +49,7 @@ function CreateProf(){
         <HomeLayout title={"Modulo asesor"}>
             <Create
                 module="asesor"
-                fields={getFieldsProf(state.data as ProfesorConfig)}
+                fields={getFieldsProf(state.data as ProfesorModel)}
                 onSubmit={submit}
                 onChange={handleChange}
             />

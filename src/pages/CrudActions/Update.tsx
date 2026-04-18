@@ -1,6 +1,15 @@
 import QueryInput from "../../components/utils/Inputs/QueryInput";
-import { type UpdateParameters } from "../../interfaces/CRUDInterfaces";
+import { type BaseModel } from "../../interfaces/Models";
 import UpdateTable from "../../components/tables/UpdateTable";
+
+export interface UpdateParameters {
+    module: string,
+    entity: BaseModel | undefined
+    all: BaseModel[]
+    headers: Array<string>
+    onSearch: (s:string) => void
+    onUpdate: (updated: BaseModel) => void
+}
 
 function Update({module, entity, headers, all, onSearch, onUpdate}:UpdateParameters){
     if(!entity){

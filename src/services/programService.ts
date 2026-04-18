@@ -1,9 +1,9 @@
-import type { SelectItem, OperationResponse, PagedData, ProgramaAPI } from "../interfaces/httpConfig";
-import type { ProgramaConfig } from "../interfaces/ModelsInterfaces";
+import type { SelectItem, OperationResponse, PagedData, ProgramaAPI } from "../interfaces/httpModels";
+import type { ProgramaModel } from "../interfaces/Models";
 import { PROGRAMURL } from "../utils/APIurls";
 
 //pedir profesores
-export async function getPrograms(page:number, token: string):Promise<PagedData<ProgramaConfig>>{
+export async function getPrograms(page:number, token: string):Promise<PagedData<ProgramaModel>>{
     //peticion con fetch
     const response = await fetch(PROGRAMURL+'/get/all?page='+page,{
         method:"GET",
@@ -19,11 +19,11 @@ export async function getPrograms(page:number, token: string):Promise<PagedData<
 
     //obtener data
     const data = await response.json();
-    return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaConfig>
+    return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaModel>
 }
 
 //pedir profesores activos
-export async function getActivePrograms(page:number, token: string):Promise<PagedData<ProgramaConfig>>{
+export async function getActivePrograms(page:number, token: string):Promise<PagedData<ProgramaModel>>{
     //peticion con fetch
     const response = await fetch(PROGRAMURL+'/get/actives?page='+page,{
         method:"GET",
@@ -39,7 +39,7 @@ export async function getActivePrograms(page:number, token: string):Promise<Page
 
     //obtener data
     const data = await response.json();
-    return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaConfig>
+    return {data: data.data.map((p:ProgramaAPI)=> jsonMapper(p)), page: data.page, total: data.total} as PagedData<ProgramaModel>
 }
 
 export async function getProgramSelect(token: string):Promise<Array<SelectItem>>{
@@ -59,7 +59,7 @@ export async function getProgramSelect(token: string):Promise<Array<SelectItem>>
     return await response.json();
 }
 
-export async function createProgram(prof:ProgramaConfig, token: string):Promise<OperationResponse<ProgramaAPI>>{
+export async function createProgram(prof:ProgramaModel, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(PROGRAMURL+'/create',{
         method: "POST",
@@ -77,7 +77,7 @@ export async function createProgram(prof:ProgramaConfig, token: string):Promise<
     return await response.json();
 }
 
-export async function updateProgramA(updated: ProgramaConfig, token: string):Promise<OperationResponse<ProgramaAPI>>{
+export async function updateProgramA(updated: ProgramaModel, token: string):Promise<OperationResponse<ProgramaAPI>>{
     //peticion con fetch
     const response = await fetch(PROGRAMURL+'/update',{
         method: "PUT",
@@ -113,7 +113,7 @@ export async function deleteProgramA(id: string, token: string):Promise<Operatio
     return await response.json();
 }
 
-function modelRemapper(prog:ProgramaConfig):ProgramaAPI{
+function modelRemapper(prog:ProgramaModel):ProgramaAPI{
     return {
         clave_programa: prog.id,
         nombre_programa: prog.nombre,
@@ -122,11 +122,11 @@ function modelRemapper(prog:ProgramaConfig):ProgramaAPI{
     } as ProgramaAPI
 }
 
-function jsonMapper(prog:ProgramaAPI):ProgramaConfig{
+function jsonMapper(prog:ProgramaAPI):ProgramaModel{
     return {
         id: prog.clave_programa,
         nombre: prog.nombre_programa,
         registro: prog.registro_conahcyt,
         status: prog.estatus_programa
-    } as ProgramaConfig
+    } as ProgramaModel
 }

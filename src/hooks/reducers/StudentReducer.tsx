@@ -1,19 +1,28 @@
 import React, { useReducer, useEffect } from "react";
 import { StudentsContext } from "../context/StudentContext";
-import { type StudentStateProps } from "../../interfaces/componentConfig";
-import { type StudentActions } from "../../interfaces/componentConfig";
-import type { AlumnoConfig } from "../../interfaces/ModelsInterfaces";
+import type { PagedData } from "../../interfaces/httpModels";
+import type { AlumnoModel } from "../../interfaces/Models";
 import { getActiveStudents, createStudent, deleteStudentA, updateStudentA } from "../../services/studentsService";
 
-type PropsHook = {
-  children: React.ReactNode
+export interface StudentStateProps {
+  students: AlumnoModel[]
+  current_page: number
+  total: number
+  student?: AlumnoModel
 }
 
-const initialState = () => ({
-    students: [] as Array<AlumnoConfig>,
+const initialState = ():StudentStateProps => ({
+    students: [] as Array<AlumnoModel>,
     current_page: 0,
     total: 0,
 })
+
+type StudentActions = 
+    | { type: "GET_STUDENTS", payload: PagedData<AlumnoModel> }
+    | { type: "CREATE_STUDENT"; payload: AlumnoModel}
+    | { type: "UPDATE_STUDENT"; payload: AlumnoModel}
+    | { type: "DELETE_STUDENT"; payload: string}
+    | { type: "SEARCH_STUDENT"; payload: string}
 
 const reducer = (state: StudentStateProps, action: StudentActions) => {
     switch(action.type) {
@@ -28,6 +37,10 @@ const reducer = (state: StudentStateProps, action: StudentActions) => {
         case 'SEARCH_STUDENT':
             return {...state, student: state.students.find(student => student.id === action.payload)}
     }
+}
+
+type PropsHook = {
+  children: React.ReactNode
 }
 
 export function StudentProvider ({ children }: PropsHook) {
@@ -45,14 +58,14 @@ export function StudentProvider ({ children }: PropsHook) {
       }
   }
 
-  const addStudent = async (student: AlumnoConfig, tk:string):Promise<boolean> => {
+  const addStudent = async (student: AlumnoModel, tk:string):Promise<boolean> => {
       try{
         //pedir al api
         const result = await createStudent(student, student.foto as File, tk);
         //verificar exito
         if(!result.success){ return result.success }
         //guardar en reducer
-        dispatch({ type: 'CREATE_STUDENT', payload: result.data as AlumnoConfig });
+        dispatch({ type: 'CREATE_STUDENT', payload: result.data as AlumnoModel });
         //retorno de exito
         return result.success;
       }catch(error){
@@ -79,14 +92,14 @@ export function StudentProvider ({ children }: PropsHook) {
       }
   }
 
-  const updateStudent = async (updated: AlumnoConfig, tk:string) => {
+  const updateStudent = async (updated: AlumnoModel, tk:string) => {
       try{
         //peticion al api
         const result = await updateStudentA(updated, updated.foto as File, tk);
         //verificar exito
         if(!result.success){ return result.success }
         //guardar en reducer
-        dispatch({type: "UPDATE_STUDENT", payload: result.data as AlumnoConfig});
+        dispatch({type: "UPDATE_STUDENT", payload: result.data as AlumnoModel});
         //retorno de exito
         return result.success;
       }catch(error){

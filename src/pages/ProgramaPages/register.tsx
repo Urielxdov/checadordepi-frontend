@@ -4,7 +4,7 @@ import ReturnButton from "../../components/utils/buttons/ReturnButton";
 import { getFieldsProg } from "../../utils/Fields";
 import { usePrograms } from "../../hooks/custom/usePrograms";
 import { useForm } from "../../hooks/reducers/FormReducer";
-import type { ProgramaConfig } from "../../interfaces/ModelsInterfaces";
+import type { ProgramaModel } from "../../interfaces/Models";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import debounce from "../../utils/Debounce";
@@ -27,7 +27,7 @@ function CreateProg(){
     //manejo de datos
     const submit = debounce(() => {
         //obtener el modelo
-        const programa = state.data as ProgramaConfig
+        const programa = state.data as ProgramaModel
         //activo por defecto
         programa.status = "Activo"
         //guardado en el contexto
@@ -48,7 +48,7 @@ function CreateProg(){
         <HomeLayout title={"Modulo curso"}>
             <Create
                 module="curso"
-                fields={getFieldsProg(state.data as ProgramaConfig)}
+                fields={getFieldsProg(state.data as ProgramaModel)}
                 onSubmit={submit}
                 onChange={handleChange}
             />

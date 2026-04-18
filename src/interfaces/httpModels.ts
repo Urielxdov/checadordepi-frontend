@@ -1,4 +1,4 @@
-import type { BaseModel } from "./ModelsInterfaces";
+import type { BaseModel } from "./Models";
 
 export interface PagedData<T extends BaseModel>{
     data: T[]

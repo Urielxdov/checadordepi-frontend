@@ -1,4 +1,4 @@
-import type { SelectItem } from "../interfaces/httpConfig";
+import type { SelectItem } from "../interfaces/httpModels";
 
 export const STATUSOPTIONS = [
     {key:"Inactivo", name:"Inactivo"},

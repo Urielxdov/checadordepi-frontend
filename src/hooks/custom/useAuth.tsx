@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
-import type { TokenConfig } from "../../interfaces/httpConfig";
+import type { TokenConfig } from "../../interfaces/httpModels";
 import { useNavigate } from "react-router-dom";
 
 interface AuthProviderProps {
@@ -56,7 +56,6 @@ export function AuthProvider({ children }:AuthProviderProps){
 
     //limpiar el estado
     const clear = () => {
-        console.log("se limpia");
         //limpiar el localstorage
         localStorage.clear();
         setJwt({token: "", expiration: 0});

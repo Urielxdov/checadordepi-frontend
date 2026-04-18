@@ -49,7 +49,7 @@ function DeleteAlu(){
             <PageBar
                 current={context.state.current_page}
                 total={context.state.total}
-                onChange={(page: number) => context.getStudents(page, jwt.token as string)}
+                onChange={(page: number) => context.getStudents(page, jwt.token)}
             />
             <ReturnButton path="/alumno/"/>
         </HomeLayout>

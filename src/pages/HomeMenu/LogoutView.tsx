@@ -12,8 +12,6 @@ function Logout(){
         jwt.clear();
     },[]);
 
-    console.log("logout render");
-
     //redirigir al login
     return (
         <HomeLayout title="Sesion terminada">
