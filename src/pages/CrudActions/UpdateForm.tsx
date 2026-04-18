@@ -2,7 +2,7 @@ import ComboBox from '../../components/forms/Combo'
 import Form from '../../components/forms/Form'
 import Input from '../../components/forms/Input'
 import Button from '../../components/utils/buttons/Button'
-import { type CreateParameters } from '../../interfaces/CRUDInterfaces'
+import type { CreateParameters } from './Create'
 import type { FieldConfig } from '../../utils/Fields'
 
 function UpdateForm ({ module, fields, itemsPf, itemsPr, selectPf, selectPr, onSubmit, onChange }: CreateParameters) {

@@ -15,7 +15,7 @@ function IndexProg(){
 
     //vista de la pagina
     return (
-        <HomeLayout title="Lista de profesores">
+        <HomeLayout title="Lista de programas">
             <Index 
                 headers={PROGRAMAHEADERS}
                 data={context.state.programs}
@@ -25,7 +25,7 @@ function IndexProg(){
                 total={context.state.total}
                 onChange={(page: number) => context.getPrograms(page, jwt.token)}
             />
-            <ReturnButton path="/curso/"/>
+            <ReturnButton path="/programa/"/>
         </HomeLayout>
     );
 }

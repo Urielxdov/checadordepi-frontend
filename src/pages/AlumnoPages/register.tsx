@@ -37,6 +37,7 @@ function CreateAlu(){
       const alumno = state.data as AlumnoModel
       //activo por defecto
       alumno.status = "Activo"
+      console.log(alumno);
       //gurdado en el contexto
       context.addStudent(alumno, jwt.token).then(created => {
          if(created){

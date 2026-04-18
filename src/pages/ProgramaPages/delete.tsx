@@ -38,9 +38,9 @@ function DeleteProg(){
     //retorno de la vista
     return(
         <>
-        <HomeLayout title="Modulo curso">
+        <HomeLayout title="Modulo programa">
             <Delete
-                module="curso"
+                module="programa"
                 headers={PROGRAMAHEADERS}
                 entity={context.state.program}
                 all={context.state.programs}
@@ -52,18 +52,18 @@ function DeleteProg(){
                 total={context.state.total}
                 onChange={(page: number) => context.getPrograms(page, jwt.token)}
             />
-            <ReturnButton path="/curso/"/>
+            <ReturnButton path="/programa/"/>
         </HomeLayout>
         <Modal
             title="Programa eliminado"
-            message="el alumno ha sido eliminado con exito"
+            message="el programa ha sido eliminado con exito"
             type="success"
             isOpen={openSuccess}
             onClose={() => setOpenSuccess(false)}
         />
         <Modal
             title="Error al eliminar"
-            message="el curso no ha sido eliminado"
+            message="el programa no ha sido eliminado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}

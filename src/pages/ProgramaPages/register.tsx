@@ -45,14 +45,14 @@ function CreateProg(){
     //retorno de la vista
     return (
         <>
-        <HomeLayout title={"Modulo curso"}>
+        <HomeLayout title={"Modulo programa"}>
             <Create
-                module="curso"
+                module="programa"
                 fields={getFieldsProg(state.data as ProgramaModel)}
                 onSubmit={submit}
                 onChange={handleChange}
             />
-            <ReturnButton path="/curso/"/>
+            <ReturnButton path="/programa/"/>
         </HomeLayout>
         <Modal
             title="Programa creado"
@@ -63,7 +63,7 @@ function CreateProg(){
         />
         <Modal
             title="Error al crear"
-            message="el curso no ha sido creado"
+            message="el programa no ha sido creado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}

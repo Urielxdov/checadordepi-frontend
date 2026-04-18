@@ -40,9 +40,9 @@ function UpdateProg(){
 
     return (
         <>
-        <HomeLayout title="Modulo curso">
+        <HomeLayout title="Modulo programa">
             <Update
-                module='curso'
+                module='programa'
                 entity={context.state.program}
                 all={context.state.programs}
                 headers={PROGRAMAHEADERS}
@@ -54,7 +54,7 @@ function UpdateProg(){
                 total={context.state.total}
                 onChange={(page: number) => context.getPrograms(page, jwt.token)}
             />
-            <ReturnButton path="/curso/"/>
+            <ReturnButton path="/programa/"/>
         </HomeLayout>
         <Modal
             title="Programa actualizado"
@@ -65,7 +65,7 @@ function UpdateProg(){
         />
         <Modal
             title="Error al actualizar"
-            message="el curso no ha sido actualizado"
+            message="el programa no ha sido actualizado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}
