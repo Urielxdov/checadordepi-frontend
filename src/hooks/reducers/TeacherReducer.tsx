@@ -13,7 +13,7 @@ export interface TeacherStateProps {
 
 //estado inicial 
 const initialState = () => ({ 
-    teachers: [] as Array<ProfesorModel>,
+    teachers: [],
     current_page: 0,
     total: 0
  })

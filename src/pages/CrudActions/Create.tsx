@@ -35,8 +35,8 @@ function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: Creat
             key={f.name}
           />
         ))}
-        {module == 'Alumno' ? <ComboBox name="profesor" id='profesor-select' items={itemsPf ? itemsPf:[]} onChange={onChange} />:""}
-        {module == 'Alumno' ? <ComboBox name="programa" id='programa-select' items={itemsPr ? itemsPr:[]} onChange={onChange} />:""}
+        {module == 'Alumno' ? <ComboBox name="profesor" id='profesor-select' items={itemsPf ? itemsPf:[]} onChange={onChange} />:null}
+        {module == 'Alumno' ? <ComboBox name="programa" id='programa-select' items={itemsPr ? itemsPr:[]} onChange={onChange} />:null}
         <Button
           text='registrar'
           action={() => {}}

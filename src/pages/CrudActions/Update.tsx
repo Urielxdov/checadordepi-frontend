@@ -1,6 +1,6 @@
 import QueryInput from "../../components/interactives/inputs/QueryInput";
 import { type BaseModel } from "../../interfaces/Models";
-import UpdateTable from "../../components/ui/tables/UpdateTable";
+import UpdateTable from "../../components/ui/tables/EditableTable";
 
 export interface UpdateParameters {
     module: string,
@@ -12,7 +12,7 @@ export interface UpdateParameters {
 }
 
 function Update({module, entity, headers, all, onSearch, onUpdate}:UpdateParameters){
-    if(!entity){
+    if(!entity)
         return (
             <>
                 <QueryInput placeholder={'buscar '+module} action={onSearch}/>
@@ -23,8 +23,8 @@ function Update({module, entity, headers, all, onSearch, onUpdate}:UpdateParamet
                 />
             </>
         );
-    }else{
-        return (
+
+    return (
         <>
             <QueryInput placeholder={'buscar '+module} action={onSearch}/>
             <UpdateTable
@@ -33,8 +33,7 @@ function Update({module, entity, headers, all, onSearch, onUpdate}:UpdateParamet
                 body={[entity]}
             />
         </>
-        );
-    }
+    );
 }
 
 export default Update

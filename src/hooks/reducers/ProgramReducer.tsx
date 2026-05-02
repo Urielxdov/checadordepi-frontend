@@ -14,7 +14,7 @@ export interface ProgramStateProps {
 
 //estado inicial 
 const initialState = () => ({
-    programs: [] as Array<ProgramaModel>,
+    programs: [],
     current_page: 0,
     total: 0
 })

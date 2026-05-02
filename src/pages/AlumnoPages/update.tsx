@@ -67,7 +67,7 @@ function UpdateAlu(){
             <>
             <HomeLayout title="Modulo Alumno">
                 <QueryInput action={context.searchStudent} placeholder="buscar alumno"/>
-                sin registro
+                    <p className="text-center">sin registro</p>
                 <ReturnButton path="/alumno/"/>
             </HomeLayout>
             </>
@@ -78,35 +78,35 @@ function UpdateAlu(){
     //si existe una busqueda
     return (
         <>
-        <HomeLayout title="Modulo Alumno">
-            <QueryInput action={context.searchStudent} placeholder="buscar alumno"/>
-            <UpdateForm
-                module="Alumno"
-                fields={check ? getFieldsAlu(state.data as AlumnoModel).slice(1): getFieldsAlu(state.data as AlumnoModel).slice(1,7)}
-                itemsPf={itemsPf}
-                itemsPr={itemsPr}
-                selectPf={(state.data as AlumnoModel).profesor}
-                selectPr={(state.data as AlumnoModel).programa}
-                onSubmit={update}
-                onChange={handleChange}
+            <HomeLayout title="Modulo Alumno">
+                <QueryInput action={context.searchStudent} placeholder="buscar alumno"/>
+                <UpdateForm
+                    module="Alumno"
+                    fields={check ? getFieldsAlu(state.data as AlumnoModel).slice(1): getFieldsAlu(state.data as AlumnoModel).slice(1,7)}
+                    itemsPf={itemsPf}
+                    itemsPr={itemsPr}
+                    selectPf={(state.data as AlumnoModel).profesor}
+                    selectPr={(state.data as AlumnoModel).programa}
+                    onSubmit={update}
+                    onChange={handleChange}
+                />
+                <CheckBox text="actualizar foto" onChange={setCheck}/>
+                <ReturnButton path="/alumno/"/>
+            </HomeLayout>
+            <Modal
+                title="Alumno actualizado"
+                message="los datos del alumnos se han actualizado"
+                type="success"
+                isOpen={openSuccess}
+                onClose={() => setOpenSuccess(false)}
             />
-            <CheckBox text="actualizar foto" onChange={setCheck}/>
-            <ReturnButton path="/alumno/"/>
-        </HomeLayout>
-        <Modal
-            title="Alumno actualizado"
-            message="los datos del alumnos se han actualizado"
-            type="success"
-            isOpen={openSuccess}
-            onClose={() => setOpenSuccess(false)}
-        />
-        <Modal
-            title="Error al actualizar"
-            message="el alumno no ha sido actualizado"
-            type="failure"
-            isOpen={openFail}
-            onClose={() => setOpenFail(false)}
-        />
+            <Modal
+                title="Error al actualizar"
+                message="el alumno no ha sido actualizado"
+                type="failure"
+                isOpen={openFail}
+                onClose={() => setOpenFail(false)}
+            />
         </>
     );
 }

@@ -1,6 +1,6 @@
 import { type BaseModel } from "../../interfaces/Models";
 import QueryInput from "../../components/interactives/inputs/QueryInput";
-import DeleteTable from "../../components/ui/tables/DeleteTable";
+import { Table } from "../../components/ui/tables/Table";
 
 export interface DeleteParameters {
     module: string
@@ -12,30 +12,18 @@ export interface DeleteParameters {
 }
 
 function Delete({module, headers, entity, all, onSearch, onDelete}:DeleteParameters){
-    //validar entidad
-    if(!entity){
-        return(
-          <>
-            <QueryInput placeholder={"buscar "+module} action={onSearch}/>
-            <DeleteTable
-              action={onDelete}
-              headers={headers}
-              body={all}
-            />
-          </>
-        );
-    }else{
-        return(
-          <>
-            <QueryInput placeholder={"buscar "+module} action={onSearch}/>
-            <DeleteTable
-              action={onDelete}
-              headers={headers}
-              body={[entity]}
-            />
-          </>  
-        );
-    }
+    //vista de delete
+    return(
+      <>
+        <QueryInput placeholder={"buscar "+module} action={onSearch}/>
+        <Table
+          action="delete"
+          func={onDelete}
+          header={headers}
+          body={entity ? [entity] : all}
+        />
+      </>  
+    );
 }
 
 export default Delete

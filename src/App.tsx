@@ -46,6 +46,7 @@ function App () {
           <Route path='/alumno/create' element={<CreateAlu />} />
           <Route path='/alumno/delete' element={<DeleteAlu />} />
           <Route path='/alumno/update' element={<UpdateAlu />} />
+          <Route path='/alumno/justify' element={<UpdateAlu />} />
         </Route>
         {/** Rutas de profesor */}
         <Route element={<TeacherWrapper/>}>

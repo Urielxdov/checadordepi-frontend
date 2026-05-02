@@ -12,7 +12,7 @@ export interface StudentStateProps {
 }
 
 const initialState = ():StudentStateProps => ({
-    students: [] as Array<AlumnoModel>,
+    students: [],
     current_page: 0,
     total: 0,
 })

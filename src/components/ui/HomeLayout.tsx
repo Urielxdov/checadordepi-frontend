@@ -1,5 +1,6 @@
 import { Menu, Home, LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import Button from '../interactives/buttons/Button'
 
 interface Props {
   title: string
@@ -12,24 +13,26 @@ export default function HomeLayout ({ title, children }: Props) {
     <>
       <header className='relative w-full bg-white shadow px-8 py-4 flex justify-between items-center'>
         <div className='flex'>
-          <button className='text-gray-500'>
-            <Menu className='w-5 h-5 hover:text-gray-700 hover:cursor-pointer rounded-2xl' />
-          </button>
-          <button
-            onClick={() => navigate('/home')}
-            className='flex items-center ml-2 text-gray-500 hover:text-gray-700 hover:cursor-pointer'
-          >
-            <Home className='w-5 h-5' />
-            Inicio
-          </button>
+          <Button 
+            text='' 
+            action={() => {}} 
+            icon={<Menu className='w-5 h-5 hover:text-gray-700 hover:cursor-pointer rounded-2xl' />}
+            styles='text-gray-500'
+          />
+          <Button
+            text='Inicio'
+            action={() => navigate('/home')}
+            icon={<Home className='w-5 h-5' />}
+            styles='ml-2 text-gray-500 hover:text-gray-700 hover:cursor-pointer'
+          />
         </div>
         <div>
-          <button onClick={() => navigate('/logout')}
-          className='flex items-center ml-2 text-gray-500 hover:text-gray-700 hover:cursor-pointer'
-          >
-            <LogOut className='w-5 h-5'/>
-            cerrar sesion
-          </button>
+          <Button
+            text='cerrar sesion'
+            icon={<LogOut className='w-5 h-5'/>} 
+            action={() => navigate('/logout')}
+            styles='ml-2 text-gray-500 hover:text-gray-700 hover:cursor-pointer'
+          />
         </div>
       </header>
       <main className='relative flex flex-col flex-grow-1 w-260 mx-auto shadow-custom-soft rounded-sm'>

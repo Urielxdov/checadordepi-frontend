@@ -10,34 +10,37 @@ interface RowDataConfig<T extends BaseModel>{
 
 function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T>){
     //si es editable
-    if(editable && change){
+    if(editable && change)
         return (
-        <>
-            {Object.keys(data).map((key) => {
-                //status
-                if(key == "status"){
-                    return (<td key={key}><ComboBox name="status" id="status-select" items={STATUSOPTIONS} select={data.status} onChange={(key, value) => change(data.id, key, value)}/></td>);
-                }
-                //otros valores
-                if(key != "id"){
+            <>
+                {Object.keys(data).map((key) => {
+                    //status
+                    if(key == "status"){
+                        return (<td key={key} className='border border-gray-300 p-2 align-top'><ComboBox name="status" id="status-select" items={STATUSOPTIONS} select={data.status} onChange={(key, value) => change(data.id, key, value)}/></td>);
+                    }
+                    //id no se edita
+                    if(key == "id"){
+                        return <td className='border border-gray-300 p-2 align-top'><p>{data.id}</p></td>;
+                    }
+
                     return (
-                        <td key={key} className='border border-gray-300 p-2 align-top'>
-                            <input name={key} onChange={e => change(data.id, e.target.name, e.target.value)} defaultValue={String(data[key as keyof T])} />
-                        </td>
+                            <td key={key} className='border border-gray-300 p-2 align-top'>
+                                <input name={key} onChange={e => change(data.id, e.target.name, e.target.value)} defaultValue={String(data[key as keyof T])} />
+                            </td>
                     );
-                }else{
-                    return <td><p>{data.id}</p></td>;
-                }
-            })}
-        </>
-    );
-    }
+                })}
+            </>
+        );
 
     //retorno del componente
     return (
         <>
             {Object.keys(data).map((key) => (
-                <td key={key} className='border border-gray-300 p-2 align-top'><p>{String(data[key as keyof T])}</p></td>
+                <td key={key} className='border border-gray-300 p-2 align-top'>
+                    <p>
+                        {String(data[key as keyof T])}
+                    </p>
+                </td>
             ))}
         </>
     );

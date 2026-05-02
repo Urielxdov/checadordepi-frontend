@@ -54,6 +54,12 @@ export default function EntityModules ({ entity }: EntityModulesProps) {
             button={<AccessButton url={module.url} />}
           />
         ))}
+        {entity == "alumno" ?
+          <Card
+            title={"Justificacion"}
+            description={"Justificar insidencia de un alumno"}
+            button={<AccessButton url={"/alumno/justify"} />}
+          /> : null}
       </div>
     </HomeLayout>
   )

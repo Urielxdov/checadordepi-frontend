@@ -1,10 +1,10 @@
 import { useTeachers } from "../../hooks/custom/useTeachers";
 import { PROFESORHEADERS } from "../../utils/Headers";
-import Index from "../CrudActions/Index";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import PageBar from "../../components/ui/pageBar";
 import { useAuth } from "../../hooks/custom/useAuth";
+import Index from "../CrudActions/Index";
+import PageBar from "../../components/ui/pageBar";
 
 function IndexProf(){
     //hook de jwt
@@ -18,7 +18,9 @@ function IndexProf(){
         <HomeLayout title="Lista de asesores">
             <Index 
                 headers={PROFESORHEADERS}
-                data={context.state.teachers}
+                body={context.state.teachers}
+                onSearch={context.searchTeacher}
+                entity={context.state.teacher}
             />
             <PageBar
                 current={context.state.current_page}

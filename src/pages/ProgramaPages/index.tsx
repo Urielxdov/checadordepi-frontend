@@ -1,10 +1,10 @@
 import { usePrograms } from "../../hooks/custom/usePrograms";
 import { PROGRAMAHEADERS } from "../../utils/Headers";
-import Index from "../CrudActions/Index";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import PageBar from "../../components/ui/pageBar";
 import { useAuth } from "../../hooks/custom/useAuth";
+import Index from "../CrudActions/Index";
+import PageBar from "../../components/ui/pageBar";
 
 function IndexProg(){
     //hook de jwt
@@ -16,9 +16,10 @@ function IndexProg(){
     //vista de la pagina
     return (
         <HomeLayout title="Lista de programas">
-            <Index 
+            <Index
                 headers={PROGRAMAHEADERS}
-                data={context.state.programs}
+                body={context.state.programs}
+                onSearch={s => context.searchProgram(s)}
             />
             <PageBar
                 current={context.state.current_page}
