@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import { useEffect } from "react";
 import HomeLayout from "../../components/ui/HomeLayout";
 

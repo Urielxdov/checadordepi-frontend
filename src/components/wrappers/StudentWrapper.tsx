@@ -1,12 +1,10 @@
-import { StudentProvider } from "../../hooks/reducers/StudentReducer";
+import StudentProvider from "../../hooks/providers/students";
 import ProtectedRoute from "./ProtectedRoute";
 
-function StudentWrapper(){
+export default function StudentWrapper(){
     return (
         <StudentProvider>
             <ProtectedRoute />
         </StudentProvider>
     );
 }
-
-export default StudentWrapper;

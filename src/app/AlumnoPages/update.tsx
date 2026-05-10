@@ -1,5 +1,5 @@
 import UpdateForm from "../CrudActions/UpdateForm";
-import { useStudents } from "../../hooks/custom/useStudents";
+import { useStudents } from "../../hooks/context/StudentContext";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { type AlumnoModel } from "../../interfaces/Models";
@@ -7,7 +7,7 @@ import Modal from "../../components/ui/Modals";
 import { useEffect, useState } from "react";
 import { getFieldsAlu } from "../../utils/Fields";
 import { useForm } from "../../hooks/reducers/FormReducer";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
 import type { SelectItem } from "../../interfaces/httpModels";
@@ -57,12 +57,12 @@ function UpdateAlu(){
 
     //poner el preset
     useEffect(() => {
-        if(context.state.student){
-            setValue(context.state.student);
+        if(context.state.current){
+            setValue(context.state.current);
         }
-    },[context.state.student])
+    },[context.state.current])
 
-    if(!context.state.student){
+    if(!context.state.current){
         return (
             <>
             <HomeLayout title="Modulo Alumno">

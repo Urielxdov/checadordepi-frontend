@@ -9,7 +9,7 @@ import logoTec from '../../assets/logo_login_tecnm.png';
 import logoITL from '../../assets/110053_login.png';
 import { useForm } from "../../hooks/reducers/FormReducer";
 import { validateAccess } from "../../services/userService";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import { useEffect } from "react";
 
 function LoginView(){

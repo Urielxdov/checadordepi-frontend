@@ -1,4 +1,4 @@
-import { TeacherProvider } from "../../hooks/reducers/TeacherReducer";
+import { TeacherProvider } from "../../hooks/providers/teachers";
 import ProtectedRoute from "./ProtectedRoute";
 
 function TeacherWrapper(){

@@ -1,4 +1,4 @@
-import { useStudents } from "../../hooks/custom/useStudents";
+import { useStudents } from "../../hooks/context/StudentContext";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import Create from "../CrudActions/Create";
 import HomeLayout from "../../components/ui/HomeLayout";
@@ -9,7 +9,7 @@ import Modal from "../../components/ui/Modals";
 import { useEffect, useState } from "react";
 import { getTeacherSelect } from "../../services/teacherService";
 import { getProgramSelect } from "../../services/programService";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import type { SelectItem } from "../../interfaces/httpModels";
 import debounce from "../../utils/Debounce";
 

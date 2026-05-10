@@ -2,10 +2,10 @@ import Delete from "../CrudActions/Delete";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { ALUMNOHEADERS } from "../../utils/Headers";
-import { useStudents } from "../../hooks/custom/useStudents";
+import { useStudents } from "../../hooks/context/StudentContext";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
 
@@ -41,8 +41,8 @@ function DeleteAlu(){
             <Delete 
                 module="alumno"
                 headers={ALUMNOHEADERS}
-                entity={context.state.student}
-                all={context.state.students}
+                entity={context.state.current}
+                all={context.state.entities}
                 onSearch={context.searchStudent}
                 onDelete={drop}
             />

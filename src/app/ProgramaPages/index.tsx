@@ -1,8 +1,8 @@
-import { usePrograms } from "../../hooks/custom/usePrograms";
+import { usePrograms } from "../../hooks/context/ProgramContext";
 import { PROGRAMAHEADERS } from "../../utils/Headers";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import Index from "../CrudActions/Index";
 import PageBar from "../../components/ui/pageBar";
 
@@ -18,7 +18,7 @@ function IndexProg(){
         <HomeLayout title="Lista de programas">
             <Index
                 headers={PROGRAMAHEADERS}
-                body={context.state.programs}
+                body={context.state.entities}
                 onSearch={s => context.searchProgram(s)}
             />
             <PageBar

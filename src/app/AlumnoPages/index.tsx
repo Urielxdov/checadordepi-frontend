@@ -1,8 +1,8 @@
-import { useStudents } from "../../hooks/custom/useStudents";
+import { useStudents } from "../../hooks/context/StudentContext";
 import { ALUMNOHEADERS } from "../../utils/Headers";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import HomeLayout from "../../components/ui/HomeLayout";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import Index from "../CrudActions/Index";
 import PageBar from "../../components/ui/pageBar";
 
@@ -24,9 +24,9 @@ function IndexAlu () {
         <HomeLayout title="Lista de alumnos">
             <Index 
                 headers={ALUMNOHEADERS}
-                body={context.state.students}
+                body={context.state.entities}
                 onSearch={s => context.searchStudent(s)}
-                entity={context.state.student}
+                entity={context.state.current}
             />
             <PageBar
                 current={context.state.current_page}

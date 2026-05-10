@@ -2,13 +2,13 @@ import Create from "../CrudActions/Create";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { getFieldsProf } from "../../utils/Fields";
-import { useTeachers } from "../../hooks/custom/useTeachers";
+import { useTeachers } from "../../hooks/context/TeacherContext";
 import type { ProfesorModel } from "../../interfaces/Models";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import { useForm } from "../../hooks/reducers/FormReducer";
 import debounce from "../../utils/Debounce";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 
 function CreateProf(){
     //hook de jwt

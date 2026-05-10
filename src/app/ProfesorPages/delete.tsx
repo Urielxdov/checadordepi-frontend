@@ -2,10 +2,10 @@ import Delete from "../CrudActions/Delete";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { PROFESORHEADERS } from "../../utils/Headers";
-import { useTeachers } from "../../hooks/custom/useTeachers";
+import { useTeachers } from "../../hooks/context/TeacherContext";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import debounce from "../../utils/Debounce";
 import PageBar from "../../components/ui/pageBar";
 
@@ -42,8 +42,8 @@ function DeleteProf(){
             <Delete
                 module="asesor"
                 headers={PROFESORHEADERS}
-                entity={context.state.teacher}
-                all={context.state.teachers}
+                entity={context.state.current}
+                all={context.state.entities}
                 onSearch={context.searchTeacher}
                 onDelete={drop}
             />

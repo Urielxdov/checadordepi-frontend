@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { loadFaceDetectionModels } from '../../FaceRecognition/loadModels';
+import { loadFaceDetectionModels } from '../../utils/loadModels';
 import * as faceapi from 'face-api.js';
 import { checkAttendance } from '../../services/attendantService';
 

@@ -10,13 +10,25 @@ interface RowDataConfig<T extends BaseModel>{
 
 function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T>){
     //si es editable
-    if(editable && change)
+    if(editable && change) {
+        //obtener estados
+        const stat = "registro" in data ? [STATUSOPTIONS[0],STATUSOPTIONS[2]] : STATUSOPTIONS;
         return (
             <>
                 {Object.keys(data).map((key) => {
                     //status
                     if(key == "status"){
-                        return (<td key={key} className='border border-gray-300 p-2 align-top'><ComboBox name="status" id="status-select" items={STATUSOPTIONS} select={data.status} onChange={(key, value) => change(data.id, key, value)}/></td>);
+                        return (
+                            <td key={key} className='border border-gray-300 p-2 align-top'>
+                                <ComboBox 
+                                    name="status"
+                                    id="status-select"
+                                    items={stat}
+                                    select={data.status}
+                                    onChange={(key, value) => change(data.id, key, value)}
+                                />
+                            </td>
+                        );
                     }
                     //id no se edita
                     if(key == "id"){
@@ -31,6 +43,7 @@ function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T
                 })}
             </>
         );
+    }
 
     //retorno del componente
     return (

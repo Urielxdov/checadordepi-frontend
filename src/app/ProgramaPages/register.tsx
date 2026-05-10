@@ -2,13 +2,13 @@ import Create from "../CrudActions/Create";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { getFieldsProg } from "../../utils/Fields";
-import { usePrograms } from "../../hooks/custom/usePrograms";
+import { usePrograms } from "../../hooks/context/ProgramContext";
 import { useForm } from "../../hooks/reducers/FormReducer";
 import type { ProgramaModel } from "../../interfaces/Models";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
 import debounce from "../../utils/Debounce";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 
 function CreateProg(){
     //hook de jwt

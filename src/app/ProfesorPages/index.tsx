@@ -1,8 +1,8 @@
-import { useTeachers } from "../../hooks/custom/useTeachers";
+import { useTeachers } from "../../hooks/context/TeacherContext";
 import { PROFESORHEADERS } from "../../utils/Headers";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 import Index from "../CrudActions/Index";
 import PageBar from "../../components/ui/pageBar";
 
@@ -18,9 +18,9 @@ function IndexProf(){
         <HomeLayout title="Lista de asesores">
             <Index 
                 headers={PROFESORHEADERS}
-                body={context.state.teachers}
+                body={context.state.entities}
                 onSearch={context.searchTeacher}
-                entity={context.state.teacher}
+                entity={context.state.current}
             />
             <PageBar
                 current={context.state.current_page}

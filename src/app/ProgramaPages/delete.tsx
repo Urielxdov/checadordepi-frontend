@@ -1,16 +1,15 @@
-import Update from "../CrudActions/Update";
-import { usePrograms } from "../../hooks/custom/usePrograms";
+import Delete from "../CrudActions/Delete";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
 import { PROGRAMAHEADERS } from "../../utils/Headers";
+import { usePrograms } from "../../hooks/context/ProgramContext";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
-import type { BaseModel, ProgramaModel } from "../../interfaces/Models";
 import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 
-function UpdateProg(){
+function DeleteProg(){
     //hook de jwt
     const jwt = useAuth();
 
@@ -18,36 +17,35 @@ function UpdateProg(){
     const [openSuccess, setOpenSuccess] = useState<boolean>(false);
     const [openFail, setOpenFail] = useState<boolean>(false);
 
-    //contexto de programa
+    //uso de contexto
     const context = usePrograms();
 
-    //menejo de update
-    const update = (updated:BaseModel) => {
+    //manejo de eliminado
+    const drop = (id: string) => {
         debounce(() => {
-            //cambio
-            if(updated.status == "Permiso"){ updated.status = "Inactivo" }
             //paso al contexto
-            context.updateProgram(updated as ProgramaModel, jwt.token).then(updated => {
-                if(updated){
+            context.deleteProgram(id, jwt.token).then(deleted => {
+                if(deleted){
                     //abrir modal
                     setOpenSuccess(true);
                 }else{
                     setOpenFail(true);
                 }
-            }).catch(e => console.log(e));
+            }).catch(e => console.log(e))
         },500)();
     }
 
-    return (
+    //retorno de la vista
+    return(
         <>
         <HomeLayout title="Modulo programa">
-            <Update
-                module='programa'
-                entity={context.state.program}
-                all={context.state.programs}
+            <Delete
+                module="programa"
                 headers={PROGRAMAHEADERS}
+                entity={context.state.current}
+                all={context.state.entities}
                 onSearch={context.searchProgram}
-                onUpdate={update}
+                onDelete={drop}
             />
             <PageBar
                 current={context.state.current_page}
@@ -57,15 +55,15 @@ function UpdateProg(){
             <ReturnButton path="/programa/"/>
         </HomeLayout>
         <Modal
-            title="Programa actualizado"
-            message="los datos del programa han sido actualizados"
+            title="Programa eliminado"
+            message="el programa ha sido eliminado con exito"
             type="success"
             isOpen={openSuccess}
             onClose={() => setOpenSuccess(false)}
         />
         <Modal
-            title="Error al actualizar"
-            message="el programa no ha sido actualizado"
+            title="Error al eliminar"
+            message="el programa no ha sido eliminado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}
@@ -74,4 +72,4 @@ function UpdateProg(){
     );
 }
 
-export default UpdateProg;
+export default DeleteProg;

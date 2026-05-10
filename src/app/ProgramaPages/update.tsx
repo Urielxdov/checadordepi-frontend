@@ -1,31 +1,33 @@
 import Update from "../CrudActions/Update";
-import { useTeachers } from "../../hooks/custom/useTeachers";
+import { usePrograms } from "../../hooks/context/ProgramContext";
 import HomeLayout from "../../components/ui/HomeLayout";
 import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { PROFESORHEADERS } from "../../utils/Headers";
+import { PROGRAMAHEADERS } from "../../utils/Headers";
 import Modal from "../../components/ui/Modals";
 import { useState } from "react";
-import type { ProfesorModel, BaseModel } from "../../interfaces/Models";
+import type { BaseModel, ProgramaModel } from "../../interfaces/Models";
 import PageBar from "../../components/ui/pageBar";
 import debounce from "../../utils/Debounce";
-import { useAuth } from "../../hooks/custom/useAuth";
+import { useAuth } from "../../hooks/context/AuthContext";
 
-function UpdateProf(){
+function UpdateProg(){
     //hook de jwt
     const jwt = useAuth();
 
     //estado de modal
-    const [openSuccess,setOpenSuccess] = useState<boolean>(false);
-    const [openFail,setOpenFail] = useState<boolean>(false);
+    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
+    const [openFail, setOpenFail] = useState<boolean>(false);
 
-    //contexto de profesor
-    const context = useTeachers();
+    //contexto de programa
+    const context = usePrograms();
 
     //menejo de update
-    const update = (updated: BaseModel) => {
+    const update = (updated:BaseModel) => {
         debounce(() => {
-            context.updateTeacher(updated as ProfesorModel, jwt.token).then(updated => {
-                //verificar el exito
+            //cambio
+            if(updated.status == "Permiso"){ updated.status = "Inactivo" }
+            //paso al contexto
+            context.updateProgram(updated as ProgramaModel, jwt.token).then(updated => {
                 if(updated){
                     //abrir modal
                     setOpenSuccess(true);
@@ -38,32 +40,32 @@ function UpdateProf(){
 
     return (
         <>
-        <HomeLayout title="Modulo asesor">
+        <HomeLayout title="Modulo programa">
             <Update
-                module='asesor'
-                entity={context.state.teacher}
-                all={context.state.teachers}
-                headers={PROFESORHEADERS}
-                onSearch={context.searchTeacher}
+                module='programa'
+                entity={context.state.current}
+                all={context.state.entities}
+                headers={PROGRAMAHEADERS}
+                onSearch={context.searchProgram}
                 onUpdate={update}
             />
             <PageBar
                 current={context.state.current_page}
                 total={context.state.total}
-                onChange={(page: number) => context.getTeachers(page, jwt.token)}
+                onChange={(page: number) => context.getPrograms(page, jwt.token)}
             />
-            <ReturnButton path="/asesor/"/>
+            <ReturnButton path="/programa/"/>
         </HomeLayout>
         <Modal
-            title="Asesor actualizado"
-            message="los datos del asesor han sido actualizados"
+            title="Programa actualizado"
+            message="los datos del programa han sido actualizados"
             type="success"
             isOpen={openSuccess}
             onClose={() => setOpenSuccess(false)}
         />
         <Modal
             title="Error al actualizar"
-            message="el asesor no ha sido actualizado"
+            message="el programa no ha sido actualizado"
             type="failure"
             isOpen={openFail}
             onClose={() => setOpenFail(false)}
@@ -72,4 +74,4 @@ function UpdateProf(){
     );
 }
 
-export default UpdateProf;
+export default UpdateProg;
