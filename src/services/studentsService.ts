@@ -39,6 +39,29 @@ export async function getActiveStudents(page:number, token: string):Promise<Page
     return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoModel>
 }
 
+export async function getStudent(id:string, token: string):Promise<AlumnoModel>{
+    //peticion con fetch
+    const response = await fetch(STUDENTURL+'/get/'+id,{
+        method:"GET",
+        mode:"cors",
+        headers: {"access-token": token}
+    });
+
+    //verificar exito
+    if(!response.ok){
+        throw new Error("erroren transaccion!!!");
+    }
+
+    //retorno de datos
+    const data = await response.json() as OperationResponse<AlumnoAPI>;
+
+    if(!data.data){
+        throw new Error("error al obtener alumno!!!");
+    }
+
+    return jsonMapper(data.data);
+}
+
 export async function createStudent(a:AlumnoModel, foto:File, token: string):Promise<OperationResponse<AlumnoModel>>{
     //preparar form data
     const data = new FormData();

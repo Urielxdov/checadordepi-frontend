@@ -19,6 +19,8 @@ import CreateProg from './app/ProgramaPages/register'
 import DeleteProg from './app/ProgramaPages/delete'
 import FacialRecognition from './app/FacialRecognition/FacialRecognition'
 import AttendanceChecked from './app/FacialRecognition/AttendanceChecked'
+import JustifyAlu from './app/AlumnoPages/justify'
+import JustifyOneAlu from './app/AlumnoPages/justifyone'
 
 //wrappers
 import AuthWrapper from './components/wrappers/AuthWrapper'
@@ -46,7 +48,8 @@ function App () {
           <Route path='/alumno/create' element={<CreateAlu />} />
           <Route path='/alumno/delete' element={<DeleteAlu />} />
           <Route path='/alumno/update' element={<UpdateAlu />} />
-          <Route path='/alumno/justify' element={<UpdateAlu />} />
+          <Route path='/alumno/justify' element={<JustifyAlu />} />
+          <Route path='/alumno/justify/:id' element={<JustifyOneAlu />} />
         </Route>
         {/** Rutas de profesor */}
         <Route element={<TeacherWrapper/>}>

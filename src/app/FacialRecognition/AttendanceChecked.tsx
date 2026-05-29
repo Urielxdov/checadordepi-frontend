@@ -24,8 +24,8 @@ export default function AttendanceChecked(){
     //vista de asistencia marcada
     return (
         <HomeLayout title="Asistencia registrada">
-            <h1 className="font-bold">Asistencia marcada con exito</h1>
-            <p>La asistencia ha sido marcada de forma exitosa, puede ingresar al plantel</p>
+            <h1 className="text-center font-bold">Asistencia marcada con exito</h1>
+            <p className="text-center">La asistencia ha sido marcada de forma exitosa, puede ingresar al plantel</p>
             <Link className="text-blue-600" to="/asistencia">volver a checador</Link>
         </HomeLayout>
     );

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { loadFaceDetectionModels } from '../../utils/loadModels';
-import * as faceapi from 'face-api.js';
+import * as faceapi from '@vladmandic/face-api';
 import { checkAttendance } from '../../services/attendantService';
 
 //manejo de camara

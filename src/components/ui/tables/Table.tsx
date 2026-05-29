@@ -1,6 +1,7 @@
 import RowData from './RowData';
 import type { BaseModel } from '../../../interfaces/Models';
 import DeleteButton from '../../interactives/buttons/DeleteButton';
+import Button from '../../interactives/buttons/Button';
 
 //propiedades de header
 interface TableHeaderProps {
@@ -31,7 +32,7 @@ export function TableHeader({ header, withAction }:TableHeaderProps){
 //propiedades de cuerpo de tabla
 interface TableBodyProps<T extends BaseModel> {
   body: T[],
-  action?: "list" | "delete"
+  action?: "list" | "delete" | "navigate"
   func?: (id: string) => void
 }
 
@@ -49,6 +50,25 @@ function TableBody<T extends BaseModel>({ body, action, func }:TableBodyProps<T>
             />
             <td className='border border-gray-300 p-2 align-top'>
               <DeleteButton action={() => func(row.id)}/>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    );
+  }
+
+  //cuerpo de tabla modo delete
+  if(action == "navigate" && func){
+    return (
+      <tbody>
+        {body.map((row) => (
+          <tr key={row.id} className='odd:bg-white even:bg-gray-100' data-id={row.id}>
+            <RowData
+              key={row.id}
+              data={row}
+            />
+            <td className='border border-gray-300 p-2 align-top'>
+              <Button text="revisar" action={() => func(row.id)}/>
             </td>
           </tr>
         ))}
@@ -75,7 +95,7 @@ function TableBody<T extends BaseModel>({ body, action, func }:TableBodyProps<T>
 interface TableProps<T extends BaseModel> {
   header: string[]
   body: T[],
-  action?: "list" | "delete"
+  action?: "list" | "delete" | "navigate"
   func?: (id: string) => void
 }
 

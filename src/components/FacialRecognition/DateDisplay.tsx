@@ -21,5 +21,5 @@ export default function DateDisplay () {
     return () => clearInterval(interval)
   }, [])
 
-  return <div className='text-4xl font-mono'>{currentDate}</div>
+  return <div className='text-center text-4xl font-mono'>{currentDate}</div>
 }

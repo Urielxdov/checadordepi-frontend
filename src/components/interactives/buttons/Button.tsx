@@ -15,7 +15,7 @@ export default function Button ({
   submit = false,
   icon,
   iconPosition = 'left',
-  styles = ''
+  styles = "p-1 text-white bg-blue-500 rounded-sm hover: bg-blue-600 hover: cursor-pointer"
 }: ButtonProps) {
   return (
     <button onClick={action} className={`flex items-center gap-2 ${styles}`} type={submit?'submit':'button'}>

@@ -36,7 +36,7 @@ export default function HomeLayout ({ title, children }: Props) {
         </div>
       </header>
       <main className='relative flex flex-col flex-grow-1 w-260 mx-auto shadow-custom-soft rounded-sm'>
-        <div className='border-b border-gray-200 rounded-t-sm bg-gray-100 z-20 text-left py-2 px-4'>
+        <div className='border-b border-gray-200 rounded-t-sm bg-gray-100 text-left py-2 px-4'>
           <p>{title}</p>
         </div>
         <div className='p-4 flex flex-col gap-3'>{children}</div>
