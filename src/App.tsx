@@ -68,6 +68,7 @@ function App () {
             <Route path='/programa/update' element={<UpdateProg />} />
         </Route>
       </Route>
+      {/* Public kiosk routes — intentionally outside AuthWrapper, no login required */}
       <Route path='/asistencia' element={<FacialRecognition />} />
       <Route path='/asistencia/valida' element={<AttendanceChecked />} />
     </Routes>
