@@ -1,18 +1,13 @@
-import { Link } from "react-router-dom";
-import { useAuth } from "../../hooks/context/AuthContext";
-import { useEffect } from "react";
-import HomeLayout from "../../components/ui/HomeLayout";
+import { Link } from "react-router-dom"
+import { useEffect } from "react"
+import HomeLayout from "../../components/ui/HomeLayout"
+import { useAuthStore } from "../../store/authStore"
 
-function Logout(){
-    //contexto de jwt
-    const jwt = useAuth();
+function Logout() {
+    const { clear } = useAuthStore()
 
-    //limpiar al montar
-    useEffect(() => {
-        jwt.clear();
-    },[]);
+    useEffect(() => { clear() }, [])
 
-    //redirigir al login
     return (
         <HomeLayout title="Sesion terminada">
             <>
@@ -20,7 +15,7 @@ function Logout(){
                 <Link className="text-blue-600 text-center" to="/">volver a acceder</Link>
             </>
         </HomeLayout>
-    );
+    )
 }
 
-export default Logout;
+export default Logout

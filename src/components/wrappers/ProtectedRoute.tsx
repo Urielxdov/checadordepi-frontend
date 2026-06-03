@@ -1,10 +1,8 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "../../hooks/context/AuthContext";
-import { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom"
+import { useAuthStore } from "../../store/authStore"
 
-function ProtectedRoute() {
-    const context = useContext(AuthContext);
-    return context?.token != "" ?<Outlet/>:<Navigate to="/"/>;
+export default function ProtectedRoute() {
+    const { token } = useAuthStore()
+    if (!token) return <Navigate to="/" replace />
+    return <Outlet />
 }
-
-export default ProtectedRoute;
