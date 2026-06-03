@@ -25,3 +25,5 @@ dist-ssr
 
 # TLS certificates — provide locally, never commit
 *.pem
+
+.env
