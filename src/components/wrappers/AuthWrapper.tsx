@@ -1,12 +1,5 @@
-import AuthProvider from "../../hooks/providers/auth";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom"
 
-function AuthWrapper(){
-    return (
-        <AuthProvider>
-            <Outlet/>
-        </AuthProvider>
-    );
+export default function AuthWrapper() {
+    return <Outlet />
 }
-
-export default AuthWrapper;
