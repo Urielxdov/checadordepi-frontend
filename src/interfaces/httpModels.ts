@@ -63,5 +63,5 @@ export interface LoginAPI {
 
 export interface TokenConfig{
     token: string,
-    expiration: number
+    expiresAt: number   // absolute ms timestamp — Date.now() + durationMs
 }
