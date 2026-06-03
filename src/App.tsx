@@ -1,7 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 
-//pages
+// pages
 import LoginView from './app/HomeMenu/LoginForm'
 import Logout from './app/HomeMenu/LogoutView'
 import HomePage from './app/HomeMenu/HomePages'
@@ -21,57 +21,52 @@ import FacialRecognition from './app/FacialRecognition/FacialRecognition'
 import AttendanceChecked from './app/FacialRecognition/AttendanceChecked'
 import JustifyAlu from './app/AlumnoPages/justify'
 import JustifyOneAlu from './app/AlumnoPages/justifyone'
+import UpdateProg from './app/ProgramaPages/update'
 
-//wrappers
+// wrappers
 import AuthWrapper from './components/wrappers/AuthWrapper'
-import StudentWrapper from './components/wrappers/StudentWrapper'
-import UpdateProg from './app/ProgramaPages/update';
 import ProtectedRoute from './components/wrappers/ProtectedRoute'
-import TeacherWrapper from './components/wrappers/TeacherWrapper'
-import ProgramWrapper from './components/wrappers/ProgramWrapper'
 
-function App () {
-  return (
-    <Routes>
-      <Route element={<AuthWrapper/>}>
-        {/** Ruta de login */}
-        <Route path='/' element={<LoginView />} />
-        <Route path='/logout' element={<Logout />} />
-        {/** Rutas protegidas */}
-        <Route element={<ProtectedRoute />}>
-          <Route path='/home' element={<HomePage />} />
-        </Route>
-        {/** Rutas de alumno */}
-        <Route element={<StudentWrapper />}>
-          <Route path='/alumno' element={<EntityModules entity='alumno' />} />
-          <Route path='/alumno/get' element={<IndexAlu />} />
-          <Route path='/alumno/create' element={<CreateAlu />} />
-          <Route path='/alumno/delete' element={<DeleteAlu />} />
-          <Route path='/alumno/update' element={<UpdateAlu />} />
-          <Route path='/alumno/justify' element={<JustifyAlu />} />
-          <Route path='/alumno/justify/:id' element={<JustifyOneAlu />} />
-        </Route>
-        {/** Rutas de profesor */}
-        <Route element={<TeacherWrapper/>}>
-            <Route path='/asesor' element={<EntityModules entity='asesor' />} />
-            <Route path='/asesor/get' element={<IndexProf />} />
-            <Route path='/asesor/create' element={<CreateProf />} />
-            <Route path='/asesor/delete' element={<DeleteProf />} />
-            <Route path='/asesor/update' element={<UpdateProf />} />
-        </Route>
-        {/** Rutas de programa/curso */}
-        <Route element={<ProgramWrapper/>}>
-            <Route path='/programa' element={<EntityModules entity='programa' />} />
-            <Route path='/programa/get' element={<IndexProg />} />
-            <Route path='/programa/create' element={<CreateProg />} />
-            <Route path='/programa/delete' element={<DeleteProg />} />
-            <Route path='/programa/update' element={<UpdateProg />} />
-        </Route>
-      </Route>
-      <Route path='/asistencia' element={<FacialRecognition />} />
-      <Route path='/asistencia/valida' element={<AttendanceChecked />} />
-    </Routes>
-  )
+function App() {
+    return (
+        <Routes>
+            <Route element={<AuthWrapper />}>
+                <Route path='/' element={<LoginView />} />
+                <Route path='/logout' element={<Logout />} />
+
+                <Route element={<ProtectedRoute />}>
+                    <Route path='/home' element={<HomePage />} />
+
+                    {/* Alumno */}
+                    <Route path='/alumno' element={<EntityModules entity='alumno' />} />
+                    <Route path='/alumno/get' element={<IndexAlu />} />
+                    <Route path='/alumno/create' element={<CreateAlu />} />
+                    <Route path='/alumno/delete' element={<DeleteAlu />} />
+                    <Route path='/alumno/update' element={<UpdateAlu />} />
+                    <Route path='/alumno/justify' element={<JustifyAlu />} />
+                    <Route path='/alumno/justify/:id' element={<JustifyOneAlu />} />
+
+                    {/* Asesor */}
+                    <Route path='/asesor' element={<EntityModules entity='asesor' />} />
+                    <Route path='/asesor/get' element={<IndexProf />} />
+                    <Route path='/asesor/create' element={<CreateProf />} />
+                    <Route path='/asesor/delete' element={<DeleteProf />} />
+                    <Route path='/asesor/update' element={<UpdateProf />} />
+
+                    {/* Programa */}
+                    <Route path='/programa' element={<EntityModules entity='programa' />} />
+                    <Route path='/programa/get' element={<IndexProg />} />
+                    <Route path='/programa/create' element={<CreateProg />} />
+                    <Route path='/programa/delete' element={<DeleteProg />} />
+                    <Route path='/programa/update' element={<UpdateProg />} />
+                </Route>
+
+                {/* Public kiosk routes — intentionally outside ProtectedRoute, no login required */}
+                <Route path='/asistencia' element={<FacialRecognition />} />
+                <Route path='/asistencia/valida' element={<AttendanceChecked />} />
+            </Route>
+        </Routes>
+    )
 }
 
 export default App
