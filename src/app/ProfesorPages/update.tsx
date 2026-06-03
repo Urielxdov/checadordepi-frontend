@@ -1,75 +1,63 @@
-import Update from "../CrudActions/Update";
-import { useTeachers } from "../../hooks/context/TeacherContext";
-import HomeLayout from "../../components/ui/HomeLayout";
-import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { PROFESORHEADERS } from "../../utils/Headers";
-import Modal from "../../components/ui/Modals";
-import { useState } from "react";
-import type { ProfesorModel, BaseModel } from "../../interfaces/Models";
-import PageBar from "../../components/ui/pageBar";
-import debounce from "../../utils/Debounce";
-import { useAuth } from "../../hooks/context/AuthContext";
+import Update from "../CrudActions/Update"
+import HomeLayout from "../../components/ui/HomeLayout"
+import ReturnButton from "../../components/interactives/buttons/ReturnButton"
+import { PROFESORHEADERS } from "../../utils/Headers"
+import Modal from "../../components/ui/Modals"
+import { useState } from "react"
+import type { BaseModel, ProfesorModel } from "../../interfaces/Models"
+import PageBar from "../../components/ui/pageBar"
+import debounce from "../../utils/Debounce"
+import { useSearchParams } from "react-router-dom"
+import { useTeachers } from "../../hooks/queries/useTeachers"
+import { useUpdateTeacher } from "../../hooks/mutations/useTeacherMutations"
 
-function UpdateProf(){
-    //hook de jwt
-    const jwt = useAuth();
+function UpdateProf() {
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFail, setOpenFail] = useState(false)
+    const [current, setCurrent] = useState<ProfesorModel | undefined>()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const page = Number(searchParams.get('page') ?? 0)
+    const { data } = useTeachers(page)
+    const { mutate: update } = useUpdateTeacher()
 
-    //estado de modal
-    const [openSuccess,setOpenSuccess] = useState<boolean>(false);
-    const [openFail,setOpenFail] = useState<boolean>(false);
+    const onSearch = (id: string) => {
+        setCurrent(data?.data.find(t => t.id === id))
+    }
 
-    //contexto de profesor
-    const context = useTeachers();
-
-    //menejo de update
-    const update = (updated: BaseModel) => {
+    const onUpdate = (updated: BaseModel) => {
         debounce(() => {
-            context.updateTeacher(updated as ProfesorModel, jwt.token).then(updated => {
-                //verificar el exito
-                if(updated){
-                    //abrir modal
-                    setOpenSuccess(true);
-                }else{
-                    setOpenFail(true);
-                }
-            }).catch(e => console.log(e));
-        },500)();
+            update(updated as ProfesorModel, {
+                onSuccess: (result) => {
+                    if (result.success) setOpenSuccess(true)
+                    else setOpenFail(true)
+                },
+                onError: () => setOpenFail(true)
+            })
+        }, 500)()
     }
 
     return (
         <>
-        <HomeLayout title="Modulo asesor">
-            <Update
-                module='asesor'
-                entity={context.state.current}
-                all={context.state.entities}
-                headers={PROFESORHEADERS}
-                onSearch={context.searchTeacher}
-                onUpdate={update}
-            />
-            <PageBar
-                current={context.state.current_page}
-                total={context.state.total}
-                onChange={(page: number) => context.getTeachers(page, jwt.token)}
-            />
-            <ReturnButton path="/asesor/"/>
-        </HomeLayout>
-        <Modal
-            title="Asesor actualizado"
-            message="los datos del asesor han sido actualizados"
-            type="success"
-            isOpen={openSuccess}
-            onClose={() => setOpenSuccess(false)}
-        />
-        <Modal
-            title="Error al actualizar"
-            message="el asesor no ha sido actualizado"
-            type="failure"
-            isOpen={openFail}
-            onClose={() => setOpenFail(false)}
-        />
+            <HomeLayout title="Modulo asesor">
+                <Update
+                    module='asesor'
+                    entity={current}
+                    all={data?.data ?? []}
+                    headers={PROFESORHEADERS}
+                    onSearch={onSearch}
+                    onUpdate={onUpdate}
+                />
+                <PageBar
+                    current={page}
+                    total={data?.total ?? 0}
+                    onChange={(p: number) => setSearchParams({ page: String(p) })}
+                />
+                <ReturnButton path="/asesor/" />
+            </HomeLayout>
+            <Modal title="Asesor actualizado" message="los datos del asesor han sido actualizados" type="success" isOpen={openSuccess} onClose={() => setOpenSuccess(false)} />
+            <Modal title="Error al actualizar" message="el asesor no ha sido actualizado" type="failure" isOpen={openFail} onClose={() => setOpenFail(false)} />
         </>
-    );
+    )
 }
 
-export default UpdateProf;
+export default UpdateProf

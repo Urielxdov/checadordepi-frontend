@@ -1,76 +1,43 @@
-import Create from "../CrudActions/Create";
-import HomeLayout from "../../components/ui/HomeLayout";
-import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { getFieldsProf } from "../../utils/Fields";
-import { useTeachers } from "../../hooks/context/TeacherContext";
-import type { ProfesorModel } from "../../interfaces/Models";
-import Modal from "../../components/ui/Modals";
-import { useState } from "react";
-import { useForm } from "../../hooks/reducers/FormReducer";
-import debounce from "../../utils/Debounce";
-import { useAuth } from "../../hooks/context/AuthContext";
+import Create from "../CrudActions/Create"
+import HomeLayout from "../../components/ui/HomeLayout"
+import ReturnButton from "../../components/interactives/buttons/ReturnButton"
+import { getFieldsProf } from "../../utils/Fields"
+import type { ProfesorModel } from "../../interfaces/Models"
+import Modal from "../../components/ui/Modals"
+import { useState } from "react"
+import { useForm } from "../../hooks/reducers/FormReducer"
+import debounce from "../../utils/Debounce"
+import { useCreateTeacher } from "../../hooks/mutations/useTeacherMutations"
 
-function CreateProf(){
-    //hook de jwt
-    const jwt = useAuth();
+function CreateProf() {
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFail, setOpenFail] = useState(false)
+    const { state, handleChange, resetForm } = useForm('Profesor')
+    const { mutate: create } = useCreateTeacher()
 
-    //estado de modal
-    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
-    const [openFail, setOpenFail] = useState<boolean>(false);
-
-    //uso del contexto
-    const context = useTeachers();
-
-    //hook de formulario
-    const {state, handleChange, resetForm } = useForm('Profesor');
-
-    //manejo de datos
     const submit = debounce(() => {
-        //obtener el modelo
-        const profesor = state.data as ProfesorModel;
-        //activo por defecto
+        const profesor = state.data as ProfesorModel
         profesor.status = "Activo"
-        //guardado en el contexto
-        context.addTeacher(profesor, jwt.token).then(created => {
-            if(created){
-                //mostrar modal
-                setOpenSuccess(true);
-            }else{
-                setOpenFail(true);
-            }
-            //resetear formulario
-            resetForm();
-        }).catch(e => console.log(e));
-    },500);
+        create(profesor, {
+            onSuccess: (result) => {
+                if (result.success) setOpenSuccess(true)
+                else setOpenFail(true)
+                resetForm()
+            },
+            onError: () => { setOpenFail(true); resetForm() }
+        })
+    }, 500)
 
-    //retorno de la vista
     return (
         <>
-        <HomeLayout title={"Modulo asesor"}>
-            <Create
-                module="asesor"
-                fields={getFieldsProf(state.data as ProfesorModel)}
-                onSubmit={submit}
-                onChange={handleChange}
-            />
-            <ReturnButton path="/asesor/"/>
-        </HomeLayout>
-        <Modal
-            title="Asesor registrado"
-            message="el asesor ha sido registrado con exito"
-            type="success"
-            isOpen={openSuccess}
-            onClose={() => setOpenSuccess(false)}
-        />
-        <Modal
-            title="Error al registrar"
-            message="el asesor no ha sido registrado"
-            type="failure"
-            isOpen={openFail}
-            onClose={() => setOpenFail(false)}
-        />
+            <HomeLayout title="Modulo asesor">
+                <Create module="asesor" fields={getFieldsProf(state.data as ProfesorModel)} onSubmit={submit} onChange={handleChange} />
+                <ReturnButton path="/asesor/" />
+            </HomeLayout>
+            <Modal title="Asesor registrado" message="el asesor ha sido registrado con exito" type="success" isOpen={openSuccess} onClose={() => setOpenSuccess(false)} />
+            <Modal title="Error al registrar" message="el asesor no ha sido registrado" type="failure" isOpen={openFail} onClose={() => setOpenFail(false)} />
         </>
-    );
+    )
 }
 
-export default CreateProf;
+export default CreateProf
