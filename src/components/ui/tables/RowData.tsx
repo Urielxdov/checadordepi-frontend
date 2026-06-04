@@ -19,7 +19,7 @@ function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T
                     //status
                     if(key == "status"){
                         return (
-                            <td key={key} className='border border-gray-300 p-2 align-top'>
+                            <td key={key} className='px-4 py-3 align-middle text-gray-700'>
                                 <ComboBox 
                                     name="status"
                                     id="status-select"
@@ -32,11 +32,11 @@ function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T
                     }
                     //id no se edita
                     if(key == "id"){
-                        return <td className='border border-gray-300 p-2 align-top'><p>{data.id}</p></td>;
+                        return <td className='px-4 py-3 align-middle text-gray-700'><p>{data.id}</p></td>;
                     }
 
                     return (
-                            <td key={key} className='border border-gray-300 p-2 align-top'>
+                            <td key={key} className='px-4 py-3 align-middle text-gray-700'>
                                 <input name={key} onChange={e => change(data.id, e.target.name, e.target.value)} defaultValue={String(data[key as keyof T])} />
                             </td>
                     );
@@ -49,7 +49,7 @@ function RowData<T extends BaseModel>({ data, editable, change }:RowDataConfig<T
     return (
         <>
             {Object.keys(data).map((key) => (
-                <td key={key} className='border border-gray-300 p-2 align-top'>
+                <td key={key} className='px-4 py-3 align-middle text-gray-700'>
                     <p>
                         {String(data[key as keyof T])}
                     </p>
