@@ -60,11 +60,11 @@ function App() {
                     <Route path='/programa/delete' element={<DeleteProg />} />
                     <Route path='/programa/update' element={<UpdateProg />} />
                 </Route>
-
-                {/* Public kiosk routes — intentionally outside ProtectedRoute, no login required */}
-                <Route path='/asistencia' element={<FacialRecognition />} />
-                <Route path='/asistencia/valida' element={<AttendanceChecked />} />
             </Route>
+
+            {/* Public kiosk routes — intentionally outside AuthWrapper, no login required */}
+            <Route path='/asistencia' element={<FacialRecognition />} />
+            <Route path='/asistencia/valida' element={<AttendanceChecked />} />
         </Routes>
     )
 }

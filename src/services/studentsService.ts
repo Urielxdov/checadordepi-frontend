@@ -3,24 +3,6 @@ import type { AlumnoModel } from "../interfaces/Models"
 import type { AlumnoAPI } from "../interfaces/httpModels";
 import { STUDENTURL } from "../utils/APIurls";
 
-export async function getStudentsA(page:number, token: string):Promise<PagedData<AlumnoModel>>{
-    //peticion con fetch
-    const response = await fetch(STUDENTURL+'/get/all?page='+page,{
-        method:"GET",
-        mode:"cors",
-        headers: {"access-token": token}
-    });
-
-    //verificar exito
-    if(!response.ok){
-        throw new Error("error al obtener alumnos!!!");
-    }
-
-    //retorno de datos
-    const data = await response.json()
-    return { data: data.data.map((a:AlumnoAPI) => jsonMapper(a)), page: data.page, total: data.total } as PagedData<AlumnoModel>
-}
-
 export async function getActiveStudents(page:number, token: string):Promise<PagedData<AlumnoModel>>{
     //peticion con fetch
     const response = await fetch(STUDENTURL+'/get/actives?page='+page,{
