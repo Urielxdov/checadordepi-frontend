@@ -2,9 +2,15 @@ import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "../../hooks/context/AuthContext";
 import { useContext } from "react";
 
-function ProtectedRoute() {
+interface ProtectedRouteProps {
+    requiredRole?: string
+}
+
+function ProtectedRoute({ requiredRole }: ProtectedRouteProps) {
     const context = useContext(AuthContext);
-    return context?.token != "" ?<Outlet/>:<Navigate to="/"/>;
+    if(!context?.token){ return <Navigate to="/"/>; }
+    if(requiredRole && context.role !== requiredRole){ return <Navigate to="/asistencia"/>; }
+    return <Outlet/>;
 }
 
 export default ProtectedRoute;

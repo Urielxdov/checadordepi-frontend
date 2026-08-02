@@ -3,7 +3,8 @@ import { createContext, useContext } from "react";
 //propiedades del contexto
 interface AuthContextType {
     token: string
-    store: (token: string, expiration: number) => void
+    role: string
+    store: (token: string, expiration: number, role: string) => void
     clear: () => void
 }
 

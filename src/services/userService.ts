@@ -2,8 +2,13 @@ import type { OperationResponse, LoginAPI } from "../interfaces/httpModels";
 import type { LoginModel } from "../interfaces/Models";
 import { USERURL } from "../utils/APIurls";
 
+interface AuthResult {
+    token: string
+    role: string
+}
+
 //validar acceso y obtener el token
-export async function validateAccess(login: LoginModel):Promise<string|null>{
+export async function validateAccess(login: LoginModel):Promise<AuthResult|null>{
     //peticion con fetch
     const response = await fetch(USERURL+"/login",{
         method: "POST",
@@ -21,8 +26,10 @@ export async function validateAccess(login: LoginModel):Promise<string|null>{
     const result = await response.json() as OperationResponse<LoginAPI>;
     if(!result.success){ return null }
 
-    //retorno de token
-    return response.headers.get("access-token") as string;
+    const token = response.headers.get("access-token");
+    if(!token || !result.data?.role){ return null; }
+
+    return { token, role: result.data.role };
 }
 
 function modelRemapper(l:LoginModel):LoginAPI{

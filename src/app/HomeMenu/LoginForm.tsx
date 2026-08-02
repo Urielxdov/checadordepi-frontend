@@ -26,11 +26,11 @@ function LoginView(){
     const onSubmit = () => {
         const login = state.data as LoginModel
         //validar acceso
-        validateAccess(login).then(token => {
-            if(token){
+        validateAccess(login).then(auth => {
+            if(auth){
                 alert("bienvenido "+login.user);
-                jwt.store(token, 2040000);
-                navigate("/home");
+                jwt.store(auth.token, 2040000, auth.role);
+                navigate(auth.role === "Administrador" ? "/home" : "/asistencia");
             }else{
                 alert("credenciales invalidas!!!");
             }

@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import type { AlumnoModel, ProfesorConfig, ProgramaConfig, LoginConfig } from "../../interfaces/Models";
+import type { AlumnoModel, ProfesorModel, ProgramaModel, LoginModel } from "../../interfaces/Models";
 
 //propiedades de eestados
 interface StateProps<T> {
@@ -50,17 +50,17 @@ const initialStates = () => ({
         grado: "",
         nombre_grado: "",
         status: ""
-    } as ProfesorConfig,
+    } as ProfesorModel,
     Programa: {
         id: "",
         nombre: "",
         registro: "",
         status: ""
-    } as ProgramaConfig,
+    } as ProgramaModel,
     Login: {
         user: '',
         password: ''
-    } as LoginConfig
+    } as LoginModel
 })
 
 export function useForm(module: 'Alumno'|'Profesor'|'Programa'|'Login'){

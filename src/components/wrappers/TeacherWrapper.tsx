@@ -4,7 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 function TeacherWrapper(){
     return (
         <TeacherProvider>
-            <ProtectedRoute />
+            <ProtectedRoute requiredRole="Administrador" />
         </TeacherProvider>
     );
 }

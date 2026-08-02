@@ -38,7 +38,7 @@ function App () {
         <Route path='/' element={<LoginView />} />
         <Route path='/logout' element={<Logout />} />
         {/** Rutas protegidas */}
-        <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute requiredRole="Administrador" />}>
           <Route path='/home' element={<HomePage />} />
         </Route>
         {/** Rutas de alumno */}

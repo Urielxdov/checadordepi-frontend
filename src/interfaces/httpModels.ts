@@ -63,5 +63,6 @@ export interface LoginAPI {
 
 export interface TokenConfig{
     token: string,
-    expiration: number
+    expiration: number,
+    role: string
 }

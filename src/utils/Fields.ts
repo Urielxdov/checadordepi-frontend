@@ -145,8 +145,8 @@ export const getFieldsLog = (preset: LoginModel):Array<FieldConfig> =>  [
             label:"Contraseña",
             name:"password",
             type:"password",
-            maxlength: 10,
-            minlength: 0,
+            maxlength: 100,
+            minlength: 8,
             value: preset.password
         }
     ]

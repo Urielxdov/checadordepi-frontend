@@ -11,7 +11,7 @@ interface AuthProviderProps {
 //provider de autenticacion
 export default function AuthProvider({ children }:AuthProviderProps){
     //objeto jwt
-    const [jwt, setJwt] = useState<TokenConfig>({token: "", expiration: 0});
+    const [jwt, setJwt] = useState<TokenConfig>({token: "", expiration: 0, role: ""});
     //contador de tiempo
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     //hook de navegador
@@ -29,9 +29,9 @@ export default function AuthProvider({ children }:AuthProviderProps){
     },[]);
 
     //guardar la informacion del token
-    const store = (tk:string, exp: number) => {
+    const store = (tk:string, exp: number, role: string) => {
         //crear nuevo objeto
-        const newJWT = {token: tk, expiration: exp} as TokenConfig;
+        const newJWT = {token: tk, expiration: exp, role} as TokenConfig;
         //guardar en localstorage
         localStorage.clear();
         localStorage.setItem("access-token",JSON.stringify(newJWT));
@@ -53,13 +53,13 @@ export default function AuthProvider({ children }:AuthProviderProps){
     const clear = () => {
         //limpiar el localstorage
         localStorage.clear();
-        setJwt({token: "", expiration: 0});
+        setJwt({token: "", expiration: 0, role: ""});
         if(timeoutRef.current) clearTimeout(timeoutRef.current);
     }
 
     //retorno del provider
     return(
-        <AuthContext.Provider value={{token: jwt.token, store, clear}}>
+        <AuthContext.Provider value={{token: jwt.token, role: jwt.role, store, clear}}>
             {children}
         </AuthContext.Provider>
     );

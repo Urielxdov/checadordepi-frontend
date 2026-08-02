@@ -1,9 +1,12 @@
-//API base
-const BASEAPIURL = "http://localhost:8000/";
+const withTrailingSlash = (url: string) => url.endsWith("/") ? url : `${url}/`;
+
+// API base
+const ADMINAPIURL = withTrailingSlash(import.meta.env.VITE_ADMIN_URL ?? "http://localhost:8000");
+const CLIENTAPIURL = withTrailingSlash(import.meta.env.VITE_CLIENT_URL ?? "http://localhost:8000");
 
 //enpoints de entidad
-export const STUDENTURL = BASEAPIURL+"alumno";
-export const TEACHERURL = BASEAPIURL+"profesor";
-export const PROGRAMURL = BASEAPIURL+"programa_estudios";
-export const USERURL = BASEAPIURL+"auth";
-export const ATTENDANCEURL = BASEAPIURL+"facial-recognition/student-attendance";
+export const STUDENTURL = ADMINAPIURL+"alumno";
+export const TEACHERURL = ADMINAPIURL+"profesor";
+export const PROGRAMURL = ADMINAPIURL+"programa_estudios";
+export const USERURL = ADMINAPIURL+"auth";
+export const ATTENDANCEURL = CLIENTAPIURL+"facial-recognition/student-attendance";

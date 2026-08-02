@@ -4,7 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 function ProgramWrapper(){
     return (
         <ProgramProvider>
-            <ProtectedRoute />
+            <ProtectedRoute requiredRole="Administrador" />
         </ProgramProvider>
     );
 }
