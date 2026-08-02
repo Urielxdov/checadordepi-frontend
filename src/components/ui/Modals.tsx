@@ -29,7 +29,7 @@ function Modal ({ isOpen, title, message, type, onClose }: ModalProps) {
         </div>
         <div className={`flex flex-col items-center gap-3 p-6 ${config.bg}`}>
           {config.icon}
-          <p className='text-sm text-center text-gray-600'>{message}</p>
+          <p className='text-sm text-center text-gray-600 whitespace-pre-line'>{message}</p>
         </div>
         <div className='px-4 py-3 flex justify-end border-t border-gray-100'>
           <button

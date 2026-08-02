@@ -1,20 +1,21 @@
 import Camera from '../../components/FacialRecognition/Camera'
-import useCamera from '../../hooks/custom/useCamera';
+import useCamera from '../../hooks/custom/useCamera'
 import Clock from '../../components/FacialRecognition/Clock'
 import DateDisplay from '../../components/FacialRecognition/DateDisplay'
 import HomeLayout from '../../components/ui/HomeLayout'
-import Modal from '../../components/ui/Modals';
+import Modal from '../../components/ui/Modals'
 
 export default function FacialRecognition () {
-  const { videoRef, canvasRef, checked, initCamera, closeCamera } = useCamera();
+  const { videoRef, canvasRef, checked, resetCheck, initCamera, closeCamera } = useCamera()
 
   const overlayConfig = {
-    success:   { type: "success", title: "Asistencia registrada",   message: "Entrada registrada con éxito. Puede ingresar al plantel." },
-    duplicate: { type: "info",    title: "Ya registrado hoy",        message: "Tu asistencia de hoy ya fue marcada anteriormente." },
-    error:     { type: "failure", title: "No reconocido",            message: "No se pudo identificar al alumno. Inténtalo de nuevo." },
-  } as const;
+    success: { type: 'success', title: 'Asistencia registrada' },
+    duplicate: { type: 'info', title: 'Ya registrado hoy' },
+    not_found: { type: 'failure', title: 'No reconocido' },
+    error: { type: 'failure', title: 'Error de asistencia' },
+  } as const
 
-  const overlay = checked ? overlayConfig[checked] : null;
+  const overlay = checked ? overlayConfig[checked.status] : null
 
   return (
     <>
@@ -30,15 +31,15 @@ export default function FacialRecognition () {
           closeCamera={closeCamera}
         />
       </HomeLayout>
-      {overlay && (
+      {checked && overlay && (
         <Modal
           title={overlay.title}
-          message={overlay.message}
+          message={checked.message}
           type={overlay.type}
           isOpen={true}
-          onClose={() => {}}
+          onClose={resetCheck}
         />
       )}
     </>
-  );
+  )
 }

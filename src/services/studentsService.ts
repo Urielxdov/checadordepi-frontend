@@ -2,6 +2,7 @@ import type { OperationResponse, PagedData } from "../interfaces/httpModels"
 import type { AlumnoModel } from "../interfaces/Models"
 import type { AlumnoAPI } from "../interfaces/httpModels";
 import { STUDENTURL } from "../utils/APIurls";
+import { apiError } from "./apiErrors";
 
 export async function getActiveStudents(page:number, token: string):Promise<PagedData<AlumnoModel>>{
     //peticion con fetch
@@ -13,7 +14,7 @@ export async function getActiveStudents(page:number, token: string):Promise<Page
 
     //verificar exito
     if(!response.ok){
-        throw new Error("error al obtener alumnos!!!");
+        throw await apiError(response, "Error al obtener alumnos");
     }
 
     //retorno de datos
@@ -31,7 +32,7 @@ export async function getStudent(id:string, token: string):Promise<AlumnoModel>{
 
     //verificar exito
     if(!response.ok){
-        throw new Error("erroren transaccion!!!");
+        throw await apiError(response, "Error al obtener alumno");
     }
 
     //retorno de datos
@@ -61,7 +62,7 @@ export async function createStudent(a:AlumnoModel, foto:File, token: string):Pro
 
     //verificar exito
     if(!response.ok){
-      throw new Error("error al crear alumno");
+      throw await apiError(response, "Error al crear alumno");
     }
 
     //retorno de respuesta
@@ -78,7 +79,7 @@ export async function deleteStudentA(id: string, token: string):Promise<Operatio
     });
     //validar exito
     if(!response.ok){
-      throw new Error("error al eliminar alumnos");
+      throw await apiError(response, "Error al eliminar alumno");
     }
     //retorno de datos
     return await response.json();
@@ -98,7 +99,7 @@ export async function updateStudentA(a:AlumnoModel, foto:File | undefined, token
     });
     //verificar exito
     if(!response.ok){
-      throw new Error("error al actualizar alumno");
+      throw await apiError(response, "Error al actualizar alumno");
     }
     //retorno de datos
     const result = await response.json() as OperationResponse<AlumnoAPI>;

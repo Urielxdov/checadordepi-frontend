@@ -12,7 +12,7 @@ export interface OperationResponse<P>{
     message: string
     code_status: number
     data?: P
-    fields?: Object
+    fields?: Record<string, string>
 }
 
 export interface SelectItem {

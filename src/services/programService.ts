@@ -1,6 +1,7 @@
 import type { SelectItem, OperationResponse, PagedData, ProgramaAPI } from "../interfaces/httpModels";
 import type { ProgramaModel } from "../interfaces/Models";
 import { PROGRAMURL } from "../utils/APIurls";
+import { apiError } from "./apiErrors";
 
 //pedir profesores
 export async function getPrograms(page:number, token: string):Promise<PagedData<ProgramaModel>>{
@@ -14,7 +15,7 @@ export async function getPrograms(page:number, token: string):Promise<PagedData<
     //verificar el exito
     if(!response.ok){
         //mostrar error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al obtener programas");
     }
 
     //obtener data
@@ -34,7 +35,7 @@ export async function getActivePrograms(page:number, token: string):Promise<Page
     //verificar el exito
     if(!response.ok){
         //mostrar error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al obtener programas activos");
     }
 
     //obtener data
@@ -53,7 +54,7 @@ export async function getProgramSelect(token: string):Promise<Array<SelectItem>>
     //verificar el exito 
     if(!response.ok){
         //mostrat el error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al obtener programas");
     }
 
     return await response.json();
@@ -71,7 +72,7 @@ export async function createProgram(prof:ProgramaModel, token: string):Promise<O
     //revisar si fue exitosa
     if(!response.ok){
         //mostrar error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al registrar programa");
     }
     //avisar del exito
     return await response.json();
@@ -89,7 +90,7 @@ export async function updateProgramA(updated: ProgramaModel, token: string):Prom
     //revisar si fue exitosa
     if(!response.ok){
         //mostrar error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al actualizar programa");
     }
 
     //avisar de exito
@@ -107,7 +108,7 @@ export async function deleteProgramA(id: string, token: string):Promise<Operatio
     //revisar si hubo exito
     if(!response.ok){
         //mostrar error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al dar de baja programa");
     }
 
     return await response.json();

@@ -17,11 +17,12 @@ import { useTeachers } from '../../hooks/queries/useTeachers'
 import { useCreateTeacher, useUpdateTeacher, useDeleteTeacher } from '../../hooks/mutations/useTeacherMutations'
 import { useForm } from '../../hooks/reducers/FormReducer'
 import debounce from '../../utils/Debounce'
+import { errorMessage, formatApiMessage } from '../../services/apiErrors'
 
 export default function ProfesorPage () {
   const [searchParams, setSearchParams] = useSearchParams()
   const page = Number(searchParams.get('page') ?? 0)
-  const { data, isLoading } = useTeachers(page)
+  const { data, isLoading, isError, error } = useTeachers(page)
   const { mutate: create } = useCreateTeacher()
   const { mutate: update } = useUpdateTeacher()
   const { mutate: remove } = useDeleteTeacher()
@@ -46,10 +47,10 @@ export default function ProfesorPage () {
     create(profesor, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Asesor registrado correctamente'); setCreateOpen(false) }
-        else setFailMsg('No se pudo registrar el asesor')
+        else setFailMsg(formatApiMessage(r, 'No se pudo registrar el asesor'))
         resetForm()
       },
-      onError: () => { setFailMsg('No se pudo registrar el asesor'); resetForm() }
+      onError: (error) => { setFailMsg(errorMessage(error, 'No se pudo registrar el asesor')); resetForm() }
     })
   }, 500)
 
@@ -57,9 +58,9 @@ export default function ProfesorPage () {
     update(state.data as ProfesorModel, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Asesor actualizado correctamente'); setEditTarget(null); resetForm() }
-        else setFailMsg('No se pudo actualizar el asesor')
+        else setFailMsg(formatApiMessage(r, 'No se pudo actualizar el asesor'))
       },
-      onError: () => setFailMsg('No se pudo actualizar el asesor')
+      onError: (error) => setFailMsg(errorMessage(error, 'No se pudo actualizar el asesor'))
     })
   }, 500)
 
@@ -68,10 +69,10 @@ export default function ProfesorPage () {
     remove(deleteId, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Asesor dado de baja'); setSearch(undefined) }
-        else setFailMsg('No se pudo dar de baja el asesor')
+        else setFailMsg(formatApiMessage(r, 'No se pudo dar de baja el asesor'))
         setDeleteId(null)
       },
-      onError: () => { setFailMsg('No se pudo dar de baja el asesor'); setDeleteId(null) }
+      onError: (error) => { setFailMsg(errorMessage(error, 'No se pudo dar de baja el asesor')); setDeleteId(null) }
     })
   }, 500)
 
@@ -92,7 +93,11 @@ export default function ProfesorPage () {
         </button>
       </div>
 
-      {isLoading ? (
+      {isError ? (
+        <p className='text-center text-red-600 bg-red-50 border border-red-100 rounded-md py-3 px-4'>
+          {errorMessage(error, 'No se pudieron cargar los asesores')}
+        </p>
+      ) : isLoading ? (
         <p className='text-center text-gray-400 py-8'>Cargando...</p>
       ) : (
         <Table

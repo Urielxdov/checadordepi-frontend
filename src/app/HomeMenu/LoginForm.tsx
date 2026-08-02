@@ -11,6 +11,7 @@ import { useForm } from "../../hooks/reducers/FormReducer"
 import { validateAccess } from "../../services/userService"
 import { useAuthStore } from "../../store/authStore"
 import { useEffect, useState } from "react"
+import { errorMessage } from "../../services/apiErrors"
 
 function LoginView() {
     const { store, clear } = useAuthStore()
@@ -33,8 +34,8 @@ function LoginView() {
                 }
                 resetForm()
             })
-            .catch(() => {
-                setError("Credenciales invalidas. Intente de nuevo.")
+            .catch((error) => {
+                setError(errorMessage(error, "Credenciales invalidas. Intente de nuevo."))
                 resetForm()
             })
     }
@@ -74,6 +75,12 @@ function LoginView() {
                             action={() => {}}
                             submit={true}
                             styles='px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 hover:cursor-pointer'
+                        />
+                        <Button
+                            text='Ir a asistencia'
+                            action={() => navigate('/asistencia')}
+                            submit={false}
+                            styles='px-4 py-2 rounded border border-blue-500 text-blue-600 hover:bg-blue-50 hover:cursor-pointer'
                         />
                     </Form>
                 </div>

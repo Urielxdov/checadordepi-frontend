@@ -22,12 +22,13 @@ import { useTeachersSelect } from '../../hooks/queries/useTeachers'
 import { useProgramsSelect } from '../../hooks/queries/usePrograms'
 import { useForm } from '../../hooks/reducers/FormReducer'
 import debounce from '../../utils/Debounce'
+import { errorMessage, formatApiMessage } from '../../services/apiErrors'
 
 export default function AlumnoPage () {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const page = Number(searchParams.get('page') ?? 0)
-  const { data, isLoading } = useStudents(page)
+  const { data, isLoading, isError, error } = useStudents(page)
   const { mutate: create } = useCreateStudent()
   const { mutate: update } = useUpdateStudent()
   const { mutate: remove } = useDeleteStudent()
@@ -64,10 +65,10 @@ export default function AlumnoPage () {
     create({ student: alumno, foto: alumno.foto as File }, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Alumno registrado correctamente'); setCreateOpen(false) }
-        else setFailMsg('No se pudo registrar el alumno')
+        else setFailMsg(formatApiMessage(r, 'No se pudo registrar el alumno'))
         resetForm()
       },
-      onError: () => { setFailMsg('No se pudo registrar el alumno'); resetForm() }
+      onError: (error) => { setFailMsg(errorMessage(error, 'No se pudo registrar el alumno')); resetForm() }
     })
   }, 500)
 
@@ -76,9 +77,9 @@ export default function AlumnoPage () {
     update({ student: alumno, foto: updateFoto ? alumno.foto as File : undefined }, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Alumno actualizado correctamente'); setEditTarget(null); resetForm() }
-        else setFailMsg('No se pudo actualizar el alumno')
+        else setFailMsg(formatApiMessage(r, 'No se pudo actualizar el alumno'))
       },
-      onError: () => setFailMsg('No se pudo actualizar el alumno')
+      onError: (error) => setFailMsg(errorMessage(error, 'No se pudo actualizar el alumno'))
     })
   }, 500)
 
@@ -87,10 +88,10 @@ export default function AlumnoPage () {
     remove(deleteId, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Alumno dado de baja'); setSearch(undefined) }
-        else setFailMsg('No se pudo dar de baja el alumno')
+        else setFailMsg(formatApiMessage(r, 'No se pudo dar de baja el alumno'))
         setDeleteId(null)
       },
-      onError: () => { setFailMsg('No se pudo dar de baja el alumno'); setDeleteId(null) }
+      onError: (error) => { setFailMsg(errorMessage(error, 'No se pudo dar de baja el alumno')); setDeleteId(null) }
     })
   }, 500)
 
@@ -120,7 +121,11 @@ export default function AlumnoPage () {
         </div>
       </div>
 
-      {isLoading ? (
+      {isError ? (
+        <p className='text-center text-red-600 bg-red-50 border border-red-100 rounded-md py-3 px-4'>
+          {errorMessage(error, 'No se pudieron cargar los alumnos')}
+        </p>
+      ) : isLoading ? (
         <p className='text-center text-gray-400 py-8'>Cargando...</p>
       ) : (
         <Table

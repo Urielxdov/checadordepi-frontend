@@ -1,6 +1,7 @@
 import type { OperationResponse, LoginAPI } from "../interfaces/httpModels";
 import type { LoginModel } from "../interfaces/Models";
 import { USERURL } from "../utils/APIurls";
+import { apiError } from "./apiErrors";
 
 interface AuthResult {
     token: string
@@ -19,7 +20,7 @@ export async function validateAccess(login: LoginModel):Promise<AuthResult|null>
 
     //verificar exito
     if(!response.ok){
-        throw new Error("Error al validar acceso!!!");
+        throw await apiError(response, "Error al validar acceso");
     }
 
     //verificar el exito en autenticacion

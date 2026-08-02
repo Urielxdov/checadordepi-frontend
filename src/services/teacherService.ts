@@ -1,6 +1,7 @@
 import type { OperationResponse, PagedData, ProfesorAPI, SelectItem } from "../interfaces/httpModels";
 import type { ProfesorModel } from "../interfaces/Models";
 import { TEACHERURL } from "../utils/APIurls";
+import { apiError } from "./apiErrors";
 
 //pedir profesores
 export async function getTeachersA(page:number, token:string):Promise<PagedData<ProfesorModel>>{
@@ -14,7 +15,7 @@ export async function getTeachersA(page:number, token:string):Promise<PagedData<
     //verificar el exito
     if(!response.ok){
         //mostrar error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al obtener asesores");
     }
 
     //obtener data
@@ -34,7 +35,7 @@ export async function getActiveTeachers(page:number, token:string):Promise<Paged
     //verificar el exito
     if(!response.ok){
         //mostrar error
-        throw new Error("Error("+response.status+"): "+response.statusText);
+        throw await apiError(response, "Error al obtener asesores activos");
     }
 
     const data = await response.json();
@@ -53,7 +54,7 @@ export async function getTeacherSelect(token:string):Promise<Array<SelectItem>>{
     //verificar el exito 
     if(!response.ok){
         //mostrat el error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al obtener asesores");
     }
 
     return await response.json();
@@ -71,7 +72,7 @@ export async function createTeacher(prof:ProfesorModel, token:string):Promise<Op
     //revisar si fue exitosa
     if(!response.ok){
         //mostrar error
-        throw new Error("Error("+response.status+"): "+response.statusText);
+        throw await apiError(response, "Error al registrar asesor");
     }
     //avisar del exito
     return await response.json();
@@ -89,7 +90,7 @@ export async function updateTeacherA(updated: ProfesorModel, token:string):Promi
     //revisar si fue exitosa
     if(!response.ok){
         //mostrar error
-        throw new Error("Error("+response.status+"): "+response.statusText);
+        throw await apiError(response, "Error al actualizar asesor");
     }
 
     //avisar de exito
@@ -107,7 +108,7 @@ export async function deleteTeacherA(id: string, token:string):Promise<Operation
     //revisar si hubo exito
     if(!response.ok){
         //mostrar error
-        throw new Error(response.status.toString());
+        throw await apiError(response, "Error al dar de baja asesor");
     }
 
     return await response.json();

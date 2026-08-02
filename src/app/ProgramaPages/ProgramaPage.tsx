@@ -17,11 +17,12 @@ import { usePrograms } from '../../hooks/queries/usePrograms'
 import { useCreateProgram, useUpdateProgram, useDeleteProgram } from '../../hooks/mutations/useProgramMutations'
 import { useForm } from '../../hooks/reducers/FormReducer'
 import debounce from '../../utils/Debounce'
+import { errorMessage, formatApiMessage } from '../../services/apiErrors'
 
 export default function ProgramaPage () {
   const [searchParams, setSearchParams] = useSearchParams()
   const page = Number(searchParams.get('page') ?? 0)
-  const { data, isLoading } = usePrograms(page)
+  const { data, isLoading, isError, error } = usePrograms(page)
   const { mutate: create } = useCreateProgram()
   const { mutate: update } = useUpdateProgram()
   const { mutate: remove } = useDeleteProgram()
@@ -46,10 +47,10 @@ export default function ProgramaPage () {
     create(programa, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Programa registrado correctamente'); setCreateOpen(false) }
-        else setFailMsg('No se pudo registrar el programa')
+        else setFailMsg(formatApiMessage(r, 'No se pudo registrar el programa'))
         resetForm()
       },
-      onError: () => { setFailMsg('No se pudo registrar el programa'); resetForm() }
+      onError: (error) => { setFailMsg(errorMessage(error, 'No se pudo registrar el programa')); resetForm() }
     })
   }, 500)
 
@@ -59,9 +60,9 @@ export default function ProgramaPage () {
     update(programa, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Programa actualizado correctamente'); setEditTarget(null); resetForm() }
-        else setFailMsg('No se pudo actualizar el programa')
+        else setFailMsg(formatApiMessage(r, 'No se pudo actualizar el programa'))
       },
-      onError: () => setFailMsg('No se pudo actualizar el programa')
+      onError: (error) => setFailMsg(errorMessage(error, 'No se pudo actualizar el programa'))
     })
   }, 500)
 
@@ -70,10 +71,10 @@ export default function ProgramaPage () {
     remove(deleteId, {
       onSuccess: (r) => {
         if (r.success) { setSuccessMsg('Programa dado de baja'); setSearch(undefined) }
-        else setFailMsg('No se pudo dar de baja el programa')
+        else setFailMsg(formatApiMessage(r, 'No se pudo dar de baja el programa'))
         setDeleteId(null)
       },
-      onError: () => { setFailMsg('No se pudo dar de baja el programa'); setDeleteId(null) }
+      onError: (error) => { setFailMsg(errorMessage(error, 'No se pudo dar de baja el programa')); setDeleteId(null) }
     })
   }, 500)
 
@@ -94,7 +95,11 @@ export default function ProgramaPage () {
         </button>
       </div>
 
-      {isLoading ? (
+      {isError ? (
+        <p className='text-center text-red-600 bg-red-50 border border-red-100 rounded-md py-3 px-4'>
+          {errorMessage(error, 'No se pudieron cargar los programas')}
+        </p>
+      ) : isLoading ? (
         <p className='text-center text-gray-400 py-8'>Cargando...</p>
       ) : (
         <Table
