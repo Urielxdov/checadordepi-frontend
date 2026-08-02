@@ -1,75 +1,63 @@
-import Delete from "../CrudActions/Delete";
-import HomeLayout from "../../components/ui/HomeLayout";
-import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { PROFESORHEADERS } from "../../utils/Headers";
-import { useTeachers } from "../../hooks/context/TeacherContext";
-import Modal from "../../components/ui/Modals";
-import { useState } from "react";
-import { useAuth } from "../../hooks/context/AuthContext";
-import debounce from "../../utils/Debounce";
-import PageBar from "../../components/ui/pageBar";
+import Delete from "../CrudActions/Delete"
+import HomeLayout from "../../components/ui/HomeLayout"
+import ReturnButton from "../../components/interactives/buttons/ReturnButton"
+import { PROFESORHEADERS } from "../../utils/Headers"
+import Modal from "../../components/ui/Modals"
+import { useState } from "react"
+import debounce from "../../utils/Debounce"
+import PageBar from "../../components/ui/pageBar"
+import { useSearchParams } from "react-router-dom"
+import { useTeachers } from "../../hooks/queries/useTeachers"
+import { useDeleteTeacher } from "../../hooks/mutations/useTeacherMutations"
+import type { ProfesorModel } from "../../interfaces/Models"
 
-function DeleteProf(){
-    //hook de jwt
-    const jwt = useAuth();
+function DeleteProf() {
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFail, setOpenFail] = useState(false)
+    const [current, setCurrent] = useState<ProfesorModel | undefined>()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const page = Number(searchParams.get('page') ?? 0)
+    const { data } = useTeachers(page)
+    const { mutate: remove } = useDeleteTeacher()
 
-    //estado de modal
-    const [openSuccess,setOpenSuccess] = useState<boolean>(false);
-    const [openFail,setOpenFail] = useState<boolean>(false);
-
-    //uso de contexto
-    const context = useTeachers();
-
-    //manejo de eliminado
-    const drop = (id: string) => {
-        debounce(() => {
-                //pasar el id
-                context.deleteTeacher(id, jwt.token).then( deleted => {
-                if(deleted){
-                    //abrir modal
-                    setOpenSuccess(true);
-                }else{
-                    setOpenFail(true);
-                }
-            }).catch(e => console.log(e));
-        },500)();
+    const onSearch = (id: string) => {
+        setCurrent(data?.data.find(t => t.id === id))
     }
 
-    //retorno de la vista
-    return(
+    const drop = (id: string) => {
+        debounce(() => {
+            remove(id, {
+                onSuccess: (result) => {
+                    if (result.success) { setOpenSuccess(true); setCurrent(undefined) }
+                    else setOpenFail(true)
+                },
+                onError: () => setOpenFail(true)
+            })
+        }, 500)()
+    }
+
+    return (
         <>
-        <HomeLayout title="Modulo asesor">
-            <Delete
-                module="asesor"
-                headers={PROFESORHEADERS}
-                entity={context.state.current}
-                all={context.state.entities}
-                onSearch={context.searchTeacher}
-                onDelete={drop}
-            />
-            <PageBar
-                current={context.state.current_page}
-                total={context.state.total}
-                onChange={(page: number) => context.getTeachers(page, jwt.token)}
-            />
-            <ReturnButton path="/asesor/"/>
-        </HomeLayout>
-        <Modal
-            title="Asesor eliminado"
-            message="el asesor ha sido eliminado con exito"
-            type="success"
-            isOpen={openSuccess}
-            onClose={() => setOpenSuccess(false)}
-        />
-        <Modal
-            title="Error al eliminar"
-            message="el asesor no ha sido eliminado"
-            type="failure"
-            isOpen={openFail}
-            onClose={() => setOpenFail(false)}
-        />
+            <HomeLayout title="Modulo asesor">
+                <Delete
+                    module="asesor"
+                    headers={PROFESORHEADERS}
+                    entity={current}
+                    all={data?.data ?? []}
+                    onSearch={onSearch}
+                    onDelete={drop}
+                />
+                <PageBar
+                    current={page}
+                    total={data?.total ?? 0}
+                    onChange={(p: number) => setSearchParams({ page: String(p) })}
+                />
+                <ReturnButton path="/asesor/" />
+            </HomeLayout>
+            <Modal title="Asesor eliminado" message="el asesor ha sido eliminado con exito" type="success" isOpen={openSuccess} onClose={() => setOpenSuccess(false)} />
+            <Modal title="Error al eliminar" message="el asesor no ha sido eliminado" type="failure" isOpen={openFail} onClose={() => setOpenFail(false)} />
         </>
-    );
+    )
 }
 
-export default DeleteProf;
+export default DeleteProf

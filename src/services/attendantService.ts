@@ -1,23 +1,22 @@
 import { ATTENDANCEURL } from "../utils/APIurls";
 
-//metodo para mandar la foto al api
-export async function checkAttendance(img: Blob):Promise<Boolean>{
-    //form data
+export type AttendanceResult = "success" | "duplicate" | "error";
+
+export async function checkAttendance(img: Blob): Promise<AttendanceResult> {
     const data = new FormData();
-    data.append("file",img,'face.jpg');
+    data.append("file", img, 'face.jpg');
 
-    //peticion con fetch
-    const response = await fetch(ATTENDANCEURL,{
-        method: 'POST',
-        mode: 'cors',
-        body: data
-    });
+    try {
+        const response = await fetch(ATTENDANCEURL, {
+            method: 'POST',
+            mode: 'cors',
+            body: data
+        });
 
-    //verificar respuesta
-    if(!response.ok){
-        return false;
+        if (response.status === 201) return "success";
+        if (response.status === 409) return "duplicate";
+        return "error";
+    } catch {
+        return "error";
     }
-
-    //retornar verdadero
-    return true;
 }

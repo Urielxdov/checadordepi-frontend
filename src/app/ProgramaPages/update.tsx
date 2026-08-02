@@ -1,77 +1,64 @@
-import Update from "../CrudActions/Update";
-import { usePrograms } from "../../hooks/context/ProgramContext";
-import HomeLayout from "../../components/ui/HomeLayout";
-import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { PROGRAMAHEADERS } from "../../utils/Headers";
-import Modal from "../../components/ui/Modals";
-import { useState } from "react";
-import type { BaseModel, ProgramaModel } from "../../interfaces/Models";
-import PageBar from "../../components/ui/pageBar";
-import debounce from "../../utils/Debounce";
-import { useAuth } from "../../hooks/context/AuthContext";
+import Update from "../CrudActions/Update"
+import HomeLayout from "../../components/ui/HomeLayout"
+import ReturnButton from "../../components/interactives/buttons/ReturnButton"
+import { PROGRAMAHEADERS } from "../../utils/Headers"
+import Modal from "../../components/ui/Modals"
+import { useState } from "react"
+import type { BaseModel, ProgramaModel } from "../../interfaces/Models"
+import PageBar from "../../components/ui/pageBar"
+import debounce from "../../utils/Debounce"
+import { useSearchParams } from "react-router-dom"
+import { usePrograms } from "../../hooks/queries/usePrograms"
+import { useUpdateProgram } from "../../hooks/mutations/useProgramMutations"
 
-function UpdateProg(){
-    //hook de jwt
-    const jwt = useAuth();
+function UpdateProg() {
+    const [openSuccess, setOpenSuccess] = useState(false)
+    const [openFail, setOpenFail] = useState(false)
+    const [current, setCurrent] = useState<ProgramaModel | undefined>()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const page = Number(searchParams.get('page') ?? 0)
+    const { data } = usePrograms(page)
+    const { mutate: update } = useUpdateProgram()
 
-    //estado de modal
-    const [openSuccess, setOpenSuccess] = useState<boolean>(false);
-    const [openFail, setOpenFail] = useState<boolean>(false);
+    const onSearch = (id: string) => {
+        setCurrent(data?.data.find(p => p.id === id))
+    }
 
-    //contexto de programa
-    const context = usePrograms();
-
-    //menejo de update
-    const update = (updated:BaseModel) => {
+    const onUpdate = (updated: BaseModel) => {
         debounce(() => {
-            //cambio
-            if(updated.status == "Permiso"){ updated.status = "Inactivo" }
-            //paso al contexto
-            context.updateProgram(updated as ProgramaModel, jwt.token).then(updated => {
-                if(updated){
-                    //abrir modal
-                    setOpenSuccess(true);
-                }else{
-                    setOpenFail(true);
-                }
-            }).catch(e => console.log(e));
-        },500)();
+            if (updated.status === "Permiso") updated.status = "Inactivo"
+            update(updated as ProgramaModel, {
+                onSuccess: (result) => {
+                    if (result.success) setOpenSuccess(true)
+                    else setOpenFail(true)
+                },
+                onError: () => setOpenFail(true)
+            })
+        }, 500)()
     }
 
     return (
         <>
-        <HomeLayout title="Modulo programa">
-            <Update
-                module='programa'
-                entity={context.state.current}
-                all={context.state.entities}
-                headers={PROGRAMAHEADERS}
-                onSearch={context.searchProgram}
-                onUpdate={update}
-            />
-            <PageBar
-                current={context.state.current_page}
-                total={context.state.total}
-                onChange={(page: number) => context.getPrograms(page, jwt.token)}
-            />
-            <ReturnButton path="/programa/"/>
-        </HomeLayout>
-        <Modal
-            title="Programa actualizado"
-            message="los datos del programa han sido actualizados"
-            type="success"
-            isOpen={openSuccess}
-            onClose={() => setOpenSuccess(false)}
-        />
-        <Modal
-            title="Error al actualizar"
-            message="el programa no ha sido actualizado"
-            type="failure"
-            isOpen={openFail}
-            onClose={() => setOpenFail(false)}
-        />
+            <HomeLayout title="Modulo programa">
+                <Update
+                    module='programa'
+                    entity={current}
+                    all={data?.data ?? []}
+                    headers={PROGRAMAHEADERS}
+                    onSearch={onSearch}
+                    onUpdate={onUpdate}
+                />
+                <PageBar
+                    current={page}
+                    total={data?.total ?? 0}
+                    onChange={(p: number) => setSearchParams({ page: String(p) })}
+                />
+                <ReturnButton path="/programa/" />
+            </HomeLayout>
+            <Modal title="Programa actualizado" message="los datos del programa han sido actualizados" type="success" isOpen={openSuccess} onClose={() => setOpenSuccess(false)} />
+            <Modal title="Error al actualizar" message="el programa no ha sido actualizado" type="failure" isOpen={openFail} onClose={() => setOpenFail(false)} />
         </>
-    );
+    )
 }
 
-export default UpdateProg;
+export default UpdateProg

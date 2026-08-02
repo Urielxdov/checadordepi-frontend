@@ -1,34 +1,45 @@
-import { usePrograms } from "../../hooks/context/ProgramContext";
-import { PROGRAMAHEADERS } from "../../utils/Headers";
-import HomeLayout from "../../components/ui/HomeLayout";
-import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import { useAuth } from "../../hooks/context/AuthContext";
-import Index from "../CrudActions/Index";
-import PageBar from "../../components/ui/pageBar";
+import { useState } from "react"
+import { useSearchParams } from "react-router-dom"
+import { PROGRAMAHEADERS } from "../../utils/Headers"
+import HomeLayout from "../../components/ui/HomeLayout"
+import ReturnButton from "../../components/interactives/buttons/ReturnButton"
+import Index from "../CrudActions/Index"
+import PageBar from "../../components/ui/pageBar"
+import { usePrograms } from "../../hooks/queries/usePrograms"
+import type { ProgramaModel } from "../../interfaces/Models"
 
-function IndexProg(){
-    //hook de jwt
-    const jwt = useAuth();
+function IndexProg() {
+    const [searchParams, setSearchParams] = useSearchParams()
+    const page = Number(searchParams.get('page') ?? 0)
+    const [current, setCurrent] = useState<ProgramaModel | undefined>()
+    const { data, isLoading } = usePrograms(page)
 
-    //contexto
-    const context = usePrograms();
+    const onSearch = (id: string) => {
+        setCurrent(data?.data.find(p => p.id === id))
+    }
 
-    //vista de la pagina
+    if (isLoading) return (
+        <HomeLayout title="Lista de programas">
+            <p className="text-center">Cargando...</p>
+        </HomeLayout>
+    )
+
     return (
         <HomeLayout title="Lista de programas">
             <Index
                 headers={PROGRAMAHEADERS}
-                body={context.state.entities}
-                onSearch={s => context.searchProgram(s)}
+                body={data?.data ?? []}
+                entity={current}
+                onSearch={onSearch}
             />
             <PageBar
-                current={context.state.current_page}
-                total={context.state.total}
-                onChange={(page: number) => context.getPrograms(page, jwt.token)}
+                current={page}
+                total={data?.total ?? 0}
+                onChange={(p: number) => setSearchParams({ page: String(p) })}
             />
-            <ReturnButton path="/programa/"/>
+            <ReturnButton path="/programa/" />
         </HomeLayout>
-    );
+    )
 }
 
-export default IndexProg;
+export default IndexProg

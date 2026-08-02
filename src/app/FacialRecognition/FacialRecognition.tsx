@@ -4,40 +4,18 @@ import Clock from '../../components/FacialRecognition/Clock'
 import DateDisplay from '../../components/FacialRecognition/DateDisplay'
 import HomeLayout from '../../components/ui/HomeLayout'
 import Modal from '../../components/ui/Modals';
-import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
 
 export default function FacialRecognition () {
-  //hook de camara
   const { videoRef, canvasRef, checked, initCamera, closeCamera } = useCamera();
 
-  //estados
-  const [redirect,setRedirect] = useState<boolean>(false);
+  const overlayConfig = {
+    success:   { type: "success", title: "Asistencia registrada",   message: "Entrada registrada con éxito. Puede ingresar al plantel." },
+    duplicate: { type: "info",    title: "Ya registrado hoy",        message: "Tu asistencia de hoy ya fue marcada anteriormente." },
+    error:     { type: "failure", title: "No reconocido",            message: "No se pudo identificar al alumno. Inténtalo de nuevo." },
+  } as const;
 
-  //modales
-  const [openFailureCheck, setOpenFailureCheck] = useState<boolean>(false);
+  const overlay = checked ? overlayConfig[checked] : null;
 
-  //verificar cual ventana se abre
-  useEffect(() => {
-    //si no existe
-    if(checked == null) { return; }
-
-    //en funcion de la respuesta
-    if(checked){
-      setRedirect(true);
-    }else{
-      setOpenFailureCheck(true);
-    }
-  },[checked]);
-
-  //redireccion
-  if(redirect){
-    return (
-      <Navigate to={"/asistencia/valida"}/>
-    );
-  }
-
-  //vista
   return (
     <>
       <HomeLayout title='Registro de Asistencia'>
@@ -45,20 +23,22 @@ export default function FacialRecognition () {
           <DateDisplay />
           <Clock />
         </>
-        <Camera 
+        <Camera
           videoRef={videoRef}
           canvasRef={canvasRef}
           initCamera={initCamera}
           closeCamera={closeCamera}
         />
       </HomeLayout>
-      <Modal 
-        title='Asistencia no marcada'
-        message='La asistencia no se ha podido marcar'
-        type="failure"
-        isOpen={openFailureCheck}
-        onClose={ () => setOpenFailureCheck(false) }
-      />
+      {overlay && (
+        <Modal
+          title={overlay.title}
+          message={overlay.message}
+          type={overlay.type}
+          isOpen={true}
+          onClose={() => {}}
+        />
+      )}
     </>
-  )
+  );
 }

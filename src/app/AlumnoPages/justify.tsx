@@ -1,40 +1,23 @@
-import ReturnButton from "../../components/interactives/buttons/ReturnButton";
-import HomeLayout from "../../components/ui/HomeLayout";
-import { Table } from "../../components/ui/tables/Table";
-import type { AlumnoModel } from "../../interfaces/Models";
-import { ALUMNOHEADERS } from "../../utils/Headers";
-import { useEffect, useState } from "react";
-import { getActiveStudents } from "../../services/studentsService";
-import { useAuth } from "../../hooks/context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import ReturnButton from "../../components/interactives/buttons/ReturnButton"
+import HomeLayout from "../../components/ui/HomeLayout"
+import { Table } from "../../components/ui/tables/Table"
+import { ALUMNOHEADERS } from "../../utils/Headers"
+import { useNavigate } from "react-router-dom"
+import { useStudents } from "../../hooks/queries/useStudents"
 
-//pagina para mostrar alumnos que requieren justificarse
-export default function JustifyAlu(){
-    //estados
-    const [alumnos,setAlumnos] = useState<Array<AlumnoModel>>([]);
+export default function JustifyAlu() {
+    const navigate = useNavigate()
+    const { data } = useStudents(0)
 
-    const navigate = useNavigate();
-
-    //contextos
-    const authctx = useAuth();
-
-    //efecto para pedir alumnos
-    useEffect(() => {
-        getActiveStudents(0,authctx.token).then(data => {
-            setAlumnos(data.data);
-        }).catch(err => console.log(err));
-    },[]);
-
-    //pagina
-    return(
-        <HomeLayout title="Insidencias">
+    return (
+        <HomeLayout title="Incidencias">
             <Table
                 header={ALUMNOHEADERS}
-                body={alumnos}
+                body={data?.data ?? []}
                 action="navigate"
-                func={(id) => { navigate("/alumno/justify/"+id) }}
+                func={(id) => { navigate("/alumno/justify/" + id) }}
             />
-            <ReturnButton path="/alumno/"/>
+            <ReturnButton path="/alumno/" />
         </HomeLayout>
-    );
+    )
 }

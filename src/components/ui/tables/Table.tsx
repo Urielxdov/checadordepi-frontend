@@ -2,6 +2,7 @@ import RowData from './RowData';
 import type { BaseModel } from '../../../interfaces/Models';
 import DeleteButton from '../../interactives/buttons/DeleteButton';
 import Button from '../../interactives/buttons/Button';
+import { Pencil, Trash2 } from 'lucide-react';
 
 //propiedades de header
 interface TableHeaderProps {
@@ -13,17 +14,17 @@ interface TableHeaderProps {
 export function TableHeader({ header, withAction }:TableHeaderProps){
   //encabezados de tabla
   return (
-    <thead className='bg-gray-200'>
+    <thead className='bg-gray-50 border-b border-gray-200'>
       <tr>
         {header.map((content, index) => (
           <th
             key={index}
-            className='border border-gray-300 p-2 font-medium text-gray-700'
+            className='px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider'
           >
             {content}
           </th>
         ))}
-        {withAction && <th className='border border-gray-300 p-2 font-medium text-gray-700'>accion</th>}
+        {withAction && <th className='px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider'>Acción</th>}
       </tr>
     </thead>
   );
@@ -32,23 +33,20 @@ export function TableHeader({ header, withAction }:TableHeaderProps){
 //propiedades de cuerpo de tabla
 interface TableBodyProps<T extends BaseModel> {
   body: T[],
-  action?: "list" | "delete" | "navigate"
+  action?: "list" | "delete" | "navigate" | "actions"
   func?: (id: string) => void
+  onEdit?: (id: string) => void
 }
 
 //subcomponente body
-function TableBody<T extends BaseModel>({ body, action, func }:TableBodyProps<T>){
-  //cuerpo de tabla modo delete
+function TableBody<T extends BaseModel>({ body, action, func, onEdit }:TableBodyProps<T>){
   if(action == "delete" && func){
     return (
-      <tbody>
+      <tbody className='divide-y divide-gray-100'>
         {body.map((row) => (
-          <tr key={row.id} className='odd:bg-white even:bg-gray-100' data-id={row.id}>
-            <RowData
-              key={row.id}
-              data={row}
-            />
-            <td className='border border-gray-300 p-2 align-top'>
+          <tr key={row.id} className='hover:bg-gray-50 transition-colors' data-id={row.id}>
+            <RowData key={row.id} data={row} />
+            <td className='px-4 py-3 align-middle'>
               <DeleteButton action={() => func(row.id)}/>
             </td>
           </tr>
@@ -57,17 +55,13 @@ function TableBody<T extends BaseModel>({ body, action, func }:TableBodyProps<T>
     );
   }
 
-  //cuerpo de tabla modo delete
   if(action == "navigate" && func){
     return (
-      <tbody>
+      <tbody className='divide-y divide-gray-100'>
         {body.map((row) => (
-          <tr key={row.id} className='odd:bg-white even:bg-gray-100' data-id={row.id}>
-            <RowData
-              key={row.id}
-              data={row}
-            />
-            <td className='border border-gray-300 p-2 align-top'>
+          <tr key={row.id} className='hover:bg-gray-50 transition-colors' data-id={row.id}>
+            <RowData key={row.id} data={row} />
+            <td className='px-4 py-3 align-middle'>
               <Button text="revisar" action={() => func(row.id)}/>
             </td>
           </tr>
@@ -75,18 +69,48 @@ function TableBody<T extends BaseModel>({ body, action, func }:TableBodyProps<T>
       </tbody>
     );
   }
-  
-  //cuerpo de tabla (modo lectura)
-  return (
-    <tbody>
-      {body.map((row) => (
-          <tr key={row.id} className='odd:bg-white even:bg-gray-100' data-id={row.id}>
-            <RowData
-              key={row.id}
-              data={row}
-            />
+
+  if(action == "actions"){
+    return (
+      <tbody className='divide-y divide-gray-100'>
+        {body.map((row) => (
+          <tr key={row.id} className='hover:bg-gray-50 transition-colors' data-id={row.id}>
+            <RowData key={row.id} data={row} />
+            <td className='px-4 py-3 align-middle'>
+              <div className='flex gap-2'>
+                {onEdit && (
+                  <button
+                    onClick={() => onEdit(row.id)}
+                    className='p-1.5 rounded-md text-blue-500 hover:bg-blue-50 cursor-pointer transition-colors'
+                    title='Editar'
+                  >
+                    <Pencil className='w-4 h-4' />
+                  </button>
+                )}
+                {func && (
+                  <button
+                    onClick={() => func(row.id)}
+                    className='p-1.5 rounded-md text-red-500 hover:bg-red-50 cursor-pointer transition-colors'
+                    title='Dar de baja'
+                  >
+                    <Trash2 className='w-4 h-4' />
+                  </button>
+                )}
+              </div>
+            </td>
           </tr>
         ))}
+      </tbody>
+    );
+  }
+
+  return (
+    <tbody className='divide-y divide-gray-100'>
+      {body.map((row) => (
+        <tr key={row.id} className='hover:bg-gray-50 transition-colors' data-id={row.id}>
+          <RowData key={row.id} data={row} />
+        </tr>
+      ))}
     </tbody>
   );
 }
@@ -95,31 +119,29 @@ function TableBody<T extends BaseModel>({ body, action, func }:TableBodyProps<T>
 interface TableProps<T extends BaseModel> {
   header: string[]
   body: T[],
-  action?: "list" | "delete" | "navigate"
+  action?: "list" | "delete" | "navigate" | "actions"
   func?: (id: string) => void
+  onEdit?: (id: string) => void
 }
 
 //componente de tabla
-export function Table<T extends BaseModel>({ header, body, action = "list", func }: TableProps<T>) {
-  //componente tabla modo lista
+export function Table<T extends BaseModel>({ header, body, action = "list", func, onEdit }: TableProps<T>) {
   return (
-    <div className='overflow-x-auto'>
-      <table
-        className='min-w-full table-auto border border-gray-300 text-left'
-      >
+    <div className='overflow-x-auto rounded-lg border border-gray-200'>
+      <table className='min-w-full table-auto text-left text-sm'>
         <TableHeader header={header} withAction={action != "list"}/>
-        {body.length ? 
-          <TableBody body={body} action={action} func={func}/>
-          :<tbody>
+        {body.length ?
+          <TableBody body={body} action={action} func={func} onEdit={onEdit}/>
+          : <tbody>
               <tr>
                 <td
                   colSpan={header.length}
-                  className='p-4 text-center text-gray-600'
+                  className='px-4 py-8 text-center text-gray-400 text-sm'
                 >
                   No hay registros disponibles
                 </td>
               </tr>
-          </tbody>
+            </tbody>
         }
       </table>
     </div>

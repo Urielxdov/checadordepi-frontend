@@ -1,27 +1,20 @@
-import Button from './Button'
 import { ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 interface ReturnButtonProps {
-    path: string
+  path: string
 }
 
-export default function ReturnButton ({ path }:ReturnButtonProps) {
-  //navegacion
-  const navigate = useNavigate();
+export default function ReturnButton ({ path }: ReturnButtonProps) {
+  const navigate = useNavigate()
 
-  //componente
   return (
-    <Button
-      text='Regresar'
-      action={() => {
-        navigate(path);
-      }}
-      submit={false}
-      icon={<ArrowLeft className='h-5  w-5' />}
-      iconPosition='left'
-      styles='px-4 py-2 rounded bg-blue-500 text-white
-      hover:bg-blue-600 hover:cursor-pointer'
-    />
+    <button
+      onClick={() => navigate(path)}
+      className='flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium border border-gray-200 text-gray-600 hover:bg-gray-50 cursor-pointer transition-colors w-fit'
+    >
+      <ArrowLeft className='w-4 h-4' />
+      Regresar
+    </button>
   )
 }

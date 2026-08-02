@@ -1,16 +1,15 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { AuthContext } from "../../hooks/context/AuthContext";
-import { useContext } from "react";
+import { Navigate, Outlet } from "react-router-dom"
+import { useAuthStore } from "../../store/authStore"
 
 interface ProtectedRouteProps {
     requiredRole?: string
 }
 
 function ProtectedRoute({ requiredRole }: ProtectedRouteProps) {
-    const context = useContext(AuthContext);
-    if(!context?.token){ return <Navigate to="/"/>; }
-    if(requiredRole && context.role !== requiredRole){ return <Navigate to="/asistencia"/>; }
-    return <Outlet/>;
+    const { token, role } = useAuthStore()
+    if (!token) return <Navigate to="/" replace />
+    if (requiredRole && role !== requiredRole) return <Navigate to="/asistencia" replace />
+    return <Outlet />
 }
 
-export default ProtectedRoute;
+export default ProtectedRoute
