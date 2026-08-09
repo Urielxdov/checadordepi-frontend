@@ -4,6 +4,7 @@ import Input from '../../components/interactives/forms/Input'
 import Button from '../../components/interactives/buttons/Button'
 import { type SelectItem } from '../../interfaces/httpModels'
 import type { FieldConfig } from '../../utils/Fields'
+import type { FieldErrors } from '../../utils/formValidation'
 
 export interface CreateParameters {
     module: string
@@ -12,11 +13,16 @@ export interface CreateParameters {
     itemsPr?: Array<SelectItem>
     selectPf?: string,
     selectPr?: string,
+    errors?: FieldErrors
     onChange: (key: string, value: any) => void
     onSubmit: () => void
 }
 
-function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: CreateParameters) {
+function Create ({ module, fields, itemsPf, itemsPr, selectPf, selectPr, errors = {}, onSubmit, onChange }: CreateParameters) {
+  const handleChange = (key: string, value: any) => {
+    onChange(key, value)
+  }
+
   //retorno de vista
   return (
     <>
@@ -31,12 +37,13 @@ function Create ({ module, fields, itemsPf, itemsPr, onSubmit, onChange }: Creat
             maxLength={f.maxlength ? f.maxlength : 200}
             minLength={f.minlength ? f.minlength : 1}
             value={f.value}
-            change={onChange}
+            error={errors[f.name]}
+            change={handleChange}
             key={f.name}
           />
         ))}
-        {module == 'Alumno' ? <ComboBox name="profesor" id='profesor-select' items={itemsPf ? itemsPf:[]} onChange={onChange} />:null}
-        {module == 'Alumno' ? <ComboBox name="programa" id='programa-select' items={itemsPr ? itemsPr:[]} onChange={onChange} />:null}
+        {module == 'Alumno' ? <ComboBox name="profesor" id='profesor-select' items={itemsPf ? itemsPf:[]} select={selectPf} error={errors.profesor} onChange={handleChange} />:null}
+        {module == 'Alumno' ? <ComboBox name="programa" id='programa-select' items={itemsPr ? itemsPr:[]} select={selectPr} error={errors.programa} onChange={handleChange} />:null}
         <Button
           text='registrar'
           action={() => {}}

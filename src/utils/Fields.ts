@@ -14,8 +14,8 @@ export const getFieldsAlu = (preset:AlumnoModel):Array<FieldConfig> => ([
              label:"Numero de control",
              name:"id",
              type:"text",
-             maxlength: 8,
-             minlength: 8,
+             maxlength: 10,
+             minlength: 3,
              value: preset.id
          },
          {
@@ -34,7 +34,8 @@ export const getFieldsAlu = (preset:AlumnoModel):Array<FieldConfig> => ([
              label:"Telefono",
              name:"telefono",
              type:"tel",
-             maxlength: 10,
+             maxlength: 12,
+             minlength: 10,
              value: preset.telefono
          },
          {
@@ -68,7 +69,7 @@ export const getFieldsProf = (preset: ProfesorModel):Array<FieldConfig> => ([
              name:"id",
              type:"text",
              maxlength: 10,
-             minlength: 10,
+             minlength: 3,
              value: preset.id
          },
          {
@@ -87,7 +88,8 @@ export const getFieldsProf = (preset: ProfesorModel):Array<FieldConfig> => ([
              label:"Telefono",
              name:"telefono",
              type:"tel",
-             maxlength: 10,
+             maxlength: 12,
+             minlength: 10,
              value: preset.telefono
          },
          {
@@ -115,6 +117,8 @@ export const getFieldsProg = (preset: ProgramaModel):Array<FieldConfig> => ([
              label:"Numero de programa",
              name:"id",
              type:"text",
+             maxlength: 10,
+             minlength: 3,
              value: preset.id
          },
          {
@@ -127,7 +131,8 @@ export const getFieldsProg = (preset: ProgramaModel):Array<FieldConfig> => ([
              label:"Registro de CONAHCYT",
              name:"registro",
              type:"text",
-             maxlength: 10,
+             maxlength: 12,
+             minlength: 3,
              value: preset.registro
          }
      ])
